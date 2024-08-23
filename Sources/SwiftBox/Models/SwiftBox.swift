@@ -11,6 +11,7 @@ public typealias Theme = SwiftBox.Theme
 public typealias Config = SwiftBox.Configuration
 public typealias Part = SwiftBox.FramePart
 public typealias Line = SwiftBox.BoxLine
+public typealias GlyphStyle = SwiftBox.Theme.GlyphStyle
 
 
 public struct SwiftBox {
@@ -57,34 +58,35 @@ public struct SwiftBox {
       join: Join.Vertical = .none,
       location: Location = .exterior
     )
+    
+    case join
+    
     case cross
     
     case corner(Corner)
     
+    /// This `Join` struct exists to keep horizontal and vertical joins seperate,
+    /// so that `FramePart` cases `horizontal` and `vertical` are
+    /// more safely typed.
+    ///
     public enum Join {
       
-
-      public enum Horizontal: Hashable {
-        
-        case none
-
-        /// ┯
-        case top
-        
-        /// ┷
-        case bottom
-      }
       
-      public enum Vertical: Hashable {
+      case none
       
-        case none
-        
-        /// ┠
-        case leading
-        
-        /// ┨
-        case trailing
-      }
+      /// ┠
+      case leading
+      
+      /// ┨
+      case trailing
+      /// ┯
+      case top
+      
+      /// ┷
+      case bottom
+      
+      case cross
+      
       
     }
     

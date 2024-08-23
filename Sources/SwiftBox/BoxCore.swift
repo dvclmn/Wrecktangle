@@ -99,39 +99,38 @@ public extension SwiftBox {
   ) -> AttributedString {
     
     var output = AttributedString("")
-    let paddingCharacter = Theme.Invisibles.padding.character
     
     if let text = text {
       
-      let paddingLength = self.config.width
+      /// Set up leading cap
+      ///
+      output += capLeading.character(with: config, container: container(for: .secondary))
       
+      /// Leading space
+      ///
+      output.appendString(" ")
+      
+      /// Add text to the attr. string
+      ///
       output.appendString(text)
-      output.setAttributes(config.theme.colours.text.container)
+      output.mergeAttributes((container(for: .primary)))
       
-      // Calculate the padding length
-      let paddingNeeded = max(0, paddingLength - text.count)
+      /// Set up padding characters, to fill out to the end of the box, so the trailing wall is aligned nicely
+      ///
+      let paddingCharacter = Invisibles.padding.character
+      let totalWidth = self.config.width - 4 // leading cap, leading space, trailing cap
+      let paddingNeeded = max(0, totalWidth - text.count)
       
-      if paddingNeeded > 0 {
-        // Create an AttributedString for the padding
-        var paddingString = AttributedString(String(repeating: paddingCharacter, count: paddingNeeded))
-        
-        // Apply attributes to the padding
-        paddingString.setAttributes(config.theme.colours.invisibles.container)
-        
-        // Append the padded part with attributes
-        output += paddingString
-      }
-
+      var paddingString = AttributedString(String(repeating: paddingCharacter, count: paddingNeeded))
+      paddingString.mergeAttributes(container(for: .tertiary))
       
-//      output[paddedText.ra]
-//      output.appendString(paddedText)
-//      output += AttributedString(paddedText, attributes: config.theme.colours.invisibles.container)
+      /// Add this padding to the output string
+      ///
+      output += paddingString
       
-      //
-      //      // Apply default text color to the actual text
-      //      if let textRange = attributedPaddedText.range(of: text) {
-      //        attributedPaddedText[textRange].foregroundColor = textForeground
-      //      }
+      output.appendString(" ")
+      output += capTrailing.character(with: config, container: container(for: .secondary))
+      
       
     } else {
       output += repeatingPart(for: type)
@@ -140,30 +139,7 @@ public extension SwiftBox {
     
     return output
   }
-  
-  //    var lineContent: String = ""
-  //
-  //    if let text = text {
-  //      let leadingSpace = " "
-  //
-  //      let paddingLength: Int = self.config.width
-  //
-  //      lineContent = leadingSpace + text.padding(toLength: paddingLength, withPad: "*", startingAt: 0) + "\n"
-  //
-  //    } else {
-  //      lineContent = repeatingPart(for: type)
-  //    }
-  //
-  //
-  //    let output = capLeading.character(with: config) + lineContent + capLeading.character(with: config)
-  //
-  //    return output
-  //  }
-  
-  
-  
-  
-  
+
   
   private func repeatingPart(for line: Line) -> AttributedString {
     
@@ -173,18 +149,18 @@ public extension SwiftBox {
     
     switch line {
       case .top, .bottom:
-        let part = Part.horizontal(location: .exterior).character(with: config)
+        let part = Part.horizontal(location: .exterior).character(with: config).asString
         output += AttributedString(String(repeating: part, count: repeatCount))
         
       case .header, .content:
         break // header and content should produce actual text content, not a structural Part
         
       case .divider:
-        let part = Part.horizontal(location: .interior).character(with: config)
+        let part = Part.horizontal(location: .interior).character(with: config).asString
         output += AttributedString(String(repeating: part, count: repeatCount))
     }
     
-    output.setAttributes(config.theme.colours.frame.container)
+    output.setAttributes(container(for: .secondary))
     return output
   }
   
@@ -255,16 +231,32 @@ public extension SwiftBox {
             ".",
             alternating: "|",
             every: 5,
-            count: width
+            totalCount: width
           )
         )
         result.addNewLine()
     }
-
     
-    result.setAttributes(config.theme.colours.invisibles.container)
+    
+    result.setAttributes(container(for: .tertiary))
     return result
   }
   
-
+  
+  func container(for style: GlyphStyle.StyleType) -> AttributeContainer {
+    
+    switch style {
+      case .primary:
+        return self.config.theme.styles.primary.container
+      case .secondary:
+        return self.config.theme.styles.secondary.container
+      case .tertiary:
+        return self.config.theme.styles.tertiary.container
+      case .accent:
+        return self.config.theme.styles.accent.container
+    }
+  }
+  
+  
+  
 }

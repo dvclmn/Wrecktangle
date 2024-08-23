@@ -18,9 +18,10 @@ let package = Package(
   ],
   dependencies: [
     .package(name: "Helpers", path: "../Helpers"),
+    .package(name: "Styles", path: "../Styles"),
   ],
   targets: [
-    .target(name: "SwiftBox", dependencies: ["Helpers"]),
+    .target(name: "SwiftBox", dependencies: ["Helpers", "Styles"]),
 
     .testTarget(
       name: "SwiftBoxTests", dependencies: ["SwiftBox"]
