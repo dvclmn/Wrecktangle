@@ -69,13 +69,28 @@ extension Theme {
     }
   }
   
-  
-  
-  
-  
-  
-  
-  
+  public enum Invisibles {
+    case line(LineType)
+    case space
+    case tab
+    case padding
+    
+    public enum LineType {
+      case new
+      case end
+    }
+    
+    public var character: String {
+      switch self {
+        case .line(.new): "¬"
+        case .line(.end): "¶"
+        case .space: "•"
+        case .tab: "→"
+        case .padding: ","
+      }
+    }
+  }
+
 }
 
 
@@ -101,40 +116,3 @@ extension Theme.GlyphStyle {
 }
 
 
-extension Part {
-  
-  public var themeIndex: Int {
-    switch self {
-      case .horizontal(join: .none, location: .exterior):   return 0
-      case .horizontal(join: .none, location: .interior):   return 2
-      case .horizontal(join: .top, _):                      return 4
-      case .horizontal(join: .bottom, _):                   return 6
-        
-      case .vertical(join: .none, location: .exterior):     return 8
-      case .vertical(join: .none, location: .interior):     return 10
-      case .vertical(join: .leading, _):                    return 12
-      case .vertical(join: .trailing, _):                   return 14
-        
-      case .cross:                                          return 16
-        
-      case .corner(.top(.leading)):                         return 18
-      case .corner(.top(.trailing)):                        return 20
-      case .corner(.bottom(.leading)):                      return 22
-      case .corner(.bottom(.trailing)):                     return 24
-    }
-  }
-  
-  public func character(with config: Config) -> String {
-    
-    let index = self.themeIndex
-    let themeString = config.theme.set.string
-    
-    let output: String = String(themeString[themeString.index(themeString.startIndex, offsetBy: index)])
-    
-    return output
-  }
-  
-  
-  
-  
-}

@@ -10,13 +10,10 @@ import Foundation
 public typealias Theme = SwiftBox.Theme
 public typealias Config = SwiftBox.Configuration
 public typealias Part = SwiftBox.FramePart
-public typealias Structure = SwiftBox.BoxStructure
 public typealias Line = SwiftBox.BoxLine
 
 
 public struct SwiftBox {
-  
-  
   
   var header: String
   var content: String
@@ -25,7 +22,6 @@ public struct SwiftBox {
   var attributedString: AttributedString {
     return self.drawBox()
   }
-  
   
   public init(
     header: String,
@@ -36,8 +32,6 @@ public struct SwiftBox {
     self.content = content
     self.config = config
   }
-  
-
   
   /// Currently this implementaiton can only handle horizontal dividers, not vertical.
   /// So we can process line-by-line vertically in a fairly straightforward way.
@@ -50,59 +44,8 @@ public struct SwiftBox {
     case bottom
   }
   
-  public enum Invisibles {
-    case line(LineType)
-    case space
-    case tab
-    case padding
-    
-    public enum LineType {
-      case new
-      case end
-    }
-    
-    public var character: String {
-      switch self {
-        case .line(.new): "¬"
-        case .line(.end): "¶"
-        case .space: "•"
-        case .tab: "→"
-        case .padding: ","
-      }
-    }
-  }
-
-  public enum BoxStructure {
-    
-    case horizontal(Structure.Horizontal)
-    case vertical(Structure.Vertical)
-    
-    public enum Horizontal {
-      case top
-      case divider
-      case bottom
-      
-      public var corners: (Part, Part)? {
-        switch self {
-          case .top:
-            (Part.corner(.top(.leading)), Part.corner(.top(.trailing)))
-          case .divider:
-            nil
-          case .bottom:
-            (Part.corner(.bottom(.leading)), Part.corner(.bottom(.trailing)))
-        }
-      }
-
-    }
-    
-    public enum Vertical {
-      case leading
-      case divider
-      case trailing
-    }
-    
-  }
   
+
   public enum FramePart: Hashable {
     
     case horizontal(
