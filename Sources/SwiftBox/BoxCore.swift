@@ -10,20 +10,15 @@ import SwiftUICore
 import BaseHelpers
 
 public extension SwiftBox {
-  
-  /// This `paddingSize` value compensates for:
-  ///
-  /// 1. The leading wall character
-  /// 2. A leading space
-  /// 3  A trailing space
-  /// 4. The trailing wall character
-  ///
-  private static let paddingSize: Int = 4
-  
+
   func drawBox() -> AttributedString {
     
     var output = AttributedString()
-    let width: Int = self.config.width - SwiftBox.paddingSize
+    
+    /// Width set aside for leading and trailing box parts and spaces
+    let reservedWidth: Int = 4
+    
+    let textWidth: Int = self.config.width - reservedWidth
     
     /// Width counter
     output += widthCounter(self.config.width)
@@ -31,24 +26,26 @@ public extension SwiftBox {
     /// Box roof
     output += self.constructBoxLine(type: .top)
     output.addNewLine()
-    
-    
-    let headerLines: [String] = self.header.reflowText(width: width, maxLines: config.headerLineLimit)
-    let contentLines: [String] = self.content.reflowText(width: width, maxLines: config.contentLineLimit)
-    
+
+    /// Header
+    let headerLines: [String] = self.header.reflowText(width: textWidth, maxLines: config.headerLineLimit)
     for line in headerLines {
       output += self.constructBoxLine(line, type: .header)
       output.addNewLine()
     }
     
+    /// Divider
     output += self.constructBoxLine(type: .divider)
     output += AttributedString("\n")
     
+    /// Content
+    let contentLines: [String] = self.content.reflowText(width: textWidth, maxLines: config.contentLineLimit)
     for line in contentLines {
       output += self.constructBoxLine(line, type: .content)
       output += AttributedString("\n")
     }
     
+    /// Box floor
     output += self.constructBoxLine(type: .bottom)
     
     return output
@@ -57,48 +54,12 @@ public extension SwiftBox {
   func constructBoxLine(_ reflowedLine: String? = nil, type: Line) -> AttributedString {
     
     var output = AttributedString()
-    var capLeading: Part
-    var capTrailing: Part
     
-    /// Caps (these are not the lines themselves, just the caps)
-    ///
-    switch type {
-      case .top:
-        capLeading = Part.corner(.top(.leading))
-        capTrailing = Part.corner(.top(.trailing))
-        
-      case .header, .content:
-        capLeading = Part.vertical(.exterior)
-        capTrailing = Part.vertical(.exterior)
-        
-      case .divider:
-        capLeading = Part.join(.leading)
-        capTrailing = Part.join(.trailing)
-        
-      case .bottom:
-        capLeading = Part.corner(.bottom(.leading))
-        capTrailing = Part.corner(.bottom(.trailing))
-    }
-    
-    output = cappedLine(capLeading, reflowedLine, capTrailing, for: type)
-    
-    return output
-  }
-  
-  private func cappedLine(
-    _ capLeading: Part,
-    _ text: String?,
-    _ capTrailing: Part,
-    for type: Line
-  ) -> AttributedString {
-    
-    var output = AttributedString("")
-    
-    if let text = text {
+    if let text = reflowedLine {
       
       /// Set up leading cap
       ///
-      output += capLeading.character(with: config, container: container(for: .secondary))
+      output += type.cap(.leading, with: config)
       
       /// Leading space
       ///
@@ -123,25 +84,29 @@ public extension SwiftBox {
       output += paddingString
       
       output.appendString(" ")
-      output += capTrailing.character(with: config, container: container(for: .secondary))
+      output += type.cap(.trailing, with: config)
       
       
     } else {
-      output += capLeading.character(with: self.config)
+//      output += capLeading.character(with: self.config)
+      output += type.cap(.leading, with: config)
       output += repeatingPart(for: type)
+      output += type.cap(.trailing, with: config)
     }
-    
     
     return output
   }
 
+  
   /// This function should *only* return the repeating part, no caps
   ///
   private func repeatingPart(for line: Line) -> AttributedString {
     
     var output = AttributedString()
     
-    let repeatCount: Int = self.config.width - (Self.paddingSize - 2)
+    /// Width set aside for the leading and trailing caps
+    let reservedSpace: Int = 2
+    let repeatCount: Int = self.config.width - reservedSpace
     
     switch line {
       case .top:

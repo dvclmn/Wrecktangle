@@ -43,6 +43,57 @@ public struct SwiftBox {
     case divider
     case content
     case bottom
+    
+    /// Leading and trailing line caps
+    ///
+    public var caps: (Part, Part) {
+      switch self {
+        case .top:
+          (
+            Part.corner(.top(.leading)),
+            Part.corner(.top(.trailing))
+          )
+          
+        case .header, .content:
+          (
+            Part.vertical(.exterior),
+            Part.vertical(.exterior)
+          )
+          
+        case .divider:
+          (
+            Part.join(.leading),
+            Part.join(.trailing)
+          )
+          
+        case .bottom:
+          (
+            Part.corner(.bottom(.leading)),
+            Part.corner(.bottom(.trailing))
+          )
+          
+      }
+    } // END caps
+    
+    public enum CapEnd {
+      case leading
+      case trailing
+    }
+    
+    public func cap(
+      _ end: CapEnd,
+      with config: Config
+    ) -> AttributedString {
+      
+      let container = config.theme.styles.secondary.container
+      switch end {
+        case .leading:
+          return self.caps.0.character(with: config, container: container)
+        case .trailing:
+          return self.caps.1.character(with: config, container: container)
+
+      }
+    } // END cap
   }
   
   
