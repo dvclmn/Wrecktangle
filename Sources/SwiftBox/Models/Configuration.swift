@@ -49,22 +49,48 @@ extension SwiftBox {
     ///
     /// When `true`, information such as character count and line count will be shown.
     ///
-    public var showsMetrics: Bool
+    public var metrics: Metrics
+    
+    public var extraFrame: Bool
     
     public init(
       theme: Theme = Theme(),
       width: Int = 60,
       headerLineLimit: Int? = 3,
       contentLineLimit: Int? = nil,
-      showsMetrics: Bool = false
+      metrics: Metrics = Metrics(),
+      extraFrame: Bool = false
     ) {
       self.theme = theme
       self.width = width
       self.headerLineLimit = headerLineLimit
       self.contentLineLimit = contentLineLimit
-      self.showsMetrics = showsMetrics
+      self.metrics = metrics
+      self.extraFrame = extraFrame
     }
     
+    public struct Metrics {
+      var widthCounter: WidthCounterStyle
+      var lineNumbers: Bool
+      var invisibles: Bool
+      
+      public init(
+        widthCounter: WidthCounterStyle = .off,
+        lineNumbers: Bool = false,
+        invisibles: Bool = false
+      ) {
+        self.widthCounter = widthCounter
+        self.lineNumbers = lineNumbers
+        self.invisibles = invisibles
+      }
+      
+      public enum WidthCounterStyle {
+        case off
+        case compact
+        case full
+      }
+
+    }
 
     /// The default configuration for a `SwiftBox`.
     ///

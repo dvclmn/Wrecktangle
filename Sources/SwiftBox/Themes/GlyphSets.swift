@@ -26,19 +26,21 @@ extension Theme {
     
     //                                             0 0 0 0 0 1 1 1 1 1 2 2 2
     //                                             0 2 4 6 8 0 2 4 6 8 0 2 4
+    public static let other =       GlyphSet(set: "─ ─ │ │ ┯ ┷ ┠ ┨ ┼ ╱ ╲ ╲ ╱")
+    
     public static let sharp =       GlyphSet(set: "━ ─ ┃ │ ┯ ┷ ┠ ┨ ┼ ┏ ┓ ┗ ┛")
     
     public static let sharpThin =   GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ┌ ┐ └ ┘")
     
     public static let sharpBold =   GlyphSet(set: "━ ━ ┃ ┃ ┳ ┻ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
     
-    public static let rounded =     GlyphSet(set: "─ ─ ┃ │ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
+    public static let rounded =     GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
     
     public static let double =      GlyphSet(set: "═ ─ ║ │ ╤ ╧ ╟ ╢ ┼ ╔ ╗ ╚ ╝")
     
     public static let ascii =       GlyphSet(set: "- - | | + + + + + + + + +")
     
-    public static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ┐ └  ╯")
+    public static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ┐ └ ╯")
     
   } // END glyph set
 }
@@ -78,20 +80,40 @@ extension Part {
     }
   }
   
+  public enum GlyphCount {
+    case single
+    case double
+  }
+  
   /// This provides primary (only?) means to obtain the require `Part`, in the
   /// current user-defined style.
   ///
-  public func character(with config: Config, container: AttributeContainer? = nil) -> AttributedString {
+  
+  public func character(
+    with config: Config,
+    count: GlyphCount = .single,
+    container: AttributeContainer? = nil
+  ) -> AttributedString {
     
     var output = AttributedString()
 
     /// This identifies the glyphSet from the selected `Theme`
     ///
+    
     let glyphSet: String = config.theme.glyphSet.set
     let glyphIndex: String.Index = glyphSet.index(glyphSet.startIndex, offsetBy: self.themeIndex)
     let glyph = String(glyphSet[glyphIndex])
+    var glyphAdjusted: String = ""
     
-    output.appendString(glyph)
+    switch count {
+      case .single:
+        glyphAdjusted = glyph
+
+      case .double:
+        glyphAdjusted = glyph + " " + glyph
+    }
+
+    output.appendString(glyphAdjusted)
     
     if let container = container {
       output.setAttributes(container)

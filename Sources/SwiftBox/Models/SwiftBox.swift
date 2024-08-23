@@ -75,6 +75,25 @@ public struct SwiftBox {
       }
     } // END caps
     
+    public func repeatableString(for config: Config) -> String {
+      
+      let horizontalExterior: String = Part.horizontal(.exterior).character(with: config).asString
+      
+      let horizontalInterior: String = Part.horizontal(.interior).character(with: config).asString
+
+      switch self {
+        case .top:
+          return horizontalExterior
+        case .header, .content:
+          return ""
+        case .divider:
+          return horizontalInterior
+
+        case .bottom:
+          return horizontalExterior
+      }
+    }
+    
     public enum CapEnd {
       case leading
       case trailing
@@ -85,12 +104,16 @@ public struct SwiftBox {
       with config: Config
     ) -> AttributedString {
       
+      var glyphCount: Part.GlyphCount {
+        return config.extraFrame ? .double : .single
+      }
+      
       let container = config.theme.styles.secondary.container
       switch end {
         case .leading:
-          return self.caps.0.character(with: config, container: container)
+          return self.caps.0.character(with: config, count: glyphCount, container: container)
         case .trailing:
-          return self.caps.1.character(with: config, container: container)
+          return self.caps.1.character(with: config, count: glyphCount, container: container)
 
       }
     } // END cap

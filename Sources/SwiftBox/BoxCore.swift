@@ -10,40 +10,52 @@ import SwiftUICore
 import BaseHelpers
 
 public extension SwiftBox {
-
+  
+  
   func drawBox() -> AttributedString {
     
     var output = AttributedString()
     
-    /// Width set aside for leading and trailing box parts and spaces
-    let reservedWidth: Int = 4
-    
-    let textWidth: Int = self.config.width - reservedWidth
+    /// Starting the count at 3 for the box roof, divider and floor
+    var lineCount: Int = self.config.extraFrame ? 7 : 3
     
     /// Width counter
-    output += widthCounter(self.config.width)
+    if self.config.metrics.widthCounter != .off {
+      output += widthCounter(self.config.width)
+    }
     
     /// Box roof
     output += self.constructBoxLine(type: .top)
-    output.addNewLine()
-
+    
     /// Header
-    let headerLines: [String] = self.header.reflowText(width: textWidth, maxLines: config.headerLineLimit)
+    
+    let headerWidth: Int = self.config.width - calculateReservedHorizontalSpace(for: .header)
+    let headerLines: [String] = self.header.reflowText(width: headerWidth, maxLines: config.headerLineLimit)
     for line in headerLines {
+      lineCount += 1
       output += self.constructBoxLine(line, type: .header)
-      output.addNewLine()
     }
     
     /// Divider
     output += self.constructBoxLine(type: .divider)
-    output.addNewLine()
     
     /// Content
-    let contentLines: [String] = self.content.reflowText(width: textWidth, maxLines: config.contentLineLimit)
+    let contentWidth: Int = self.config.width - calculateReservedHorizontalSpace(for: .content)
+    let contentLines: [String] = self.content.reflowText(width: contentWidth, maxLines: config.contentLineLimit)
+    var contentLineCount: Int = 0
     for line in contentLines {
-      output += self.constructBoxLine(line, type: .content)
-      output += AttributedString("\n")
+      lineCount += 1
+      contentLineCount += 1
+      output += self.constructBoxLine(line, type: .content, lineCount: contentLineCount)
     }
+    
+    /// This could be made conditional on whether the theme's `GlyphSet`
+    /// requires it, but this ensures that if there's an alternating frame part,
+    /// the number of lines won't create alignment/joining issues
+    ///
+//    if !lineCount.isEven {
+//      output += self.constructBoxLine(" ", type: .content)
+//    }
     
     /// Box floor
     output += self.constructBoxLine(type: .bottom)
@@ -51,9 +63,42 @@ public extension SwiftBox {
     return output
   }
   
+  
+  /// Width set aside for leading and trailing box parts and spaces
+  /// and adjusted to compensate for the extra frame option
+  ///
+  func calculateReservedHorizontalSpace(for type: Line) -> Int {
+    
+    var reserved: Int = 4
+    
+    /// The header doesn't need to account for line numbers
+    ///
+    switch type {
+      case .header:
+        if self.config.extraFrame {
+          reserved += 4
+        }
+        
+      case .content:
+        if self.config.extraFrame {
+          reserved += 4
+        }
+        if self.config.metrics.lineNumbers {
+          reserved += 4
+        }
+      default: break
+    }
+    
+    return reserved
+  }
+  
   /// Builds a single line. `reflowedLine` is optional — some lines
   /// will be comprised of text, and some of repeated frame parts
-  func constructBoxLine(_ reflowedLine: String? = nil, type: Line) -> AttributedString {
+  func constructBoxLine(
+    _ reflowedLine: String? = nil,
+    type: Line,
+    lineCount: Int? = nil
+  ) -> AttributedString {
     
     var output = AttributedString()
     
@@ -67,6 +112,19 @@ public extension SwiftBox {
       ///
       output.appendString(" ")
       
+      /// Line numbers
+      ///
+      
+      if self.config.metrics.lineNumbers, let lineCount = lineCount, type == .content {
+        
+        if lineCount <= 9 {
+          output.appendString(" ")
+        }
+        output.appendString(lineCount.description)
+        output.appendString("  ")
+      }
+      
+      
       /// Add the reflowed text
       ///
       /// Note: Using `+=` on two `AttributedString`s will keep the attributes
@@ -78,8 +136,9 @@ public extension SwiftBox {
       
       /// Set up padding characters, to fill out to the end of the box, so the trailing wall is aligned nicely
       ///
-      let paddingCharacter = Invisibles.padding.character
-      let totalWidth = self.config.width - 4 // leading cap, leading space, trailing cap
+      let paddingCharacter = self.config.metrics.invisibles ? Invisibles.padding.character : " "
+      
+      let totalWidth = self.config.width - calculateReservedHorizontalSpace(for: type)
       let paddingNeeded = max(0, totalWidth - text.count)
       
       var paddingString = AttributedString(String(repeating: paddingCharacter, count: paddingNeeded))
@@ -92,48 +151,49 @@ public extension SwiftBox {
       /// Add trailing space
       output.appendString(" ")
       
-      /// And lastly, trailing cap
+      /// Trailing cap
       output += type.cap(.trailing, with: config)
       
+      /// And ensure that the line breaks, ready for the next one
+      output.addLineBreak()
       
     } else {
-//      output += capLeading.character(with: self.config)
-      output += type.cap(.leading, with: config)
-      output += repeatingPart(for: type)
-      output += type.cap(.trailing, with: config)
+      
+      if self.config.extraFrame {
+        
+        output += type.cap(.leading, with: config)
+        output += repeatingPart(for: type)
+        output.addLineBreak()
+        output += repeatingPart(for: type)
+        output += type.cap(.trailing, with: config)
+        output.addLineBreak()
+        
+      } else {
+        
+        output += type.cap(.leading, with: config)
+        output += repeatingPart(for: type)
+        output += type.cap(.trailing, with: config)
+        output.addLineBreak()
+        
+      }
     }
     
     return output
   }
-
+  
   
   /// This function should *only* return the repeating part, no caps
   ///
   private func repeatingPart(for line: Line) -> AttributedString {
     
     var output = AttributedString()
-    
+    let partToRepeat = line.repeatableString(for: config)
     /// Width set aside for the leading and trailing caps
-    let reservedSpace: Int = 2
+    
+    let reservedSpace: Int = self.config.extraFrame ? 4 : 2
     let repeatCount: Int = self.config.width - reservedSpace
     
-    switch line {
-      case .top:
-        let partToRepeat = Part.horizontal(.exterior).character(with: config).asString
-        output += AttributedString(String(repeating: partToRepeat, count: repeatCount))
-        
-      case .header, .content:
-        /// header and content consist of actual text content, and don't require a repeating part
-        break
-        
-      case .divider:
-        let partToRepeat = Part.horizontal(.interior).character(with: config).asString
-        output += AttributedString(String(repeating: partToRepeat, count: repeatCount))
-        
-      case .bottom:
-        let partToRepeat = Part.horizontal(.exterior).character(with: config).asString
-        output += AttributedString(String(repeating: partToRepeat, count: repeatCount))
-    }
+    output += AttributedString(String(repeating: partToRepeat, count: repeatCount))
     
     output.setAttributes(container(for: .secondary))
     return output
