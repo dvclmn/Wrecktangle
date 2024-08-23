@@ -8,38 +8,7 @@
 import Foundation
 
 extension Theme {
-  
-  /// `━` horizontal exterior
-  ///
-  /// `─` horizontal interior
-  ///
-  /// `┯` horizontal join top
-  ///
-  /// `┷` horizontal join bottom
-  ///
-  ///
-  /// `┃` vertical exterior
-  ///
-  /// `│` vertical interior
-  ///
-  /// `┠` vertical join leading
-  ///
-  /// `┨` vertical join trailing
-  ///
-  ///
-  /// `┼` cross join
-  ///
-  ///
-  /// `╭` corner top leading
-  ///
-  /// `╮` corner top trailing
-  ///
-  /// `╰` corner bottom leading
-  ///
-  /// `╯` corner bottom trailing
-  ///
-  
-  
+
   public struct GlyphSet {
     
     var set: String
@@ -50,17 +19,17 @@ extension Theme {
     
     //                                             0 0 0 0 0 1 1 1 1 1 2 2 2
     //                                             0 2 4 6 8 0 2 4 6 8 0 2 4
-    public static let rounded =     GlyphSet(set: "━ ─ ┯ ┷ ┃ │ ┠ ┨ ┼ ╭ ╮ ╰ ╯")
+    public static let rounded =     GlyphSet(set: "━ ─ ┃ │ ┯ ┷ ┠ ┨ ┼ ╭ ╮ ╰ ╯")
     
-    public static let sharp =       GlyphSet(set: "─ ─ ┬ ┴ │ │ ├ ┤ ┼ ┌ ┐ └ ┘")
+    public static let sharp =       GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ┌ ┐ └ ┘")
     
-    public static let double =      GlyphSet(set: "═ ─ ╤ ╧ ║ │ ╟ ╢ ┼ ╔ ╗ ╚ ╝")
+    public static let double =      GlyphSet(set: "═ ─ ║ │ ╤ ╧ ╟ ╢ ┼ ╔ ╗ ╚ ╝")
     
-    public static let ascii =       GlyphSet(set: "- - + + | | + + + + + + +")
+    public static let ascii =       GlyphSet(set: "- - | | + + + + + + + + +")
     
-    public static let bold =        GlyphSet(set: "━ ━ ┳ ┻ ┃ ┃ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
+    public static let bold =        GlyphSet(set: "━ ━ ┃ ┃ ┳ ┻ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
     
-    public static let dashed =      GlyphSet(set: "╌ ╌ ┬ ┴ ╎ ╎ ├ ┤ ┼ ╭ ╮ ╰ ╯")
+    public static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
     
   } // END glyph set
 }
@@ -78,22 +47,25 @@ extension Part {
   ///
   public var themeIndex: Int {
     switch self {
-      case .horizontal(join: .none, location: .exterior):   return 0
-      case .horizontal(join: .none, location: .interior):   return 2
-      case .horizontal(join: .top, location: .exterior):                      return 4
-      case .horizontal(join: .bottom, location: .exterior):                   return 6
+      case .horizontal(.exterior):          return 00 /// `━` horizontal exterior
+      case .horizontal(.interior):          return 02 /// `─` horizontal interior
+
+      case .vertical(.exterior):            return 04 /// `┃` vertical exterior
+      case .vertical(.interior):            return 06 /// `│` vertical interior
         
-      case .vertical(join: .none, location: .exterior):     return 8
-      case .vertical(join: .none, location: .interior):     return 10
-      case .vertical(join: .leading, _):                    return 12
-      case .vertical(join: .trailing, _):                   return 14
+      case .join(let join):
+        switch join {
+          case .top:                        return 00 /// `┯` join top
+          case .bottom:                     return 02 /// `┷` join bottom
+          case .leading:                    return 00 /// `┠` join leading
+          case .trailing:                   return 02 /// `┨` join trailing
+          case .cross:                      return 00 /// `┼` join cross
+        }
         
-      case .cross:                                          return 16
-        
-      case .corner(.top(.leading)):                         return 18
-      case .corner(.top(.trailing)):                        return 20
-      case .corner(.bottom(.leading)):                      return 22
-      case .corner(.bottom(.trailing)):                     return 24
+      case .corner(.top(.leading)):         return 18 /// `╭` corner top leading
+      case .corner(.top(.trailing)):        return 20 /// `╮` corner top trailing
+      case .corner(.bottom(.leading)):      return 22 /// `╰` corner bottom leading
+      case .corner(.bottom(.trailing)):     return 24 /// `╯` corner bottom trailing
     }
   }
   
@@ -102,7 +74,7 @@ extension Part {
   ///
   public func character(with config: Config, container: AttributeContainer? = nil) -> AttributedString {
     
-    var output = AttributedString("")
+    var output = AttributedString()
 
     /// This identifies the glyphSet from the selected `Theme`
     ///
