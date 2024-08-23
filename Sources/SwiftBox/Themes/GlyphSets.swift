@@ -12,24 +12,33 @@ extension Theme {
   public struct GlyphSet {
     
     var set: String
+//    var weight: GlyphWeight
     
     public init(set: String) {
       self.set = set
     }
     
+    //    public enum GlyphWeight {
+    //      case thin
+    //      case bold
+    //      case mixed
+    //    }
+    
     //                                             0 0 0 0 0 1 1 1 1 1 2 2 2
     //                                             0 2 4 6 8 0 2 4 6 8 0 2 4
-    public static let rounded =     GlyphSet(set: "━ ─ ┃ │ ┯ ┷ ┠ ┨ ┼ ╭ ╮ ╰ ╯")
+    public static let sharp =       GlyphSet(set: "━ ─ ┃ │ ┯ ┷ ┠ ┨ ┼ ┏ ┓ ┗ ┛")
     
-    public static let sharp =       GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ┌ ┐ └ ┘")
+    public static let sharpThin =   GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ┌ ┐ └ ┘")
+    
+    public static let sharpBold =   GlyphSet(set: "━ ━ ┃ ┃ ┳ ┻ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
+    
+    public static let rounded =     GlyphSet(set: "─ ─ ┃ │ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
     
     public static let double =      GlyphSet(set: "═ ─ ║ │ ╤ ╧ ╟ ╢ ┼ ╔ ╗ ╚ ╝")
     
     public static let ascii =       GlyphSet(set: "- - | | + + + + + + + + +")
     
-    public static let bold =        GlyphSet(set: "━ ━ ┃ ┃ ┳ ┻ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
-    
-    public static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
+    public static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ┐ └  ╯")
     
   } // END glyph set
 }
@@ -55,11 +64,11 @@ extension Part {
         
       case .join(let join):
         switch join {
-          case .top:                        return 00 /// `┯` join top
-          case .bottom:                     return 02 /// `┷` join bottom
-          case .leading:                    return 00 /// `┠` join leading
-          case .trailing:                   return 02 /// `┨` join trailing
-          case .cross:                      return 00 /// `┼` join cross
+          case .top:                        return 08 /// `┯` join top
+          case .bottom:                     return 10 /// `┷` join bottom
+          case .leading:                    return 12 /// `┠` join leading
+          case .trailing:                   return 14 /// `┨` join trailing
+          case .cross:                      return 16 /// `┼` join cross
         }
         
       case .corner(.top(.leading)):         return 18 /// `╭` corner top leading

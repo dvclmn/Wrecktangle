@@ -36,7 +36,7 @@ public extension SwiftBox {
     
     /// Divider
     output += self.constructBoxLine(type: .divider)
-    output += AttributedString("\n")
+    output.addNewLine()
     
     /// Content
     let contentLines: [String] = self.content.reflowText(width: textWidth, maxLines: config.contentLineLimit)
@@ -51,6 +51,8 @@ public extension SwiftBox {
     return output
   }
   
+  /// Builds a single line. `reflowedLine` is optional — some lines
+  /// will be comprised of text, and some of repeated frame parts
   func constructBoxLine(_ reflowedLine: String? = nil, type: Line) -> AttributedString {
     
     var output = AttributedString()
@@ -65,10 +67,14 @@ public extension SwiftBox {
       ///
       output.appendString(" ")
       
-      /// Add text to the attr. string
+      /// Add the reflowed text
       ///
-      output.appendString(text)
-      output.mergeAttributes((container(for: .primary)))
+      /// Note: Using `+=` on two `AttributedString`s will keep the attributes
+      /// for each, provided... something. Can't remember. Will need to keep an eye
+      /// on this and try to remember how it works.
+      ///
+      let reflowedString = AttributedString(text, attributes: container(for: .primary))
+      output += reflowedString
       
       /// Set up padding characters, to fill out to the end of the box, so the trailing wall is aligned nicely
       ///
@@ -83,7 +89,10 @@ public extension SwiftBox {
       ///
       output += paddingString
       
+      /// Add trailing space
       output.appendString(" ")
+      
+      /// And lastly, trailing cap
       output += type.cap(.trailing, with: config)
       
       

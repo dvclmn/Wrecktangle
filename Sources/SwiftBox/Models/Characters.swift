@@ -37,37 +37,6 @@ extension SwiftBox {
  
 }
 
-extension Theme {
-  
-  /// `Theme.GlyphSet` and `Theme.GlyphStyle` being seperate
-  /// makes sense to me, because the two should operate totally independantly.
-  ///
-  /// Then having seperate `AttributeContainer`s for pre-defined semantic
-  /// 'syntax' seems good too — such as text, invisibles, frames.
-  ///
-//  public struct GlyphStyle {
-//    
-//    var text: AttributeSet
-//    var invisibles: AttributeSet
-//    var frame: AttributeSet
-//    
-//    public init(
-//      text: AttributeSet = .init(foreground: Color.purple.opacity(0.9)),
-//      accent: AttributeSet = .init(foreground: Color.orange.opacity(0.8)),
-//      invisibles: ColorSet = .init(foreground: Color.secondary.opacity(0.6)),
-//      frame: ColorSet = .init(foreground: Color.secondary)
-//    ) {
-//      self.text = text
-//      self.invisibles = invisibles
-//      self.frame = frame
-//    }
-//  }
-  
-
-
-}
-
-
 extension Theme.GlyphStyle {
   
   public struct ColorSet {

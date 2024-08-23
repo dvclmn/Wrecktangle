@@ -14,7 +14,7 @@ struct BoxPrintView: View {
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: Config(
-      width: 46,
+      width: 36,
       contentLineLimit: 8,
       showsMetrics: true
     )
@@ -42,8 +42,8 @@ struct BoxPrintView: View {
     }
     
     .monospaced()
-    .padding(40)
-    .frame(width: 600, height: 700)
+//    .padding(40)
+    .frame(width: 400, height: 700)
     .background(.black.opacity(0.6))
     
   }
