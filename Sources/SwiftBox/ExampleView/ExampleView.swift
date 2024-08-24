@@ -13,21 +13,21 @@ struct BoxPrintView: View {
   let box01 = SwiftBox(
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
-    config: SwiftBox.Configuration (
+    config: SwiftBox.Config (
       theme: .init(glyphSet: .double),
       width: 38,
       contentLineLimit: 5,
-      metrics: .init(widthCounter: .compact, lineNumbers: true, invisibles: true)
+      metrics: .init(widthCounter: .off, lineNumbers: true, invisibles: true)
     )
   )
   
   let box02 = SwiftBox(
     header: TestStrings.conversationTitles[1],
     content: TestStrings.paragraphs[7],
-    config: SwiftBox.Configuration(
+    config: SwiftBox.Config(
       width: 32,
       contentLineLimit: 15,
-      metrics: .init(widthCounter: .full, lineNumbers: true, invisibles: false)
+      metrics: .init(widthCounter: .off, lineNumbers: true, invisibles: false)
     )
   )
   

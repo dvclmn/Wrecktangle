@@ -9,10 +9,37 @@ import Foundation
 
 extension SwiftBox {
   
+  func buildCorner(_ corner: BoxPart.Corner, attrString: inout AttributedString) -> AttributedString {
+    
+    /// For now, for simplicity, a corner is a 2x2 grid — 4 characters total
+    
+    
+  }
+  
   func buildStructuralLine(
     _ lineType: BoxLine,
     attrString: inout AttributedString
   ) {
+    
+    switch lineType {
+    case .structure(.top):
+      
+      attrString += lineType.cap(.leading, with: config)
+      
+      
+    case .structure(.divider):
+      
+      attrString += lineType.cap(.leading, with: config)
+      
+      
+    case .structure(.bottom):
+      
+      attrString += lineType.cap(.leading, with: config)
+      
+
+    case .text:
+      break
+    }
     
     //    if self.config.extraFrame {
     //
@@ -25,12 +52,14 @@ extension SwiftBox {
     //
     //    } else {
     
-    attrString += lineType.cap(.leading, with: config)
-    attrString += repeatingPart(for: lineType)
-    attrString.addLineBreak()
-    attrString += repeatingPart(for: lineType)
-    attrString += lineType.cap(.trailing, with: config)
-    attrString.addLineBreak()
+//    attrString += lineType.cap(.leading, with: config)
+    
+//    
+//    attrString += repeatingPart(for: lineType)
+//    attrString.addLineBreak()
+//    attrString += repeatingPart(for: lineType)
+//    attrString += lineType.cap(.trailing, with: config)
+//    attrString.addLineBreak()
 
     //    }
     

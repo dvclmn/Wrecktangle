@@ -9,11 +9,11 @@ extension SwiftBox {
   
   /// A structure that defines the appearance and behavior of a `SwiftBox`.
   ///
-  /// Use `Configuration` to customize various aspects of a `SwiftBox`,
+  /// Use `Config` to customize various aspects of a `SwiftBox`,
   /// such as its theme, width, and content limitations.
   ///
   ///
-  public struct Configuration {
+  public struct Config {
 
 
     /// The visual theme of the box.

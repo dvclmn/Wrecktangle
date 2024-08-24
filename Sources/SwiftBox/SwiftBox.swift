@@ -7,7 +7,6 @@
 
 import Foundation
 
-public typealias Config = SwiftBox.Configuration
 public typealias BoxLine = SwiftBox.BoxLine
 public typealias GlyphSet = SwiftBox.Theme.GlyphSet
 public typealias ColourSet = SwiftBox.Theme.ColourSet
@@ -59,8 +58,8 @@ public struct SwiftBox {
           
         case .structure(.top):
           (
-            BoxPart.corner(.top(.leading)),
-            BoxPart.corner(.top(.trailing))
+            BoxPart.corner(.topLeading),
+            BoxPart.corner(.topTrailing)
           )
 
         case .structure(.divider):
@@ -71,8 +70,8 @@ public struct SwiftBox {
           
         case .structure(.bottom):
           (
-            BoxPart.corner(.bottom(.leading)),
-            BoxPart.corner(.bottom(.trailing))
+            BoxPart.corner(.bottomLeading),
+            BoxPart.corner(.bottomTrailing)
           )
           
         case .text(.header), .text(.content):

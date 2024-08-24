@@ -8,7 +8,6 @@
 
 extension SwiftBox {
   
-  
   public enum BoxPart: Hashable {
     
     case horizontal(Location = .exterior)
@@ -44,27 +43,15 @@ extension SwiftBox {
     }
     
     public enum Corner: Hashable {
+      /// ┏
+      case topLeading
+      /// ┓
+      case topTrailing
+      /// ┗
+      case bottomLeading
+      /// ┛
+      case bottomTrailing
       
-      case top(Top)
-      case bottom(Bottom)
-      
-      public enum Top {
-        /// ┏
-        case leading
-        
-        /// ┓
-        case trailing
-        
-      }
-      
-      public enum Bottom {
-        /// ┗
-        case leading
-        
-        /// ┛
-        case trailing
-        
-      }
     }
     
     public enum Location {

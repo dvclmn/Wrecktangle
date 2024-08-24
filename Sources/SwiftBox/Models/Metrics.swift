@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-extension SwiftBox.Configuration {
+extension SwiftBox.Config {
   
   public struct Metrics {
     var widthCounter: WidthCounterStyle
