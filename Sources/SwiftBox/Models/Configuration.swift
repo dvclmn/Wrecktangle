@@ -56,39 +56,16 @@ extension SwiftBox {
       width: Int = 60,
       headerLineLimit: Int? = 3,
       contentLineLimit: Int? = nil,
-      metrics: Metrics = Metrics(),
-      extraFrame: Bool = false
+      metrics: Metrics = Metrics()
     ) {
       self.theme = theme
       self.width = width
       self.headerLineLimit = headerLineLimit
       self.contentLineLimit = contentLineLimit
       self.metrics = metrics
-      self.extraFrame = extraFrame
     }
     
-    public struct Metrics {
-      var widthCounter: WidthCounterStyle
-      var lineNumbers: Bool
-      var invisibles: Bool
-      
-      public init(
-        widthCounter: WidthCounterStyle = .off,
-        lineNumbers: Bool = false,
-        invisibles: Bool = false
-      ) {
-        self.widthCounter = widthCounter
-        self.lineNumbers = lineNumbers
-        self.invisibles = invisibles
-      }
-      
-      public enum WidthCounterStyle {
-        case off
-        case compact
-        case full
-      }
 
-    }
 
     /// The default configuration for a `SwiftBox`.
     ///

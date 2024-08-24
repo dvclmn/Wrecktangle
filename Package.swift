@@ -17,11 +17,12 @@ let package = Package(
     )
   ],
   dependencies: [
+    .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.0"),
     .package(name: "Helpers", path: "../Helpers"),
     .package(name: "Styles", path: "../Styles"),
   ],
   targets: [
-    .target(name: "SwiftBox", dependencies: ["Helpers", "Styles"]),
+    .target(name: "SwiftBox", dependencies: ["Helpers", "Styles", .product(name: "IdentifiedCollections", package: "swift-identified-collections")]),
 
     .testTarget(
       name: "SwiftBoxTests", dependencies: ["SwiftBox"]

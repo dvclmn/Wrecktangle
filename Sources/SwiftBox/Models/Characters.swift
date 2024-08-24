@@ -37,25 +37,3 @@ extension SwiftBox {
  
 }
 
-extension SwiftBox.Theme.GlyphStyle {
-  
-  public struct ColorSet {
-    var foreground: Color
-    var background: Color?
-    
-    public init(foreground: Color, background: Color? = nil) {
-      self.foreground = foreground
-      self.background = background
-    }
-    
-    var container: AttributeContainer {
-      var attrContainer = AttributeContainer()
-      attrContainer.foregroundColor = self.foreground
-      attrContainer.backgroundColor = self.background
-      
-      return attrContainer
-    }
-  }
-}
-
-

@@ -7,11 +7,14 @@
 
 import Foundation
 
+public typealias Config = SwiftBox.Configuration
+public typealias Line = SwiftBox.BoxLine
+public typealias GlyphSet = SwiftBox.Theme.GlyphSet
+public typealias ColourSet = SwiftBox.Theme.ColourSet
+public typealias FrameStyle = SwiftBox.Theme.FrameStyle
+
 public struct SwiftBox {
   
-  public typealias Config = Configuration
-  public typealias Line = BoxLine
-  public typealias GlyphStyle = Theme.GlyphStyle
   
   var header: String
   var content: String
