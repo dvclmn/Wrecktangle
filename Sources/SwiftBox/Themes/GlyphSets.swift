@@ -12,7 +12,6 @@ extension SwiftBox.Theme {
   public struct GlyphSet {
     
     var set: String
-//    var weight: GlyphWeight
     
     public init(set: String) {
       self.set = set
@@ -52,9 +51,9 @@ extension SwiftBox.Theme {
 /// to identify each entity, we use an index of type `Int`. The convention for this 'lookup'
 /// style is defined below.
 ///
-extension SwiftBox.Part {
+extension SwiftBox.BoxPart {
   
-  /// See ``Part`` for more information on the structural elements used to make boxes.
+  /// See ``BoxPart`` for more information on the structural elements used to make boxes.
   ///
   public var themeIndex: Int {
     switch self {
@@ -85,7 +84,7 @@ extension SwiftBox.Part {
 //    case double
 //  }
 //  
-  /// This provides primary (only?) means to obtain the require `Part`, in the
+  /// This provides primary (only?) means to obtain the require `BoxPart`, in the
   /// current user-defined style.
   ///
   

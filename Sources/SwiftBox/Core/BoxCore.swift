@@ -11,6 +11,9 @@ import BaseHelpers
 
 public extension SwiftBox {
   
+  /// Rundown of how a box is constructed.
+  ///
+  /// 1.
   
   func drawBox() -> AttributedString {
     
@@ -74,7 +77,7 @@ public extension SwiftBox {
   /// Width set aside for leading and trailing box parts and spaces
   /// and adjusted to compensate for the extra frame option
   ///
-  func calculateReservedHorizontalSpace(for lineType: Line) -> Int {
+  func calculateReservedHorizontalSpace(for lineType: BoxLine) -> Int {
     
     var reserved: Int = 4
     

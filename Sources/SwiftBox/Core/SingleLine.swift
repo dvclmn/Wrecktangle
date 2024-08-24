@@ -10,7 +10,7 @@ import Foundation
 extension SwiftBox {
   
   func buildStructuralLine(
-    _ lineType: Line,
+    _ lineType: BoxLine,
     attrString: inout AttributedString
   ) {
     
@@ -37,7 +37,7 @@ extension SwiftBox {
   }
   
   func buildTextLine(
-    _ lineType: Line,
+    _ lineType: BoxLine,
     text: String,
     lineCount: Int? = nil,
     attrString: inout AttributedString
@@ -106,7 +106,7 @@ extension SwiftBox {
   
   /// This function should *only* return the repeating part, no caps
   ///
-  private func repeatingPart(for line: Line) -> AttributedString {
+  private func repeatingPart(for line: BoxLine) -> AttributedString {
     
     var output = AttributedString()
     let partToRepeat = line.repeatableString(for: config)
