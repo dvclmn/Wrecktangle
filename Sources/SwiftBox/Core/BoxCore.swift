@@ -80,21 +80,21 @@ public extension SwiftBox {
     
     /// The header doesn't need to account for line numbers
     ///
-    switch lineType {
-      case .text(.header):
-        if self.config.extraFrame {
-          reserved += 4
-        }
-        
-      case .text(.content):
-        if self.config.extraFrame {
-          reserved += 4
-        }
-        if self.config.metrics.lineNumbers {
-          reserved += 4
-        }
-      default: break
-    }
+//    switch lineType {
+//      case .text(.header):
+//        if self.config.extraFrame {
+//          reserved += 4
+//        }
+//        
+//      case .text(.content):
+//        if self.config.extraFrame {
+//          reserved += 4
+//        }
+//        if self.config.metrics.lineNumbers {
+//          reserved += 4
+//        }
+//      default: break
+//    }
     
     return reserved
   }

@@ -123,12 +123,14 @@ public struct SwiftBox {
 //        return config.extraFrame ? .double : .single
 //      }
 //      
-      let container = config.theme.colour.secondary.container
+//      let container = config.theme.colour.secondary.container
       switch end {
         case .leading:
-          return self.caps.0.character(with: config, container: container)
+          return self.caps.0.character(with: config)
+//          return self.caps.0.character(with: config, container: container)
         case .trailing:
-          return self.caps.1.character(with: config, container: container)
+          return self.caps.1.character(with: config)
+//          return self.caps.1.character(with: config, container: container)
 
       }
     } // END cap

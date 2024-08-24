@@ -12,7 +12,7 @@ import BaseStyles
 extension SwiftBox.Theme {
   
   public struct ColourSet {
-    private var colors: IdentifiedArrayOf<ColorPair>
+    private var colors: IdentifiedArrayOf<Attributes>
     
     public init(
       primary: Color,
@@ -20,11 +20,11 @@ extension SwiftBox.Theme {
       tertiary: Color,
       accent: Color
     ) {
-      self.colors = IdentifiedArrayOf<ColorPair>(uniqueElements: [
-        ColorPair(id: .primary, foreground: primary),
-        ColorPair(id: .secondary, foreground: secondary),
-        ColorPair(id: .tertiary, foreground: tertiary),
-        ColorPair(id: .accent, foreground: accent)
+      self.colors = IdentifiedArrayOf<Attributes>(uniqueElements: [
+        Attributes(id: .primary, foreground: primary),
+        Attributes(id: .secondary, foreground: secondary),
+        Attributes(id: .tertiary, foreground: tertiary),
+        Attributes(id: .accent, foreground: accent)
       ])
     }
     
@@ -32,14 +32,14 @@ extension SwiftBox.Theme {
     /// It allows the use of square bracket notation `[]` to get or set values.
     /// Further reading: `https://docs.swift.org/swift-book/documentation/the-swift-programming-language/subscripts/`
     ///
-    /// In our case, it allows us to access `ColorPair` objects using `ColorCategory` as an index. For example:
+    /// In our case, it allows us to access `Attributes` objects using `ColorCategory` as an index. For example:
     ///
     /// ```swift
     /// let primaryColor = myColourSet[.primary]
     /// ```
     ///
-    public subscript(category: ColourCategory) -> ColorPair {
-      get { colors[id: category] ?? ColorPair(id: category, foreground: .black) }
+    public subscript(category: ColourCategory) -> Attributes {
+      get { colors[id: category] ?? Attributes(id: category, foreground: .black) }
       set { colors[id: category] = newValue }
     }
     
@@ -48,7 +48,7 @@ extension SwiftBox.Theme {
       colors[id: category]?.background = background
     }
     
-    /// This method provides an alternative way to retrieve a `ColorPair` for a given
+    /// This method provides an alternative way to retrieve a `Attributes` for a given
     /// category. While it's similar to the `subscript`, it has some advantages:
     ///
     /// - It's more explicit in its intent, which can make code more readable.
@@ -61,8 +61,8 @@ extension SwiftBox.Theme {
     /// let secondaryColor = myColourSet.color(for: .secondary)
     /// ```
     ///
-    public func color(for category: ColourCategory) -> ColorPair {
-      colors[id: category] ?? ColorPair(id: category, foreground: .black)
+    public func color(for category: ColourCategory) -> Attributes {
+      colors[id: category] ?? Attributes(id: category, foreground: .black)
     }
   }
   
@@ -77,7 +77,18 @@ extension SwiftBox.Theme {
     }
   }
   
-  public struct ColorPair: Identifiable {
+  /// `AttributeSet` holds an `AttributeContainer` instance, which
+  /// holds all the styles for the set.
+  ///
+  /// I find `AttributeContainer`s somewhat clumsy to make, so this type
+  /// abstracts this job away from the user. Also, `SwiftBox` (currently) only
+  /// really needs foreground/background colours, so having `AttributeSet`
+  /// makes that more accesible/straightforward.
+  ///
+  /// We can rely on the computed property `container` to return an *actual*
+  /// container when we need it.
+  ///
+  public struct Attributes: Identifiable {
     public let id: ColourCategory
     var foreground: Color
     var background: Color?
@@ -97,43 +108,8 @@ extension SwiftBox.Theme {
   }
   
   
-  /// `AttributeSet` holds an `AttributeContainer` instance, which
-  /// holds all the styles for the set.
-  ///
-  /// I find `AttributeContainer`s somewhat clumsy to make, so this type
-  /// abstracts this job away from the user. Also, `SwiftBox` (currently) only
-  /// really needs foreground/background colours, so having `AttributeSet`
-  /// makes that more accesible/straightforward.
-  ///
-  /// We can rely on the computed property `container` to return an *actual*
-  /// container when we need it.
-  ///
-  public struct AttributeSet {
-    
-    var foreground: Color
-    var background: Color?
-    
-    /// Defaults to no background, as I suspect this will be most common
-    ///
-    init(
-      _ foreground: Color = AttributeSet.primary,
-      background: Color? = nil
-    ) {
-      self.foreground = foreground
-      self.background = background
-    }
-    
-    var container: AttributeContainer {
-      var attrContainer = AttributeContainer()
-      attrContainer.foregroundColor = self.foreground
-      attrContainer.backgroundColor = self.background
-      
-      return attrContainer
-    }
-    
-    
-    
-  } // END attribute set
+  
+  
 
   
 }

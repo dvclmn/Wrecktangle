@@ -71,7 +71,8 @@ extension SwiftBox {
     /// for each, provided... something. Can't remember. Will need to keep an eye
     /// on this and try to remember how it works.
     ///
-    let reflowedString = AttributedString(text, attributes: container(for: .primary))
+    let reflowedString = AttributedString(text)
+//    let reflowedString = AttributedString(text, attributes: container(for: .primary))
     attrString += reflowedString
     
     /// Set up padding characters, to fill out to the end of the box, so the trailing wall is aligned nicely
@@ -82,7 +83,7 @@ extension SwiftBox {
     let paddingNeeded = max(0, totalWidth - text.count)
     
     var paddingString = AttributedString(String(repeating: paddingCharacter, count: paddingNeeded))
-    paddingString.mergeAttributes(container(for: .tertiary))
+//    paddingString.mergeAttributes(container(for: .tertiary))
     
     /// Add this padding to the output string
     ///
@@ -111,29 +112,30 @@ extension SwiftBox {
     let partToRepeat = line.repeatableString(for: config)
     /// Width set aside for the leading and trailing caps
     
-    let reservedSpace: Int = self.config.extraFrame ? 4 : 2
+    let reservedSpace: Int =  2
+//    let reservedSpace: Int = self.config.extraFrame ? 4 : 2
     let repeatCount: Int = self.config.width - reservedSpace
     
     output += AttributedString(String(repeating: partToRepeat, count: repeatCount))
     
-    output.setAttributes(container(for: .secondary))
+//    output.setAttributes(container(for: .secondary))
     return output
   }
   
   
-  func container(for style: GlyphStyle.StyleType) -> AttributeContainer {
-    
-    switch style {
-      case .primary:
-        return self.config.theme.colour.primary.container
-      case .secondary:
-        return self.config.theme.colour.secondary.container
-      case .tertiary:
-        return self.config.theme.colour.tertiary.container
-      case .accent:
-        return self.config.theme.colour.accent.container
-    }
-  }
+//  func container(for style: ColourSet) -> AttributeContainer {
+//    
+//    switch style {
+//      case .primary:
+//        return self.config.theme.colour.primary.container
+//      case .secondary:
+//        return self.config.theme.colour.secondary.container
+//      case .tertiary:
+//        return self.config.theme.colour.tertiary.container
+//      case .accent:
+//        return self.config.theme.colour.accent.container
+//    }
+//  }
   
 
   

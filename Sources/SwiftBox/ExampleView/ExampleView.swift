@@ -17,8 +17,7 @@ struct BoxPrintView: View {
       theme: .init(glyphSet: .double),
       width: 38,
       contentLineLimit: 5,
-      metrics: .init(widthCounter: .compact, lineNumbers: true, invisibles: true),
-      extraFrame: true
+      metrics: .init(widthCounter: .compact, lineNumbers: true, invisibles: true)
     )
   )
   
