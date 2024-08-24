@@ -51,8 +51,6 @@ extension SwiftBox {
     ///
     public var metrics: Metrics
     
-    public var extraFrame: Bool
-    
     public init(
       theme: Theme = Theme(),
       width: Int = 60,

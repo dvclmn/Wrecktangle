@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Theme {
+extension SwiftBox.Theme {
 
   public struct GlyphSet {
     
@@ -52,7 +52,7 @@ extension Theme {
 /// to identify each entity, we use an index of type `Int`. The convention for this 'lookup'
 /// style is defined below.
 ///
-extension Part {
+extension SwiftBox.Part {
   
   /// See ``Part`` for more information on the structural elements used to make boxes.
   ///
@@ -80,18 +80,17 @@ extension Part {
     }
   }
   
-  public enum GlyphCount {
-    case single
-    case double
-  }
-  
+//  public enum GlyphCount {
+//    case single
+//    case double
+//  }
+//  
   /// This provides primary (only?) means to obtain the require `Part`, in the
   /// current user-defined style.
   ///
   
   public func character(
-    with config: Config,
-    count: GlyphCount = .single,
+    with config: SwiftBox.Configuration,
     container: AttributeContainer? = nil
   ) -> AttributedString {
     
@@ -103,17 +102,8 @@ extension Part {
     let glyphSet: String = config.theme.glyphSet.set
     let glyphIndex: String.Index = glyphSet.index(glyphSet.startIndex, offsetBy: self.themeIndex)
     let glyph = String(glyphSet[glyphIndex])
-    var glyphAdjusted: String = ""
-    
-    switch count {
-      case .single:
-        glyphAdjusted = glyph
 
-      case .double:
-        glyphAdjusted = glyph + " " + glyph
-    }
-
-    output.appendString(glyphAdjusted)
+    output.appendString(glyph)
     
     if let container = container {
       output.setAttributes(container)

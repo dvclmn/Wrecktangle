@@ -1,5 +1,5 @@
 //
-//  FramePart.swift
+//  Part.swift
 //  SwiftBox
 //
 //  Created by Dave Coleman on 23/8/2024.
@@ -7,8 +7,9 @@
 
 
 extension SwiftBox {
+  
 
-  public enum FramePart: Hashable {
+  public enum Part: Hashable {
     
     case horizontal(Location = .exterior)
     
@@ -19,7 +20,7 @@ extension SwiftBox {
     case corner(Corner)
     
     /// This `Join` struct exists to keep horizontal and vertical joins seperate,
-    /// so that `FramePart` cases `horizontal` and `vertical` are
+    /// so that `Part` cases `horizontal` and `vertical` are
     /// more safely typed.
     ///
     public enum Join {

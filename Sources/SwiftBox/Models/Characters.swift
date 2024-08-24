@@ -37,7 +37,7 @@ extension SwiftBox {
  
 }
 
-extension Theme.GlyphStyle {
+extension SwiftBox.Theme.GlyphStyle {
   
   public struct ColorSet {
     var foreground: Color

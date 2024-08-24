@@ -13,14 +13,20 @@ extension SwiftBox {
   public struct Theme {
     
     var glyphSet: Theme.GlyphSet
-    var styles: Theme.GlyphStyle
+    var colour: Theme.GlyphStyle
+    var frameStyle: Theme.FrameStyle
+    var padding: Int
     
     public init(
       glyphSet: Theme.GlyphSet = .sharp,
-      styles: Theme.GlyphStyle = .default
+      colour: Theme.GlyphStyle = .default,
+      frameStyle: Theme.FrameStyle = .single,
+      padding: Int = 1
     ) {
       self.glyphSet = glyphSet
-      self.styles = styles
+      self.colour = colour
+      self.frameStyle = frameStyle
+      self.padding = padding
     }
     
     public struct GlyphStyle {
