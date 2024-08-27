@@ -34,12 +34,15 @@ public extension SwiftBox {
     
     /// Header
     
-    let headerWidth: Int = self.config.width - calculateReservedHorizontalSpace(for: .text(.header))
-    let headerLines: [String] = self.header.reflowText(width: headerWidth, maxLines: config.headerLineLimit)
-    for line in headerLines {
-      lineCount += 1
-      self.buildTextLine(.text(.header), text: line, attrString: &output)
-//      output += self.constructBoxLine(line, lineType: .header)
+    if let headerText = self.header {
+      
+      let headerWidth: Int = self.config.width - calculateReservedHorizontalSpace(for: .text(.header))
+      let headerLines: [String] = headerText.reflowText(width: headerWidth, maxLines: config.headerLineLimit)
+      for line in headerLines {
+        lineCount += 1
+        self.buildTextLine(.text(.header), text: line, attrString: &output)
+        //      output += self.constructBoxLine(line, lineType: .header)
+      }
     }
     
     /// Divider

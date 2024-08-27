@@ -31,12 +31,22 @@ struct BoxPrintView: View {
     )
   )
   
+  let box03 = SwiftBox(
+    header: "",
+    content: "",
+    config: SwiftBox.Config(
+      width: 28,
+      contentLineLimit: 15,
+      metrics: .init(widthCounter: .full, lineNumbers: false, invisibles: true)
+    )
+  )
+  
   var body: some View {
     
     VStack(spacing: 14) {
       
       Text(box01.attributedString)
-      Text(box02.attributedString)
+      Text(box03.attributedString)
       
     }
     .textSelection(.enabled)

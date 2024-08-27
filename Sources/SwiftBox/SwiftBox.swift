@@ -8,13 +8,14 @@
 import Foundation
 
 public typealias BoxLine = SwiftBox.BoxLine
+//public typealias BoxFrame = SwiftBox.BoxFrame
 public typealias GlyphSet = SwiftBox.Theme.GlyphSet
 public typealias ColourSet = SwiftBox.Theme.ColourSet
 public typealias FrameStyle = SwiftBox.Theme.FrameStyle
 
 public struct SwiftBox {
   
-  var header: String
+  var header: String?
   var content: String
   var config: Config
   
@@ -23,7 +24,7 @@ public struct SwiftBox {
   }
   
   public init(
-    header: String,
+    header: String? = nil,
     content: String,
     config: Config = .init()
   ) {

@@ -9,12 +9,31 @@ import Foundation
 
 extension SwiftBox {
   
-  func buildCorner(_ corner: BoxPart.Corner, attrString: inout AttributedString) -> AttributedString {
-    
-    /// For now, for simplicity, a corner is a 2x2 grid — 4 characters total
-    
-    
-  }
+//  func buildCorner(_ corner: BoxPart.Corner) -> AttributedString {
+//    
+//    var output = AttributedString()
+//    
+//    /// For now, for simplicity, a corner is a 2x2 grid — 4 characters total
+//    ///
+//    switch corner {
+//      case .topLeading:
+//        
+//        
+//        
+//        output += BoxPart.corner(corner).character(with: self.config)
+//        
+//      case .topTrailing:
+//        <#code#>
+//      case .bottomLeading:
+//        <#code#>
+//      case .bottomTrailing:
+//        <#code#>
+//        
+//        return output
+//    }
+//
+//    
+//  }
   
   func buildStructuralLine(
     _ lineType: BoxLine,
