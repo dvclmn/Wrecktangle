@@ -13,7 +13,7 @@
 import SwiftUI
 import BaseHelpers
 
-public struct CellCount: Equatable {
+public struct CellCount: Equatable, Sendable {
   public var rows: Int
   public var columns: Int
   
@@ -95,31 +95,85 @@ public struct TextCore {
     zoom: CGFloat? = nil
   ) -> CGSize {
     
-    guard let font = NSFont.init(name: fontName, size: fontSize) else { return .zero }
+    guard let nsFont = NSFont.init(name: fontName, size: fontSize) else { return .zero }
     
-    return cellSize(for: font)
+    let fontMetrics: String = """
+    Cap height: \(nsFont.capHeight)
+    Point size: \(nsFont.pointSize)
+    Ascender height: \(nsFont.ascender)
+    Fixed pitch?: \(nsFont.isFixedPitch)
+    Leading value: \(nsFont.leading)
+    Whole font rect: \(nsFont.boundingRectForFont)
+    """
+    
+    print(fontMetrics)
+    
+//    return cellSize(for: font)
+    
+    
+    //    let rect: NSRect = font.boundingRect(forGlyph: NSGlyph("M"))
+    
+    //    let rect = font.boundingRectForFont
+    
+    
+    
+    let name = fontName as CFString
+    let ctFont: CTFont = CTFontCreateWithName(name, fontSize, nil)
+    
+    let referenceGlyph: Character = "M"
+    
+    guard let cgGlyph = getGlyphForCharacter(referenceGlyph, font: ctFont) else {
+    print("Couldn't get CGGlyph")
+      return .zero
+    }
+    
+//    let glyphSize: NSSize = nsFont.advancement(forCGGlyph: cgGlyph)
+    
+    let glyphWidth: CGFloat = nsFont.advancement(forCGGlyph: cgGlyph).width
+    
+    let glyphHeight: CGFloat = nsFont.ascender - nsFont.descender + nsFont.leading
+    
+//    let cellSize = CGSize(width: glyphSize.width, height: glyphHeight)
+    
+//    let boundingRect: NSRect = nsFont.boundingRect(forCGGlyph: cgGlyph)
+    
+    var size: CGSize = .zero
+    
+    if let zoom = zoom {
+      let zoomedWidth = glyphWidth * zoom
+      let zoomedHeight = glyphHeight * zoom
+      size = CGSize(width: zoomedWidth, height: zoomedHeight)
+    } else {
+      size = CGSize(width: glyphWidth, height: glyphHeight)
+    }
+    
+    print("Here is the final cell size: \(size)")
+    
+    return size
     
   }
   
   /// Get cell size when already have the `NSFont`
   ///
-  public static func cellSize(for font: NSFont, zoom: CGFloat? = nil) -> CGSize {
+//  public static func cellSize(for font: NSFont, zoom: CGFloat? = nil) -> CGSize {
     
-    let rect: NSRect = font.boundingRect(forGlyph: NSGlyph("M"))
+//  }
+  
+  public static func getGlyphForCharacter(_ character: Character, font: CTFont) -> CGGlyph? {
     
-    var size: CGSize = .zero
+    let chars = [UniChar](String(character).utf16)
+    var glyphs = [CGGlyph](repeating: 0, count: chars.count)
     
-    if let zoom = zoom {
-      let zoomedWidth = rect.width * zoom
-      let zoomedHeight = rect.height * zoom
-      size = CGSize(width: zoomedWidth, height: zoomedHeight)
+    let result = CTFontGetGlyphsForCharacters(font, chars, &glyphs, chars.count)
+    
+    if result {
+      return glyphs.first
     } else {
-      size = CGSize(width: rect.width, height: rect.height)
+      return nil
     }
-    
-    return size
-    
   }
+  
+
   
   
   
@@ -130,13 +184,21 @@ public struct TextCore {
     cellSize: CGSize
   ) -> CellCount {
 
-    let width = Int(cgSize.width / cellSize.width)
-    let height = Int(cgSize.height / cellSize.height)
+//    guard !cgSize.widthOrHeightIsZero else { return .zero }
     
-    let safeWidth = max(2, width - 1) // Seems to need one shaved off?
-    let safeHeight = max(2, height - 1)
+    let cgWidthSafe: CGFloat = max(1, cgSize.width)
+    let cgHeightSafe: CGFloat = max(1, cgSize.height)
     
-    let result = CellCount(rows: safeHeight, columns: safeWidth)
+    let cellWidthSafe: CGFloat = max(1, cellSize.width)
+    let cellHeightSafe: CGFloat = max(1, cellSize.height)
+    
+    let columns = Int(cgWidthSafe / cellWidthSafe)
+    let rows = Int(cgHeightSafe / cellHeightSafe)
+    
+//    let safeWidth = max(2, width - 1) // Seems to need one shaved off?
+//    let safeHeight = max(2, height - 1)
+    
+    let result = CellCount(rows: rows, columns: columns)
     
     return result
   }
@@ -155,6 +217,12 @@ public struct TextCore {
   
   
 } // END textcore
+
+public extension CGSize {
+  var widthOrHeightIsZero: Bool {
+    return self.width.isZero || self.height.isZero
+  }
+}
 
 public extension String {
   
