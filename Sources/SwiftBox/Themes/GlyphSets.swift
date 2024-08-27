@@ -14,7 +14,6 @@ extension SwiftBox.Theme {
   public struct GlyphSet {
     
     var set: String
-//    var type:
     
     public init(set: String) {
       self.set = set

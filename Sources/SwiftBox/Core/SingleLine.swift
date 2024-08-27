@@ -23,11 +23,11 @@ extension SwiftBox {
 //        output += BoxPart.corner(corner).character(with: self.config)
 //        
 //      case .topTrailing:
-//        <#code#>
+//
 //      case .bottomLeading:
-//        <#code#>
+//
 //      case .bottomTrailing:
-//        <#code#>
+//        
 //        
 //        return output
 //    }

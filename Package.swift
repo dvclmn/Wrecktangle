@@ -24,7 +24,7 @@ let package = Package(
   ],
   targets: [
     .target(name: "SwiftBox", dependencies: ["Helpers", "Styles", .product(name: "IdentifiedCollections", package: "swift-identified-collections")]),
-    .target(name: "TextCore", dependencies: ["Helpers", "Styles", .product(name: "IdentifiedCollections", package: "swift-identified-collections")]),
+    .target(name: "TextCore", dependencies: ["Helpers", "Styles"]),
 
     .testTarget(
       name: "SwiftBoxTests", dependencies: ["SwiftBox"]
