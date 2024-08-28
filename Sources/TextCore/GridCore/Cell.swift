@@ -9,15 +9,9 @@ import SwiftUI
 
 extension GlyphCell {
   
-  public static let example: GlyphCell = GlyphCell(fontName: "Menlo", fontSize: 15)
+  public static let example: GlyphCell = GlyphCell(fontName: "Menlo")
   
-  //  private static func calculateCellSize(
-  //    fontName: String,
-  //    fontSize: CGFloat
-  //  ) -> CGSize {
-  //
-  //  }
-  
+
   /// For when the font is the same, but the zoom has changed.
   ///
   /// `mutating` means that this function can update `self.cellSize`
@@ -34,12 +28,9 @@ extension GlyphCell {
   /// For when the font is being updated, and zoom is unchanged
   ///
   public mutating func updateFont(
-    fontName: String,
-    fontSize: CGFloat
+    fontName: String
   ) {
-
-    size = GlyphCell.calculateCellSize(fontName: fontName, fontSize: fontSize)
-    
+    size = GlyphCell.calculateCellSize(fontName: fontName)
   }
   
 
@@ -48,12 +39,11 @@ extension GlyphCell {
   ///
   static func calculateCellSize(
     fontName: String,
-    fontSize: CGFloat = 14,
     zoom: CGFloat? = nil,
     minWidth: CGFloat = 1.5
   ) -> CGSize {
     
-    guard let (nsFont, ctFont) = getFonts(fontName: fontName, fontSize: fontSize) else { return .zero }
+    guard let (nsFont, _) = getFonts(fontName: fontName) else { return .zero }
     
     let size: CGSize = calculateCellSize(for: nsFont, zoom: zoom ?? 1.0, minWidth: minWidth)
     
@@ -64,11 +54,10 @@ extension GlyphCell {
   /// Returns both an NSFont and CTFont, for a given name and size
   ///
   private static func getFonts(
-    fontName: String,
-    fontSize: CGFloat = 14
+    fontName: String
   ) -> (NSFont, CTFont)? {
     
-    guard let nsFont = NSFont.init(name: fontName, size: fontSize) else { return nil }
+    guard let nsFont = NSFont.init(name: fontName, size: GlyphCell.baseFontSize) else { return nil }
     
     let ctFont = nsFont as CTFont
     

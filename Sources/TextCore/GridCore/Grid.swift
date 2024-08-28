@@ -21,10 +21,9 @@ extension GlyphGrid {
   public static func createEmpty(
     rows: Int,
     columns: Int,
-    fontName: String = "SF Mono",
-    fontSize: CGFloat = 15
+    fontName: String = "SF Mono"
   ) -> GlyphGrid {
-    let cell = GlyphCell(fontName: fontName, fontSize: fontSize)
+    let cell = GlyphCell(fontName: fontName)
     let dimensions = GridDimensions(rows: rows, columns: columns)
     
     return GlyphGrid(
@@ -34,11 +33,11 @@ extension GlyphGrid {
     )
   }
   
-  public static func createWithArtwork(_ artwork: Artwork, fontName: String = "SF Mono", fontSize: CGFloat = 15) -> GlyphGrid {
+  public static func createWithArtwork(_ artwork: Artwork, fontName: String = "SF Mono") -> GlyphGrid {
     let rows = artwork.count
     let columns = artwork.map { $0.count }.max() ?? 0
     
-    let cell = GlyphCell(fontName: fontName, fontSize: fontSize)
+    let cell = GlyphCell(fontName: fontName)
     let dimensions = GridDimensions(rows: rows, columns: columns)
     
     return GlyphGrid(
@@ -48,8 +47,8 @@ extension GlyphGrid {
     )
   }
   
-  public static func createInterface(rows: Int, columns: Int, fontName: String = "SF Mono", fontSize: CGFloat = 15) -> GlyphGrid {
-    let cell = GlyphCell(fontName: fontName, fontSize: fontSize)
+  public static func createInterface(rows: Int, columns: Int, fontName: String = "SF Mono") -> GlyphGrid {
+    let cell = GlyphCell(fontName: fontName)
     let dimensions = GridDimensions(rows: rows, columns: columns)
     
     return GlyphGrid(
@@ -60,31 +59,7 @@ extension GlyphGrid {
   }
   
   
-  
-  
-  
-  
-//  public static func createForArtwork(
-//    _ artwork: Artwork,
-//    fontName: String = "SF Mono",
-//    fontSize: CGFloat = 15
-//    
-//  ) -> GlyphGrid {
-//    
-//    let rows = artwork.count
-//    let columns = artwork.map { $0.count }.max() ?? 0
-//    
-//    let cell = GlyphCell(fontName: fontName, fontSize: fontSize)
-//    let dimensions = GridDimensions(rows: rows, columns: columns)
-//    
-//    return GlyphGrid(
-//      cell: cell,
-//      dimensions: dimensions,
-//      type: .canvas(
-//    )
-//  }
-  
-  
+
 //  public static let example: GlyphGrid = GlyphGrid(cell: .example, dimensions: .example, type: .canvas)
   
   public func gridPosition(for location: CGPoint, zoomLevel: CGFloat = 1.0) -> GridPosition {

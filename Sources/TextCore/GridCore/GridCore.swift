@@ -28,50 +28,19 @@ public struct GlyphGrid: Equatable, Sendable {
   
 } // END GlyphGrid
 
-/// 1. `cellSize` is a stored property, not a computed one. This allows us to calculate it once and store the result.
-///
-/// 2. The `init` method only takes `fontName` and `fontSize`, and calculates `cellSize` during initialization.
-///
-/// 3. All properties are marked with `private(set)`, which means they can be read publicly but only modified within the struct.
-///
-/// 4. A private static method `calculateCellSize` is used to encapsulate the cell size calculation logic.
-///
-/// 5. An `updateFont` method is provided to change the font name or size. This method only recalculates the cell size if either the name or size actually changes.
-///
-/// You can use this struct like this:
-///
-/// ```swift
-/// var cell = GlyphCell(fontName: "Menlo", fontSize: 12)
-/// print(cell.cellSize) // Prints the calculated cell size
-///
-/// // Update just the font size
-/// cell.updateFont(size: 14)
-/// // Update both font name and size
-/// cell.updateFont(name: "Courier", size: 16)
-///
-/// // This won't recalculate the cell size because neither name nor size changed
-/// cell.updateFont(name: "Courier", size: 16)
-/// ```
-///
-/// This approach ensures that:
-/// - `cellSize` is always in sync with `fontName` and `fontSize`
-/// - `cellSize` is only recalculated when necessary
-/// - The expensive calculation is only done when the font actually changes
-/// - The struct presents a clean public interface where `cellSize` can't be set directly
-///
+
 public struct GlyphCell: Equatable, Sendable {
   
   public private(set) var fontName: String
-  public private(set) var fontSize: CGFloat
   public internal(set) var size: CGSize
   
+  static let baseFontSize: CGFloat = 15
+  
   public init(
-    fontName: String = "SF Mono",
-    fontSize: CGFloat = 15
+    fontName: String = "SF Mono"
   ) {
     self.fontName = fontName
-    self.fontSize = fontSize
-    self.size = GlyphCell.calculateCellSize(fontName: fontName, fontSize: fontSize)
+    self.size = GlyphCell.calculateCellSize(fontName: fontName)
   }
 
 }
