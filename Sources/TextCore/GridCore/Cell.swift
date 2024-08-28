@@ -9,7 +9,7 @@ import SwiftUI
 
 extension GlyphCell {
   
-  public static let example: GlyphCell = GlyphCell(fontName: "Menlo")
+  public static let example: GlyphCell = GlyphCell(fontName: .menlo)
   
 
   /// For when the font is the same, but the zoom has changed.
@@ -17,35 +17,31 @@ extension GlyphCell {
   /// `mutating` means that this function can update `self.cellSize`
   /// even though this is a struct.
   ///
-  public mutating func updateCellSizeForZoom(
-    _ zoom: CGFloat
-  ) {
-    let newWidth = size.width * zoom
-    let newHeight = size.height * zoom
-    self.size = CGSize(width: newWidth, height: newHeight)
-  }
+
   
   /// For when the font is being updated, and zoom is unchanged
   ///
   public mutating func updateFont(
-    fontName: String
+    fontName: FontName
   ) {
-    size = GlyphCell.calculateCellSize(fontName: fontName)
+    size = calculateCellSize(fontName: fontName)
   }
   
 
 
   /// Get cell size when you don't yet have the `NSFont`
   ///
-  static func calculateCellSize(
-    fontName: String,
-    zoom: CGFloat? = nil,
+  func calculateCellSize(
+    fontName: FontName,
+    zoom: CGFloat = 1.0,
     minWidth: CGFloat = 1.5
   ) -> CGSize {
     
-    guard let (nsFont, _) = getFonts(fontName: fontName) else { return .zero }
+    print("Calculating cell size, for \(fontName.rawValue)")
     
-    let size: CGSize = calculateCellSize(for: nsFont, zoom: zoom ?? 1.0, minWidth: minWidth)
+    guard let (nsFont, _) = getFonts(fontName: fontName.rawValue) else { return .zero }
+    
+    let size: CGSize = calculateCellSize(for: nsFont, zoom: zoom, minWidth: minWidth)
     
     return size
     
@@ -53,7 +49,7 @@ extension GlyphCell {
   
   /// Returns both an NSFont and CTFont, for a given name and size
   ///
-  private static func getFonts(
+  private func getFonts(
     fontName: String
   ) -> (NSFont, CTFont)? {
     
@@ -79,7 +75,7 @@ extension GlyphCell {
   /// provides a way to perform the size claculation *without* the performance
   /// hit of obtaining the right font.
   ///
-  static func calculateCellSize(
+  func calculateCellSize(
     for font: NSFont,
     zoom: CGFloat,
     minWidth: CGFloat = 1.5
@@ -96,8 +92,8 @@ extension GlyphCell {
     
     let glyphHeight: CGFloat = font.ascender - font.descender + font.leading
     
-    let finalWidth: CGFloat = glyphWidth * zoom
-    let finalHeight: CGFloat = glyphHeight * zoom
+    let finalWidth: CGFloat = glyphWidth * zoom * fontName.sizeNormalisationFactor
+    let finalHeight: CGFloat = glyphHeight * zoom * fontName.sizeNormalisationFactor
     
     let size = CGSize(width: max(minWidth, finalWidth), height: max(minWidth, finalHeight))
     print("Here is the final cell size: \(size)")
@@ -106,7 +102,7 @@ extension GlyphCell {
   }
   
   
-  private static func getGlyphForCharacter(
+  private func getGlyphForCharacter(
     _ character: Character = "M",
     font: CTFont
   ) -> CGGlyph? {

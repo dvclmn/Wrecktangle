@@ -13,15 +13,27 @@ public typealias Artwork = [[Character]]
 public extension Artwork {
   static let `default`: Artwork = [["N"],["o"],[" "],["a"],["r"],["t"]]
   
-  static let empty: Artwork = [[Character("")]]
+  static let empty: Artwork = [[Character(" ")]]
 }
 
 extension GlyphGrid {
   
+  public func characterCount() -> Int {
+    
+  var count: Int = 0
+    
+    if let artwork = self.artwork {
+      
+      count = artwork.reduce(0) { $0 + $1.count }
+    }
+    
+    return count
+  }
+  
   public static func createEmpty(
     rows: Int,
     columns: Int,
-    fontName: String = "SF Mono"
+    fontName: FontName = .menlo
   ) -> GlyphGrid {
     let cell = GlyphCell(fontName: fontName)
     let dimensions = GridDimensions(rows: rows, columns: columns)
@@ -33,7 +45,7 @@ extension GlyphGrid {
     )
   }
   
-  public static func createWithArtwork(_ artwork: Artwork, fontName: String = "SF Mono") -> GlyphGrid {
+  public static func createWithArtwork(_ artwork: Artwork, fontName: FontName = .menlo) -> GlyphGrid {
     let rows = artwork.count
     let columns = artwork.map { $0.count }.max() ?? 0
     
@@ -47,7 +59,7 @@ extension GlyphGrid {
     )
   }
   
-  public static func createInterface(rows: Int, columns: Int, fontName: String = "SF Mono") -> GlyphGrid {
+  public static func createInterface(rows: Int, columns: Int, fontName: FontName = .menlo) -> GlyphGrid {
     let cell = GlyphCell(fontName: fontName)
     let dimensions = GridDimensions(rows: rows, columns: columns)
     

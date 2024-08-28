@@ -31,16 +31,21 @@ public struct GlyphGrid: Equatable, Sendable {
 
 public struct GlyphCell: Equatable, Sendable {
   
-  public private(set) var fontName: String
+  public private(set) var fontName: FontName
   public internal(set) var size: CGSize
   
-  static let baseFontSize: CGFloat = 15
+  public static let baseFontSize: CGFloat = 15
   
   public init(
-    fontName: String = "SF Mono"
+    fontName: FontName = .sfMono
   ) {
     self.fontName = fontName
-    self.size = GlyphCell.calculateCellSize(fontName: fontName)
+    self.size = .zero
+    
+    let sizeCalculation = calculateCellSize(fontName: fontName)
+    self.size = sizeCalculation
+    
+    
   }
 
 }
@@ -140,3 +145,55 @@ public struct GridPosition: Hashable, Equatable, Sendable {
   
 }
 
+
+
+public enum FontName: String, CaseIterable, Hashable, Equatable, Sendable {
+  case menlo = "Menlo"
+  case sfMono = "SF Mono"
+  case courier = "Courier New"
+  case monaco = "Monaco"
+  case ibm = "AcPlus IBM BIOS"
+  
+  public var sizeNormalisationFactor: CGFloat {
+    switch self {
+      case .menlo:
+        1.0
+      case .sfMono:
+        1.0
+      case .courier:
+        1.1
+      case .monaco:
+        1.0
+      case .ibm:
+        0.8
+    }
+  }
+  
+  //  var weight: Font.Weight {
+  //    switch self {
+  //      case .menlo:
+  //          .medium
+  //
+  //      case .sfMono:
+  //          .medium
+  //
+  //      case .courier:
+  //          .medium
+  //
+  //      case .monaco:
+  //          .medium
+  //    }
+  //  }
+  //  var font: Font {
+  //    switch self {
+  //      case .menlo:
+  //        Font(.init("Courier", size: 13))
+  //      case .sfMono:
+  //        <#code#>
+  //      case .courier:
+  //        <#code#>
+  //      case .monaco:
+  //        <#code#>
+  //    }
+  //  }
+}
