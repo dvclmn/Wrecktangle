@@ -13,7 +13,77 @@
 import SwiftUI
 import BaseHelpers
 
-public struct CellCount: Equatable, Sendable {
+
+/// 1. `cellSize` is a stored property, not a computed one. This allows us to calculate it once and store the result.
+///
+/// 2. The `init` method only takes `fontName` and `fontSize`, and calculates `cellSize` during initialization.
+///
+/// 3. All properties are marked with `private(set)`, which means they can be read publicly but only modified within the struct.
+///
+/// 4. A private static method `calculateCellSize` is used to encapsulate the cell size calculation logic.
+///
+/// 5. An `updateFont` method is provided to change the font name or size. This method only recalculates the cell size if either the name or size actually changes.
+///
+/// You can use this struct like this:
+///
+/// ```swift
+/// var cell = GlyphCell(fontName: "Menlo", fontSize: 12)
+/// print(cell.cellSize) // Prints the calculated cell size
+///
+/// // Update just the font size
+/// cell.updateFont(size: 14)
+/// // Update both font name and size
+/// cell.updateFont(name: "Courier", size: 16)
+///
+/// // This won't recalculate the cell size because neither name nor size changed
+/// cell.updateFont(name: "Courier", size: 16)
+/// ```
+///
+/// This approach ensures that:
+/// - `cellSize` is always in sync with `fontName` and `fontSize`
+/// - `cellSize` is only recalculated when necessary
+/// - The expensive calculation is only done when the font actually changes
+/// - The struct presents a clean public interface where `cellSize` can't be set directly
+///
+public struct GlyphCell: Equatable, Sendable {
+  public private(set) var fontName: String
+  public private(set) var fontSize: CGFloat
+  public private(set) var cellSize: CGSize
+  
+  public init(fontName: String, fontSize: CGFloat) {
+    self.fontName = fontName
+    self.fontSize = fontSize
+    self.cellSize = GlyphCell.cellSize(fontName: fontName, fontSize: fontSize)
+  }
+  
+//  private static func calculateCellSize(
+//    fontName: String,
+//    fontSize: CGFloat
+//  ) -> CGSize {
+//    
+//  }
+  
+  public mutating func updateFont(
+    name: String,
+    size: CGFloat
+  ) {
+//    let nameChanged = name != nil && name != fontName
+//    let sizeChanged = size != nil && size != fontSize
+//    
+//    if nameChanged {
+//      fontName = name!
+//    }
+//    if sizeChanged {
+//      fontSize = size!
+//    }
+    
+    
+    cellSize = GlyphCell.cellSize(fontName: name, fontSize: size)
+    
+  }
+}
+
+public struct GridDimensions: Equatable, Sendable {
   public var rows: Int
   public var columns: Int
   
@@ -23,12 +93,31 @@ public struct CellCount: Equatable, Sendable {
   }
 }
 
-extension CellCount {
-  public static let zero = CellCount(rows: 0, columns: 0)
+
+public struct GlyphGrid: Equatable, Sendable {
+  public var cell: GlyphCell
+  public var dimensions: GridDimensions
+  
+  public init(cell: GlyphCell, dimensions: GridDimensions) {
+    self.cell = cell
+    self.dimensions = dimensions
+  }
 }
 
-public struct TextCore {
 
+public struct GridPosition: Hashable, Equatable, Sendable {
+  public let row: Int
+  public let col: Int
+  
+  public init(row: Int, col: Int) {
+    self.row = row
+    self.col = col
+  }
+}
+
+
+public struct TextCore {
+  
   static public func padLine(
     _ text: String = "", // May need a conditional for lines that just want to repeat a character, and not adjust for any content
     with paddingString: String = " ",
@@ -85,30 +174,34 @@ public struct TextCore {
     return result
   } // END pad line
   
+}
+extension GlyphCell {
   
-
   /// Get cell size when you don't yet have the `NSFont`
   ///
   public static func cellSize(
     fontName: String,
-    fontSize: CGFloat = 15,
-    zoom: CGFloat? = nil
+    fontSize: CGFloat = 14,
+    zoom: CGFloat? = nil,
+    minWidth: CGFloat = 1.5
   ) -> CGSize {
     
     guard let nsFont = NSFont.init(name: fontName, size: fontSize) else { return .zero }
     
     let fontMetrics: String = """
-    Cap height: \(nsFont.capHeight)
-    Point size: \(nsFont.pointSize)
-    Ascender height: \(nsFont.ascender)
-    Fixed pitch?: \(nsFont.isFixedPitch)
-    Leading value: \(nsFont.leading)
-    Whole font rect: \(nsFont.boundingRectForFont)
-    """
+      Zoom: \(zoom ?? .zero)
+      
+      Cap height: \(nsFont.capHeight)
+      Point size: \(nsFont.pointSize)
+      Ascender height: \(nsFont.ascender)
+      Fixed pitch?: \(nsFont.isFixedPitch)
+      Leading value: \(nsFont.leading)
+      Whole font rect: \(nsFont.boundingRectForFont)
+      """
     
     print(fontMetrics)
     
-//    return cellSize(for: font)
+    //    return cellSize(for: font)
     
     
     //    let rect: NSRect = font.boundingRect(forGlyph: NSGlyph("M"))
@@ -118,46 +211,51 @@ public struct TextCore {
     
     
     let name = fontName as CFString
+    
     let ctFont: CTFont = CTFontCreateWithName(name, fontSize, nil)
     
     let referenceGlyph: Character = "M"
     
     guard let cgGlyph = getGlyphForCharacter(referenceGlyph, font: ctFont) else {
-    print("Couldn't get CGGlyph")
+      print("Couldn't get CGGlyph")
       return .zero
     }
     
-//    let glyphSize: NSSize = nsFont.advancement(forCGGlyph: cgGlyph)
+    //    let glyphSize: NSSize = nsFont.advancement(forCGGlyph: cgGlyph)
     
     let glyphWidth: CGFloat = nsFont.advancement(forCGGlyph: cgGlyph).width
     
     let glyphHeight: CGFloat = nsFont.ascender - nsFont.descender + nsFont.leading
     
-//    let cellSize = CGSize(width: glyphSize.width, height: glyphHeight)
+    //    let cellSize = CGSize(width: glyphSize.width, height: glyphHeight)
     
-//    let boundingRect: NSRect = nsFont.boundingRect(forCGGlyph: cgGlyph)
+    //    let boundingRect: NSRect = nsFont.boundingRect(forCGGlyph: cgGlyph)
     
-    var size: CGSize = .zero
+    var finalWidth: CGFloat
+    var finalHeight: CGFloat
     
     if let zoom = zoom {
-      let zoomedWidth = glyphWidth * zoom
-      let zoomedHeight = glyphHeight * zoom
-      size = CGSize(width: zoomedWidth, height: zoomedHeight)
+      finalWidth = glyphWidth * zoom
+      finalHeight = glyphHeight * zoom
+      
     } else {
-      size = CGSize(width: glyphWidth, height: glyphHeight)
+      finalWidth = glyphWidth
+      finalHeight = glyphHeight
     }
     
+    let size = CGSize(width: max(minWidth, finalWidth), height: max(minWidth, finalHeight))
     print("Here is the final cell size: \(size)")
     
     return size
     
   }
   
+  
   /// Get cell size when already have the `NSFont`
   ///
-//  public static func cellSize(for font: NSFont, zoom: CGFloat? = nil) -> CGSize {
-    
-//  }
+  //  public static func cellSize(for font: NSFont, zoom: CGFloat? = nil) -> CGSize {
+  
+  //  }
   
   public static func getGlyphForCharacter(_ character: Character, font: CTFont) -> CGGlyph? {
     
@@ -173,18 +271,19 @@ public struct TextCore {
     }
   }
   
-
   
   
   
-  /// Give a window size, how many cells (rows and columns) can neatly fit?
+  
+  /// Calculate the number of cells (rows and columns) of a given size (`cellSize`), that can evenly
+  /// fit within a window (or other space, sidebar, etc) of a given size (`cgSize`).
   ///
   public static func cellCount(
     cgSize: CGSize,
     cellSize: CGSize
-  ) -> CellCount {
-
-//    guard !cgSize.widthOrHeightIsZero else { return .zero }
+  ) -> GridDimensions {
+    
+    //    guard !cgSize.widthOrHeightIsZero else { return .zero }
     
     let cgWidthSafe: CGFloat = max(1, cgSize.width)
     let cgHeightSafe: CGFloat = max(1, cgSize.height)
@@ -195,10 +294,10 @@ public struct TextCore {
     let columns = Int(cgWidthSafe / cellWidthSafe)
     let rows = Int(cgHeightSafe / cellHeightSafe)
     
-//    let safeWidth = max(2, width - 1) // Seems to need one shaved off?
-//    let safeHeight = max(2, height - 1)
+    //    let safeWidth = max(2, width - 1) // Seems to need one shaved off?
+    //    let safeHeight = max(2, height - 1)
     
-    let result = CellCount(rows: rows, columns: columns)
+    let result = GridDimensions(rows: rows, columns: columns)
     
     return result
   }
@@ -209,20 +308,33 @@ public struct TextCore {
   ) -> Int {
     
     let size = CGSize(width: width, height: .zero)
-    let result = TextCore.cellCount(cgSize: size, cellSize: cellSize).columns
+    let result = GlyphCell.cellCount(cgSize: size, cellSize: cellSize).columns
     
     return result
   }
   
+} // END glyph cell extension
   
-  
-} // END textcore
+
 
 public extension CGSize {
   var widthOrHeightIsZero: Bool {
     return self.width.isZero || self.height.isZero
   }
 }
+
+public extension CGFloat {
+  enum Dimension {
+    case width, height
+  }
+  
+  func snapToCell(cellSize: CGSize, dimension: Dimension = .width) -> CGFloat {
+    let cellDimension = dimension == .width ? cellSize.width : cellSize.height
+    let multiplier = (self / cellDimension).rounded()
+    return multiplier * cellDimension
+  }
+}
+
 
 public extension String {
   
