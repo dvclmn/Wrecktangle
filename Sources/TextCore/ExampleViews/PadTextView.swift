@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PadTextView: View {
+struct PadTextExampleView: View {
   
   @State private var isSelectFontActive: Bool = true
   
@@ -33,17 +33,18 @@ struct PadTextView: View {
   }
 }
 
-extension PadTextView {
+extension PadTextExampleView {
   func menuArt(
     _ text: String,
     icon: String
   ) -> AttributedString {
     var output = AttributedString()
-    
-    let cellSize: CGSize = TextCore.cellSize(fontName: "SF Mono")
-    let columnCount: Int = TextCore.cellColumnCount(for: self.width, cellSize: cellSize)
-    
-    let expandIcon: String = self.isSelectFontActive ? "-" : "+"
+//    
+//    let cellSize: CGSize =
+////    let cellSize: CGSize = TextCore.cellSize(fontName: "SF Mono")
+//    let columnCount: Int = TextCore.cellColumnCount(for: self.width, cellSize: cellSize)
+//    
+//    let expandIcon: String = self.isSelectFontActive ? "-" : "+"
     
     var horizontalLine: String = ""
     var content: String = ""
@@ -51,42 +52,7 @@ extension PadTextView {
     var bottomLineAlt: String = ""
     var shadow: String = ""
     
-    if self.isSelectFontActive {
-      
-      horizontalLine = TextCore.padLine(with: "─", toFill: columnCount, caps: ("  ", "┐"))
-      
-    } else {
-      
-      horizontalLine = TextCore.padLine(with: "─", toFill: columnCount, caps: ("┌", "┐"))
-      
-      
-    }
     
-    
-    if self.isSelectFontActive {
-      
-      bottomLine = TextCore.padLine(with: "─", toFill: columnCount, caps: (" │", "╵"))
-      
-    } else {
-      bottomLine = TextCore.padLine(with: "─", toFill: columnCount, caps: ("└", "┘"))
-      
-    }
-    
-    bottomLineAlt = TextCore.padLine(with: "░", toFill: columnCount, caps: ("╱", "╱ "))
-    
-    shadow = TextCore.padLine(with: "░", toFill: columnCount)
-    
-    if self.isSelectFontActive {
-      
-      content = icon + " " + text + "@" + expandIcon
-      
-      content = TextCore.padLine(content, with: ",", toFill: columnCount, caps: (" ╱│", "│"))
-      
-    } else {
-      content = TextCore.padLine(content, with: ",", toFill: columnCount, caps: ("│", "│"))
-      
-      
-    }
     
     
     //    output.appendString(horizontalLine)
@@ -156,6 +122,6 @@ extension PadTextView {
 }
 
 #Preview {
-  PadTextView()
+  PadTextExampleView()
 }
 
