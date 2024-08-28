@@ -8,13 +8,17 @@
 import Foundation
 
 public struct GlyphGrid: Equatable, Sendable {
+  
   public var cell: GlyphCell
   public var dimensions: GridDimensions
   public var type: GridType
   
+  public var artwork: Artwork?
+
+  
   public init(
-    cell: GlyphCell,
-    dimensions: GridDimensions,
+    cell: GlyphCell = GlyphCell(),
+    dimensions: GridDimensions = GridDimensions(),
     type: GridType
   ) {
     self.cell = cell
@@ -56,32 +60,73 @@ public struct GlyphGrid: Equatable, Sendable {
 /// - The struct presents a clean public interface where `cellSize` can't be set directly
 ///
 public struct GlyphCell: Equatable, Sendable {
+  
   public private(set) var fontName: String
   public private(set) var fontSize: CGFloat
-  public internal(set) var cellSize: CGSize
+  public internal(set) var size: CGSize
   
-  public init(fontName: String, fontSize: CGFloat) {
+  public init(
+    fontName: String = "SF Mono",
+    fontSize: CGFloat = 15
+  ) {
     self.fontName = fontName
     self.fontSize = fontSize
-    self.cellSize = GlyphCell.calculateCellSize(fontName: fontName, fontSize: fontSize)
+    self.size = GlyphCell.calculateCellSize(fontName: fontName, fontSize: fontSize)
   }
-  
-  /// What is useful here, or what do we need:
-  /// - NSFont
-  /// - CTFont
-  /// - CTGlyph
+
 }
 
+
 public struct GridDimensions: Equatable, Sendable {
-  public var rows: Int
-  public var columns: Int
   
-  public init(rows: Int, columns: Int) {
-    self.rows = rows
-    self.columns = columns
+  private var _rows: Int
+  private var _columns: Int
+  
+  public var minValue: Int
+  
+  public var rows: Int {
+    get { _rows }
+    set { _rows = max(minValue, newValue) }
   }
   
+  public var columns: Int {
+    get { _columns }
+    set { _columns = max(minValue, newValue) }
+  }
+  
+  public init(
+    rows: Int = 2,
+    columns: Int = 2,
+    minValue: Int = 2
+  ) {
+    self.minValue = minValue
+    self._rows = max(minValue, rows)
+    self._columns = max(minValue, columns)
+  }
+  
+  public static let example: GridDimensions = GridDimensions(rows: 20, columns: 10)
 }
+
+
+
+
+//
+//
+//public struct GridDimensions: Equatable, Sendable {
+//  public var rows: Int
+//  public var columns: Int
+//  
+//  public init(
+//    rows: Int = 10,
+//    columns: Int = 10
+//  ) {
+//    self.rows = rows
+//    self.columns = columns
+//  }
+//  
+//  public static let example: GridDimensions = GridDimensions(rows: 20, columns: 10)
+//  
+//}
 
 
 /// Now, you can use these structures in your app like this:
@@ -104,7 +149,7 @@ public struct GridDimensions: Equatable, Sendable {
 ///
 
 public enum GridType: Equatable, Sendable {
-  case canvas
+  case canvas(Artwork)
   case interface
 }
 
@@ -114,7 +159,10 @@ public struct GridPosition: Hashable, Equatable, Sendable {
   public let row: Int
   public let col: Int
   
-  public init(row: Int, col: Int) {
+  public init(
+    row: Int = 0,
+    col: Int = 0
+  ) {
     self.row = row
     self.col = col
   }

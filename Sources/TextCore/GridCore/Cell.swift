@@ -9,6 +9,8 @@ import SwiftUI
 
 extension GlyphCell {
   
+  public static let example: GlyphCell = GlyphCell(fontName: "Menlo", fontSize: 15)
+  
   //  private static func calculateCellSize(
   //    fontName: String,
   //    fontSize: CGFloat
@@ -24,19 +26,19 @@ extension GlyphCell {
   public mutating func updateCellSizeForZoom(
     _ zoom: CGFloat
   ) {
-    let newWidth = cellSize.width * zoom
-    let newHeight = cellSize.height * zoom
-    self.cellSize = CGSize(width: newWidth, height: newHeight)
+    let newWidth = size.width * zoom
+    let newHeight = size.height * zoom
+    self.size = CGSize(width: newWidth, height: newHeight)
   }
   
   /// For when the font is being updated, and zoom is unchanged
   ///
   public mutating func updateFont(
-    name: String,
-    size: CGFloat
+    fontName: String,
+    fontSize: CGFloat
   ) {
 
-    cellSize = GlyphCell.calculateCellSize(fontName: name, fontSize: size)
+    size = GlyphCell.calculateCellSize(fontName: fontName, fontSize: fontSize)
     
   }
   
@@ -52,11 +54,6 @@ extension GlyphCell {
   ) -> CGSize {
     
     guard let (nsFont, ctFont) = getFonts(fontName: fontName, fontSize: fontSize) else { return .zero }
-    
-    guard let cgGlyph = getGlyphForCharacter(font: ctFont) else {
-      print("Couldn't get CGGlyph")
-      return .zero
-    }
     
     let size: CGSize = calculateCellSize(for: nsFont, zoom: zoom ?? 1.0, minWidth: minWidth)
     
