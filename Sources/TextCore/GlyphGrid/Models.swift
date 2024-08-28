@@ -7,6 +7,22 @@
 
 import Foundation
 
+public struct GlyphGrid: Equatable, Sendable {
+  public var cell: GlyphCell
+  public var dimensions: GridDimensions
+  public var type: GridType
+  
+  public init(
+    cell: GlyphCell,
+    dimensions: GridDimensions,
+    type: GridType
+  ) {
+    self.cell = cell
+    self.dimensions = dimensions
+    self.type = type
+  }
+  
+} // END GlyphGrid
 
 /// 1. `cellSize` is a stored property, not a computed one. This allows us to calculate it once and store the result.
 ///
@@ -65,7 +81,6 @@ public struct GridDimensions: Equatable, Sendable {
     self.columns = columns
   }
   
-  
 }
 
 
@@ -93,22 +108,6 @@ public enum GridType: Equatable, Sendable {
   case interface
 }
 
-public struct GlyphGrid: Equatable, Sendable {
-  public var cell: GlyphCell
-  public var dimensions: GridDimensions
-  public var type: GridType
-  
-  public init(
-    cell: GlyphCell,
-    dimensions: GridDimensions,
-    type: GridType
-  ) {
-    self.cell = cell
-    self.dimensions = dimensions
-    self.type = type
-  }
-  
-} // END GlyphGrid
 
 
 public struct GridPosition: Hashable, Equatable, Sendable {
@@ -119,6 +118,8 @@ public struct GridPosition: Hashable, Equatable, Sendable {
     self.row = row
     self.col = col
   }
+  
+  
   
 }
 

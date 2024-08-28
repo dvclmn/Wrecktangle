@@ -133,44 +133,6 @@ extension GlyphCell {
     return result ? glyph : nil
   }
   
-  
-  /// Calculate the number of cells (rows and columns) of a given size (`cellSize`), that can evenly
-  /// fit within a window (or other space, sidebar, etc) of a given size (`cgSize`).
-  ///
-  public static func cellCount(
-    cgSize: CGSize,
-    cellSize: CGSize
-  ) -> GridDimensions {
-    
-    //    guard !cgSize.widthOrHeightIsZero else { return .zero }
-    
-    let cgWidthSafe: CGFloat = max(1, cgSize.width)
-    let cgHeightSafe: CGFloat = max(1, cgSize.height)
-    
-    let cellWidthSafe: CGFloat = max(1, cellSize.width)
-    let cellHeightSafe: CGFloat = max(1, cellSize.height)
-    
-    let columns = Int(cgWidthSafe / cellWidthSafe)
-    let rows = Int(cgHeightSafe / cellHeightSafe)
-    
-    //    let safeWidth = max(2, width - 1) // Seems to need one shaved off?
-    //    let safeHeight = max(2, height - 1)
-    
-    let result = GridDimensions(rows: rows, columns: columns)
-    
-    return result
-  }
-  
-  public static func cellColumnCount(
-    for width: CGFloat,
-    cellSize: CGSize
-  ) -> Int {
-    
-    let size = CGSize(width: width, height: .zero)
-    let result = GlyphCell.cellCount(cgSize: size, cellSize: cellSize).columns
-    
-    return result
-  }
-  
+ 
 } // END glyph cell extension
 
