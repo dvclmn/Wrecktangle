@@ -11,8 +11,6 @@ extension GlyphCell {
   
   public static let example: GlyphCell = GlyphCell(fontName: .menlo)
 
-
-
   /// Get cell size when you don't yet have the `NSFont`
   ///
   func calculateCellSize(
@@ -52,8 +50,8 @@ extension GlyphCell {
     
     let glyphHeight: CGFloat = font.ascender - font.descender + font.leading
     
-    let finalWidth: CGFloat = glyphWidth * fontName.normalised()
-    let finalHeight: CGFloat = glyphHeight * fontName.normalised()
+    let finalWidth: CGFloat = fontName.normalised(baseValue: glyphWidth)
+    let finalHeight: CGFloat = fontName.normalised(baseValue: glyphHeight)
     
     let size = CGSize(width: max(minWidth, finalWidth), height: max(minWidth, finalHeight))
     print("Here is the final cell size: \(size)")

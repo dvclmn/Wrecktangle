@@ -6,24 +6,107 @@
 //
 
 import Foundation
+import BaseHelpers
 
+public typealias RowsAndColumns = (rows: Int, columns: Int)
 
-
-extension GlyphGrid {
+public extension CGSize {
   
-  public func characterCount() -> Int {
+  func cellsThatFit(_ cellSize: CGSize) -> RowsAndColumns {
+    cellsThatFitSize(in: self, cellSize: cellSize)
+  }
+}
+
+public extension CGFloat {
+  func cellsThatFit(_ cellSize: CGSize, in dimension: DimensionForCell = .width) -> Int {
+
+//    print("Hello, the value of self is \(self)")
+    
+    var size: CGSize
+    var result: Int
+    
+    switch dimension {
+      case .width:
+        size = CGSize(width: self, height: .zero)
+        
+//        print("The cgsize for `width` is: \(size)")
+        result = cellsThatFitSize(in: size, cellSize: cellSize).columns
+        
+      case .height:
+        size = CGSize(width: .zero, height: self)
+        result = cellsThatFitSize(in: size, cellSize: cellSize).rows
+    }
+    
+    print("This is the CGFloat result: \(result)")
+
+    return result
+  }
+}
+
+private func cellsThatFitSize(
+  in size: CGSize,
+  cellSize: CGSize
+) -> RowsAndColumns {
+  
+  let width: CGFloat = size.width / cellSize.width
+  print("Let's look at width: \(width)")
+  
+  let height: CGFloat = size.height / cellSize.height
+  
+  print("And height: \(height)")
+  
+  /// IMPORTANT: It's 'unfortunate' that the following feels right
+  /// to *say*: "Width and height", and "Rows and column".
+  ///
+  /// As it conflicts with the below correlation:
+  /// *Width* does not correspond to *Rows*, it corresponds
+  /// to *Columns*.
+  /// *Height* corresponds to *Rows*
+  ///
+  /// `width` ≈ `columns`
+  /// `height` ≈ `rows`
+  ///
+  let result = (Int(max(1, height)), Int(max(1, width)))
+  print("And result: \(result)")
+  
+  return result
+}
+
+
+public extension GlyphGrid {
+  
+  /// This is for a single dimension — width, or height, etc
+  
+  /// How many cells fit into the supplied width/height?
+  ///
+//  static func cellsThatFit(in width: CGFloat, ofSize cellSize: CGSize) -> Int {
+//    
+//    let length = Int(width / cellSize.width)
+//    
+//    var result: Int
+//    
+//    if length > 1 {
+//      result = length
+//    } else {
+//      result = 1
+//    }
+//    
+//    return result
+//  }
+  
+  
+  func characterCount() -> Int {
     
   var count: Int = 0
     
     if let artwork = self.artwork {
-      
       count = artwork.reduce(0) { $0 + $1.count }
     }
     
     return count
   }
   
-  public static func createEmpty(
+  static func createEmpty(
     rows: Int,
     columns: Int,
     fontName: FontName = .menlo
@@ -38,7 +121,7 @@ extension GlyphGrid {
     )
   }
   
-  public static func createWithArtwork(_ artwork: Artwork, fontName: FontName = .menlo) -> GlyphGrid {
+  static func createWithArtwork(_ artwork: Artwork, fontName: FontName = .menlo) -> GlyphGrid {
     let rows = artwork.count
     let columns = artwork.map { $0.count }.max() ?? 0
     
@@ -52,7 +135,7 @@ extension GlyphGrid {
     )
   }
   
-  public static func createInterface(rows: Int, columns: Int, fontName: FontName = .menlo) -> GlyphGrid {
+  static func createInterface(rows: Int, columns: Int, fontName: FontName = .menlo) -> GlyphGrid {
     let cell = GlyphCell(fontName: fontName)
     let dimensions = GridDimensions(rows: rows, columns: columns)
     

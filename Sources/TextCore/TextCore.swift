@@ -14,32 +14,31 @@ import SwiftUI
 import BaseHelpers
 
 
+public struct LineCaps {
+  var leading: String
+  var trailing: String
+  var hasPadding: Bool
+  
+  public init(
+    _ leading: String,
+    _ trailing: String,
+    hasPadding: Bool = true
+  ) {
+    self.leading = leading
+    self.trailing = trailing
+    self.hasPadding = hasPadding
+  }
+}
+
 public struct TextCore {
   
-//  public static func countingString(to value: Int, linesPerGroup: Int = 2) -> String {
-//    guard value > 0 else { return "" }
-//    
-//    let digits = String(value).count
-//    var result = ""
-//    
-//    for lineIndex in 0..<linesPerGroup {
-//      for i in 1...value {
-//        let numberString = String(i)
-//        let paddedNumber = numberString.padding(toLength: digits, withPad: "0", startingAt: 0)
-//        result += String(paddedNumber[paddedNumber.index(paddedNumber.startIndex, offsetBy: lineIndex)])
-//      }
-//      result += "\n"
-//    }
-//    
-//    return result.trimmingCharacters(in: .whitespacesAndNewlines)
-//  }
-  
   static public func padLine(
-    _ text: String = "", // May need a conditional for lines that just want to repeat a character, and not adjust for any content
+    _ text: String = "",
     with paddingString: String = " ",
     toFill width: Int,
+    alignment: Alignment = .center,
     sliceCharacter: Character = "@",
-    caps: (String, String)? = nil, /// This is `String` in case of multi-character caps
+    caps: LineCaps? = nil, /// This is `String` in case of multi-character caps
     hasHorizontalPadding: Bool = true
   ) -> String {
     
@@ -48,46 +47,73 @@ public struct TextCore {
     
     var leadingCap: String = ""
     var trailingCap: String = ""
-    let capWidth: Int = leadingCap.count + trailingCap.count
+    var capsTotalWidth: Int = 0
     
-    if let (leading, trailing) = caps {
-      leadingCap = leading
-      trailingCap = trailing
+    if let caps = caps {
+      leadingCap = caps.leading
+      trailingCap = caps.trailing
+      capsTotalWidth += caps.hasPadding ? 2 : 0
     }
+    
+    capsTotalWidth += leadingCap.count + trailingCap.count
     
     let components = text.split(separator: sliceCharacter, omittingEmptySubsequences: false)
     
     let contentWidth = components.reduce(0) { $0 + $1.count }
     
-    let availableSpace: Int = max(0, width - contentWidth - capWidth - horizontalPaddingWidth)
+    let availableSpace: Int = max(0, width - contentWidth - capsTotalWidth - horizontalPaddingWidth)
     
     
-    /// This will return all the padding at the end of the string, if no split was found
-    ///
+    /// This will distribute the padding based on alignment if no split was found
     if components.count <= 1 {
-      return text + String(repeating: paddingString, count: availableSpace)
-    }
-    
-    let spacesPerSlice = availableSpace / (components.count - 1)
-    let extraSpaces = availableSpace % (components.count - 1)
-    
-    /// Add the leading cap/padding, if present
-    ///
-    var result = leadingCap + horizontalPadding
-    
-    for (index, component) in components.enumerated() {
-      result += component
-      if index < components.count - 1 {
-        let spaces = spacesPerSlice + (index < extraSpaces ? 1 : 0)
-        result += String(repeating: paddingString, count: spaces)
+      let paddingCount = availableSpace
+      let leftPadding: Int
+      let rightPadding: Int
+      
+      switch alignment {
+        case .leading:
+          leftPadding = 0
+          rightPadding = paddingCount
+        case .trailing:
+          leftPadding = paddingCount
+          rightPadding = 0
+        default: // .center
+          leftPadding = paddingCount / 2
+          rightPadding = paddingCount - leftPadding
       }
+      
+      return leadingCap +
+      String(repeating: paddingString, count: leftPadding) +
+      text +
+      String(repeating: paddingString, count: rightPadding) +
+      horizontalPadding + trailingCap
+      
+    } else {
+      
+      let spacesPerSlice = availableSpace / (components.count - 1)
+      let extraSpaces = availableSpace % (components.count - 1)
+      
+      /// Add the leading cap/padding, if present
+      ///
+      var result = leadingCap + horizontalPadding
+      
+      for (index, component) in components.enumerated() {
+        result += component
+        if index < components.count - 1 {
+          let spaces = spacesPerSlice + (index < extraSpaces ? 1 : 0)
+          result += String(repeating: paddingString, count: spaces)
+        }
+      }
+      
+      /// Add the trailing cap/padding, if present
+      ///
+      result += horizontalPadding + trailingCap
+      
+      return result
+      
     }
     
-    /// Add the trailing cap/padding, if present
-    ///
-    result += horizontalPadding + trailingCap
     
-    return result
   } // END pad line
   
 }
@@ -99,52 +125,40 @@ public extension CGSize {
   }
 }
 
-public extension CGFloat {
-  enum Dimension {
-    case width, height
-  }
+public enum DimensionForCell {
+  case width, height
+}
+
+//protocol Flouble {
+//
+//
+//
+//  var width:
+//}
+
+public extension BinaryFloatingPoint {
   
-  func snapToCell(cellSize: CGSize, dimension: Dimension = .width) -> CGFloat {
+  func snapToCell(cellSize: CGSize, dimension: DimensionForCell = .width) -> CGFloat {
+    
     let cellDimension = dimension == .width ? cellSize.width : cellSize.height
-    let multiplier = (self / cellDimension).rounded()
-    return multiplier * cellDimension
+    
+    if let value = self as? CGFloat {
+      
+      let multiplier = (value / cellDimension).rounded()
+      return multiplier * cellDimension
+      
+    } else if let value = self as? Double {
+      
+      let multiplier = (value / cellDimension).rounded()
+      return multiplier * cellDimension
+      
+    } else {
+      
+      return .zero
+    }
+    
+    
+    
   }
 }
-
-
-public extension String {
-  
-  
-  //  static func formatLine(
-  //    content: String,
-  //    width: Int,
-  //    alignment: TextAlignment = .left,
-  //    fill: Character = " ",
-  //    leftCap: String = "",
-  //    rightCap: String = "",
-  //    trimming: Int = 0
-  //  ) -> String {
-  //    let contentWidth = content.count
-  //    let capWidth = leftCap.count + rightCap.count
-  //    let availableWidth = max(0, width - capWidth - trimming)
-  //
-  //    if contentWidth >= availableWidth {
-  //      return leftCap + String(content.prefix(availableWidth)) + rightCap
-  //    }
-  //
-  //    let padding = String(repeating: fill, count: availableWidth - contentWidth)
-  //
-  //    switch alignment {
-  //      case .left:
-  //        return leftCap + content + padding + rightCap
-  //      case .center:
-  //        let leftPad = String(repeating: fill, count: (availableWidth - contentWidth) / 2)
-  //        let rightPad = String(repeating: fill, count: availableWidth - contentWidth - leftPad.count)
-  //        return leftCap + leftPad + content + rightPad + rightCap
-  //      case .right:
-  //        return leftCap + padding + content + rightCap
-  //    }
-  //  }
-}
-
 

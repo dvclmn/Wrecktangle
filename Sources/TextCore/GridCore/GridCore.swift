@@ -207,7 +207,7 @@ public enum FontName: String, CaseIterable, Hashable, Equatable, Sendable, Ident
   
   public func normalised(
     for parameter: NormaliseParameter = .fontSize,
-    baseValue: CGFloat = GlyphGrid.baseFontSize
+    baseValue: CGFloat
   ) -> CGFloat {
     let factor: CGFloat
     switch parameter {
