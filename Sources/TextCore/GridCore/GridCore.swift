@@ -15,6 +15,7 @@ public struct GlyphGrid: Equatable, Sendable {
   
   public var artwork: Artwork?
 
+  public static let baseFontSize: CGFloat = 15
   
   public init(
     cell: GlyphCell = GlyphCell(),
@@ -33,8 +34,6 @@ public struct GlyphCell: Equatable, Sendable {
   
   public private(set) var fontName: FontName
   public internal(set) var size: CGSize
-  
-  public static let baseFontSize: CGFloat = 15
   
   public init(
     fontName: FontName = .sfMono
@@ -147,53 +146,78 @@ public struct GridPosition: Hashable, Equatable, Sendable {
 
 
 
-public enum FontName: String, CaseIterable, Hashable, Equatable, Sendable {
+public enum FontName: String, CaseIterable, Hashable, Equatable, Sendable, Identifiable {
+  
   case menlo = "Menlo"
   case sfMono = "SF Mono"
   case courier = "Courier New"
   case monaco = "Monaco"
   case ibm = "AcPlus IBM BIOS"
   
-  public var sizeNormalisationFactor: CGFloat {
+  public var id: String {
+    self.rawValue
+  }
+  
+  public enum NormaliseParameter {
+    case fontSize
+    case width
+    case weight
+  }
+  
+  public struct Normalisers {
+    let fontSize: CGFloat
+    let width: CGFloat
+    let weight: CGFloat
+  }
+  
+  public var normalisers: Normalisers {
     switch self {
       case .menlo:
-        1.0
+        Normalisers(
+          fontSize: 1.0,
+          width: 1.0,
+          weight: 1.0
+        )
       case .sfMono:
-        1.0
+        Normalisers(
+          fontSize: 1.0,
+          width: 1.0,
+          weight: 1.0
+        )
       case .courier:
-        1.1
+        Normalisers(
+          fontSize: 1.1,
+          width: 1.0,
+          weight: 1.0
+        )
       case .monaco:
-        1.0
+        Normalisers(
+          fontSize: 1.0,
+          width: 1.0,
+          weight: 1.0
+        )
       case .ibm:
-        0.8
+        Normalisers(
+          fontSize: 0.8,
+          width: 1.0,
+          weight: 1.0
+        )
     }
   }
   
-  //  var weight: Font.Weight {
-  //    switch self {
-  //      case .menlo:
-  //          .medium
-  //
-  //      case .sfMono:
-  //          .medium
-  //
-  //      case .courier:
-  //          .medium
-  //
-  //      case .monaco:
-  //          .medium
-  //    }
-  //  }
-  //  var font: Font {
-  //    switch self {
-  //      case .menlo:
-  //        Font(.init("Courier", size: 13))
-  //      case .sfMono:
-  //        <#code#>
-  //      case .courier:
-  //        <#code#>
-  //      case .monaco:
-  //        <#code#>
-  //    }
-  //  }
+  public func normalised(
+    for parameter: NormaliseParameter = .fontSize,
+    baseValue: CGFloat = GlyphGrid.baseFontSize
+  ) -> CGFloat {
+    let factor: CGFloat
+    switch parameter {
+      case .fontSize:
+        factor = normalisers.fontSize
+      case .width:
+        factor = normalisers.width
+      case .weight:
+        factor = normalisers.weight
+    }
+    return baseValue * factor
+  }
 }

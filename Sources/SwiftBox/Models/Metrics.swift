@@ -5,15 +5,17 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
+import TextCore
+
 extension SwiftBox.Config {
   
   public struct Metrics {
-    var widthCounter: WidthCounterStyle
+    var widthCounter: TextCore.WidthCounterStyle
     var lineNumbers: Bool
     var invisibles: Bool
     
     public init(
-      widthCounter: WidthCounterStyle = .off,
+      widthCounter: TextCore.WidthCounterStyle = .off,
       lineNumbers: Bool = false,
       invisibles: Bool = false
     ) {
@@ -21,11 +23,6 @@ extension SwiftBox.Config {
       self.lineNumbers = lineNumbers
       self.invisibles = invisibles
     }
-    
-    public enum WidthCounterStyle {
-      case off
-      case compact
-      case full
-    }
+
   }
 }

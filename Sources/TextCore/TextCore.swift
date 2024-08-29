@@ -16,6 +16,24 @@ import BaseHelpers
 
 public struct TextCore {
   
+//  public static func countingString(to value: Int, linesPerGroup: Int = 2) -> String {
+//    guard value > 0 else { return "" }
+//    
+//    let digits = String(value).count
+//    var result = ""
+//    
+//    for lineIndex in 0..<linesPerGroup {
+//      for i in 1...value {
+//        let numberString = String(i)
+//        let paddedNumber = numberString.padding(toLength: digits, withPad: "0", startingAt: 0)
+//        result += String(paddedNumber[paddedNumber.index(paddedNumber.startIndex, offsetBy: lineIndex)])
+//      }
+//      result += "\n"
+//    }
+//    
+//    return result.trimmingCharacters(in: .whitespacesAndNewlines)
+//  }
+  
   static public func padLine(
     _ text: String = "", // May need a conditional for lines that just want to repeat a character, and not adjust for any content
     with paddingString: String = " ",

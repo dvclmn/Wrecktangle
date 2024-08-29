@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUICore
 import BaseHelpers
+import TextCore
 
 public extension SwiftBox {
   
@@ -24,7 +25,7 @@ public extension SwiftBox {
     
     /// Width counter
     if self.config.metrics.widthCounter != .off {
-      output += widthCounter(self.config.width)
+      output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
     }
     
     /// Box roof
