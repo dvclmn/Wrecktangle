@@ -11,7 +11,7 @@ import SwiftUI
 public extension SwiftBox {
   
   enum Invisibles {
-    case line(LineType)
+    case line
     case space
     case tab
     case padding
@@ -24,13 +24,23 @@ public extension SwiftBox {
     
     public var character: Character {
       switch self {
-        case .line(.new): "¬"
-        case .line(.end): "¶"
-        case .space: "•"
+        case .line: "¬"
+//        case .line(.end): "¶"
+        case .space: "/"
         case .tab: "→"
         case .padding: ","
         case .paddingAlt: "."
       }
+    }
+    
+    static public func ifNeeded(
+      _ character: Invisibles,
+      fallBackCharacter: Character = " ",
+      isShowing isShowingInvisibles: Bool
+    ) -> Character {
+      let result = isShowingInvisibles ? character.character : fallBackCharacter
+      
+      return result
     }
   }
   

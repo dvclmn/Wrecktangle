@@ -23,6 +23,18 @@ struct BoxPrintView: View {
     )
   )
   
+  let box02 = SwiftBox(
+    header: TestStrings.conversationTitles[1],
+    content: TestStrings.paragraphs[7],
+    config: SwiftBox.Config (
+      theme: .init(glyphSet: .double, frameStyle: .double),
+      width: 38,
+      headerLineLimit: 2,
+      contentLineLimit: 9,
+      metrics: .init(widthCounter: .off, lineNumbers: true, invisibles: false)
+    )
+  )
+  
   
   
   //
@@ -51,7 +63,7 @@ struct BoxPrintView: View {
     VStack(spacing: 14) {
       
       Text(box01.attributedString)
-      //      Text(box03.attributedString)
+            Text(box02.attributedString)
       
     }
     .textSelection(.enabled)

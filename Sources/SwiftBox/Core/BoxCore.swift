@@ -13,40 +13,6 @@ import AppKit
 
 public extension SwiftBox {
   
-  func adjustedBoxWidth(for type: BoxLine) -> Int {
-    
-    var textPadding: Int
-    
-    switch type {
-      case .structure:
-        /// Don't want spaces in our structural lines
-        textPadding = 0
-        
-      case .text:
-        /// Extra space on either side of text lines
-        textPadding = (self.config.theme.padding * 2)
-    }
-    
-    let structure: Int = self.config.theme.frameStyle.reservedSpace
-    
-    let totalReserved: Int = textPadding + structure
-    let result = self.config.width - totalReserved
-    
-    return result
-  }
-  
-  
-//  static let temporaryReservedWidth: Int = 4
-  
-//  var adjustedWidth: Int {
-//    self.config.width - Self.temporaryReservedWidth
-//  }
-  
-  
-  /// Rundown of how a box is constructed.
-  ///
-  /// 1.
-  
   func drawBox() -> AttributedString {
     
     /// We start off with a fresh, blank attr. string. The 'build process' is based
@@ -57,7 +23,12 @@ public extension SwiftBox {
     output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
 
     /// Box roof
-    self.buildLine(type: .structure(.top), string: nil, attrString: &output)
+    self.buildLine(
+      type: .structure(.top),
+      string: nil,
+      theme: self.config.theme,
+      attrString: &output
+    )
     
 //    output.quickHighlight()
     
@@ -68,26 +39,48 @@ public extension SwiftBox {
     
     if let headerText = self.header {
 
-      let headerLines: [String] = headerText.reflowText(width: adjustedBoxWidth(for: .text(.header)), maxLines: config.headerLineLimit)
+      let headerLines: [String] = headerText.reflowText(
+        width: adjustedBoxWidth(for: .text(.header)),
+        maxLines: config.headerLineLimit,
+        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+      )
       
       for line in headerLines {
         
-        self.buildLine(type: .text(.header), string: line, attrString: &output)
+        self.buildLine(
+          type: .text(.header),
+          string: line,
+          theme: self.config.theme,
+          attrString: &output
+        )
         
       }
     }
     
     /// Divider
-    self.buildStructuralLine(.divider, attrString: &output)
+    self.buildStructuralLine(
+      .divider,
+      theme: self.config.theme,
+      attrString: &output
+    )
 
 
     /// Content
 
-    let contentLines: [String] = self.content.reflowText(width: adjustedBoxWidth(for: .text(.content)), maxLines: config.contentLineLimit)
+    let contentLines: [String] = self.content.reflowText(
+      width: adjustedBoxWidth(for: .text(.content)),
+      maxLines: config.contentLineLimit,
+      paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+    )
 
     for line in contentLines {
 
-      self.buildLine(type: .text(.content), string: line, attrString: &output)
+      self.buildLine(
+        type: .text(.content),
+        string: line,
+        theme: self.config.theme,
+        attrString: &output
+      )
     }
     
     /// This could be made conditional on whether the theme's `GlyphSet`
@@ -99,7 +92,11 @@ public extension SwiftBox {
 //    }
     
     /// Box floor
-    self.buildStructuralLine(.bottom, attrString: &output)
+    self.buildStructuralLine(
+      .bottom,
+      theme: self.config.theme,
+      attrString: &output
+    )
 //    output += self.constructBoxLine(lineType: .bottom)
     
     
@@ -136,6 +133,34 @@ public extension SwiftBox {
 //    
 //    return reserved
 //  }
+  
+  
+  func adjustedBoxWidth(
+    for type: BoxLine
+  ) -> Int {
+    
+    var textPadding: Int
+    
+    switch type {
+      case .structure:
+        /// Don't want spaces in our structural lines
+        textPadding = 0
+        
+      case .text:
+        /// Extra space on either side of text lines
+        textPadding = (self.config.theme.padding * 2)
+    }
+    
+    let structure: Int = self.config.theme.frameStyle.reservedSpace
+    
+    let totalReserved: Int = textPadding + structure
+    let result = self.config.width - totalReserved
+    
+    return result
+  }
+  
+  
+  
   
   
   
