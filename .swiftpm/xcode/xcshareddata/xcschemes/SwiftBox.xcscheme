@@ -21,20 +21,6 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F6A890EA2C7A28790073ADAE"
-               BuildableName = "DrawString.app"
-               BlueprintName = "DrawString"
-               ReferencedContainer = "container:../../_Natives Workspace/DrawString/DrawString.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
