@@ -13,11 +13,23 @@ import AppKit
 
 public extension SwiftBox {
   
-  var contentWidth: Int {
-    let paddingOption: Int = self.config.theme.padding
+  func adjustedBoxWidth(for type: BoxLine) -> Int {
+    
+    var textPadding: Int
+    
+    switch type {
+      case .structure:
+        /// Don't want spaces in our structural lines
+        textPadding = 0
+        
+      case .text:
+        /// Extra space on either side of text lines
+        textPadding = (self.config.theme.padding * 2)
+    }
+    
     let structure: Int = self.config.theme.frameStyle.reservedSpace
     
-    let totalReserved: Int = paddingOption + structure
+    let totalReserved: Int = textPadding + structure
     let result = self.config.width - totalReserved
     
     return result
@@ -56,7 +68,7 @@ public extension SwiftBox {
     
     if let headerText = self.header {
 
-      let headerLines: [String] = headerText.reflowText(width: contentWidth, maxLines: config.headerLineLimit)
+      let headerLines: [String] = headerText.reflowText(width: adjustedBoxWidth(for: .text(.header)), maxLines: config.headerLineLimit)
       
       for line in headerLines {
         
@@ -71,7 +83,7 @@ public extension SwiftBox {
 
     /// Content
 
-    let contentLines: [String] = self.content.reflowText(width: contentWidth, maxLines: config.contentLineLimit)
+    let contentLines: [String] = self.content.reflowText(width: adjustedBoxWidth(for: .text(.content)), maxLines: config.contentLineLimit)
 
     for line in contentLines {
 

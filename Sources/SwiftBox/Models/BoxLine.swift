@@ -77,10 +77,16 @@ public enum BoxLine {
     //
     switch end {
       case .leading:
-        return self.caps.0.character(from: glyphSet)
+        
+        let leading = self.caps.0.character(from: glyphSet)
+//        print("Leading cap: \(leading)")
+        return leading
         
       case .trailing:
-        return self.caps.1.character(from: glyphSet)
+        
+        let trailing = self.caps.1.character(from: glyphSet)
+//        print("Trailing cap: \(trailing)")
+        return trailing
         
     }
   } // END cap

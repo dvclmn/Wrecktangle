@@ -50,9 +50,11 @@ public extension SwiftBox {
     //    } else {
     
     
-    attrString.appendString(horizontalStructure(ofType: lineType), addsLineBreak: true)
+    attrString.appendString(horizontalStructure(ofType: lineType), addsLineBreak: false)
     
+    attrString.appendString(BoxLine.structure(lineType).cap(.trailing, from: config.theme.glyphSet), addsLineBreak: true)
 
+//    print("Here is the Structural line: \(attrString)")
 //    attrString.addLineBreak()
 //    attrString += horizontalStructure(for: lineType)
 //    attrString += lineType.cap(.trailing, with: config)
@@ -78,7 +80,13 @@ public extension SwiftBox {
     
     /// Leading space
     ///
-    attrString.appendString(" ", addsLineBreak: false)
+    
+    let paddingCount = self.config.theme.padding
+    let paddingCharacter = self.config.metrics.invisibles ? Invisibles.space.character : " "
+    
+    let paddingString = String(repeating: paddingCharacter, count: paddingCount)
+    
+    attrString.appendString(paddingString, addsLineBreak: false)
     
     /// Line numbers
     ///
@@ -102,25 +110,15 @@ public extension SwiftBox {
 //    let reflowedString = AttributedString(text, attributes: container(for: .primary))
     attrString += reflowedString
     
-    /// Set up padding characters, to fill out to the end of the box, so the trailing wall is aligned nicely
-    ///
-    let paddingCharacter = self.config.metrics.invisibles ? Invisibles.padding.character : " "
     
-    let reservedSpace: Int = 10
-    
-    let totalWidth = self.config.width - reservedSpace
-//    let totalWidth = self.config.width - calculateReservedHorizontalSpace(for: lineType)
-    let paddingNeeded = max(0, totalWidth - text.count)
-    
-    var paddingString = AttributedString(String(repeating: paddingCharacter, count: paddingNeeded))
 //    paddingString.mergeAttributes(container(for: .tertiary))
     
     /// Add this padding to the output string
     ///
-    attrString += paddingString
+//    attrString += paddingString
     
     /// Add trailing space
-    attrString.appendString(" ", addsLineBreak: false)
+    attrString.appendString(paddingString, addsLineBreak: false)
     
     /// Trailing cap
     attrString.appendString(BoxLine.text(lineType).cap(.trailing, from: config.theme.glyphSet), addsLineBreak: false)
@@ -138,15 +136,13 @@ public extension SwiftBox {
   ///
   private func horizontalStructure(ofType structure: BoxLine.Structure) -> String {
     
+    /// Structural elements
 //    var output = AttributedString()
     
     let partToRepeat = structure.repeatablePart(from: config.theme.glyphSet)
     
-    
-    
-    /// Width set aside for the leading and trailing caps
-    
-    let output = String(repeating: partToRepeat, count: contentWidth)
+    // TODO: The use of `.top` here is arbitrary, as I really only wanted to specify options 'structure or text'. Could use a tidy.
+    let output = String(repeating: partToRepeat, count: adjustedBoxWidth(for: .structure(.top)))
     
 //    output.setAttributes(container(for: .secondary))
     return output

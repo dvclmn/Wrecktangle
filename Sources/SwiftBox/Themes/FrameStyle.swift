@@ -14,14 +14,15 @@ public extension SwiftBox.Theme {
     case intertwined
     
     /// This is the number of characters used to construct this style of frame,
-    /// in the horizontal and vertical dimension, including a space each side.
+    /// in the horizontal and vertical dimension. This does not include any
+    /// space characters, this is handled by the `Theme`s `padding` property.
     ///
     public var reservedSpace: Int {
       switch self {
-        case .single:       4
-        case .double:       6
-        case .shadow:       6
-        case .intertwined:  6
+        case .single:       2
+        case .double:       4
+        case .shadow:       4
+        case .intertwined:  4
       }
     }
   }

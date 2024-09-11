@@ -17,9 +17,9 @@ struct BoxPrintView: View {
     config: SwiftBox.Config (
       theme: .init(glyphSet: .double),
       width: 38,
-      headerLineLimit: 1,
-      contentLineLimit: 3,
-      metrics: .init(widthCounter: .full, lineNumbers: false, invisibles: true)
+      headerLineLimit: 2,
+      contentLineLimit: 9,
+      metrics: .init(widthCounter: .full, lineNumbers: false, invisibles: false)
     )
   )
   
