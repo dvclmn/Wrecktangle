@@ -53,28 +53,28 @@ public extension SwiftBox {
   }
 }
 
-
 public extension SwiftBox.BoxPart {
   
   enum PartMode {
     case oneByOne
     case threeByTwo
   }
-  
-  
+}
+
+
+public extension SwiftBox {
+
   
   /// This provides primary (only?) means to obtain the require `BoxPart`, in the
   /// current user-defined style.
   ///
-  func character(
-    from glyphSet: SwiftBox.Theme.GlyphSet
-  ) -> Character {
+  func character(for part: SwiftBox.BoxPart) -> Character {
     
     /// This identifies the glyphSet from the selected `Theme`
     ///
-    let requestedSet: String = glyphSet.set
+    let requestedSet: String = self.config.theme.glyphSet.set
     
-    if let index = glyphMap[self], index < requestedSet.count {
+    if let index = self.glyphMap[part], index < requestedSet.count {
       
       let startIndex = requestedSet.startIndex
       let requestedGlyphIndex = requestedSet.index(startIndex, offsetBy: index)
@@ -84,7 +84,7 @@ public extension SwiftBox.BoxPart {
       return glyph
       
     } else {
-      fatalError("There was an error retrieving part '\(self)' from the provided GlyphSet '\(glyphSet)'. Please double check the glyph set string and ensure the requested part is present.")
+      fatalError("There was an error retrieving part '\(part)' from the provided GlyphSet '\(requestedSet)'. Please double check the glyph set string and ensure the requested part is present.")
     }
     
   }

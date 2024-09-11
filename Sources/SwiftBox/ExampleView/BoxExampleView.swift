@@ -63,7 +63,19 @@ struct BoxPrintView: View {
     VStack(spacing: 14) {
       
       Text(box01.attributedString)
-      Text(box02.attributedString)
+      HStack {
+        Text("top leading\n" + box01.partPreset(for: .corner(.topLeading), with: .threeByTwo))
+        Text("top trailing\n" + box01.partPreset(for: .corner(.topTrailing), with: .threeByTwo))
+        Text("bottom leading\n" + box01.partPreset(for: .corner(.bottomLeading), with: .threeByTwo))
+        Text("bottom trailing\n" + box01.partPreset(for: .corner(.bottomTrailing), with: .threeByTwo))
+      }
+      HStack {
+        Text("Hor. Ext.\n" + box01.partPreset(for: .horizontal(.exterior), with: .threeByTwo))
+        Text("Hor. Int\n" + box01.partPreset(for: .horizontal(.interior), with: .threeByTwo))
+        Text("Vert. Ext\n" + box01.partPreset(for: .vertical(.exterior), with: .threeByTwo))
+        Text("Vert. Int\n" + box01.partPreset(for: .vertical(.interior), with: .threeByTwo))
+      }
+//      Text(box02.attributedString)
       
     }
     .textSelection(.enabled)

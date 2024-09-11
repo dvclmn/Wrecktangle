@@ -9,26 +9,37 @@
 /// Currently this library can only handle horizontal dividers, not vertical.
 /// So processing line-by-line, vertically, is fairly strightforward.
 ///
-public enum BoxLine {
+public extension SwiftBox {
   
-  case structure(Structure)
-  case text(BoxLine.Text)
-  
-  public enum Structure {
-    case top
-    case divider
-    case bottom
+  enum BoxLine {
+    
+    case structure(Structure)
+    case text(BoxLine.Text)
+    
+    public enum Structure {
+      case top
+      case divider
+      case bottom
+    }
+    
+    public enum Text {
+      case header
+      case content
+    }
+
+    public enum Cap {
+      case leading
+      case trailing
+    }
+    
+    
   }
-  
-  public enum Text {
-    case header
-    case content
-  }
+
   
   /// Leading and trailing line caps
   ///
-  public var caps: (SwiftBox.BoxPart, SwiftBox.BoxPart) {
-    switch self {
+  func caps(for lineType: SwiftBox.BoxLine) -> (leading: SwiftBox.BoxPart, trailing: SwiftBox.BoxPart) {
+    switch lineType {
         
       case .structure(.top):
         (
@@ -54,21 +65,12 @@ public enum BoxLine {
           SwiftBox.BoxPart.vertical(.exterior)
         )
         
-        
     }
   } // END caps
   
-
-  
-  
-  public enum Cap {
-    case leading
-    case trailing
-  }
-  
-  public func cap(
-    _ end: Cap,
-    from glyphSet: SwiftBox.Theme.GlyphSet
+  func cap(
+    _ end: BoxLine.Cap,
+    line: BoxLine
   ) -> Character {
     
     //      var glyphCount: BoxPart.GlyphCount {
@@ -78,17 +80,19 @@ public enum BoxLine {
     switch end {
       case .leading:
         
-        let leading = self.caps.0.character(from: glyphSet)
-//        print("Leading cap: \(leading)")
+        let cap = self.caps(for: line).leading
+        let leading = self.character(for: cap)
+        //        print("Leading cap: \(leading)")
         return leading
         
       case .trailing:
         
-        let trailing = self.caps.1.character(from: glyphSet)
-//        print("Trailing cap: \(trailing)")
+        let cap = self.caps(for: line).trailing
+        let trailing = self.character(for: cap)
+        //        print("Leading cap: \(leading)")
+
         return trailing
         
     }
   } // END cap
 }
-

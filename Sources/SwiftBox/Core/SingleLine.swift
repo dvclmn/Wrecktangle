@@ -45,13 +45,16 @@ public extension SwiftBox {
     theme: Theme,
     attrString: inout AttributedString
   ) {
+    
+    let leading = cap(.leading, line: .structure(lineType))
+    let trailing = cap(.trailing, line: .structure(lineType))
 
     switch theme.frameStyle {
       case .single:
         
         /// Leading cap
         ///
-        let leading = "\(BoxLine.structure(lineType).cap(.leading, from: config.theme.glyphSet))"
+        
         attrString.appendString(leading, addsLineBreak: false)
         
         /// Repeating section
@@ -60,7 +63,8 @@ public extension SwiftBox {
         
         /// Trailing cap
         ///
-        attrString.appendString(BoxLine.structure(lineType).cap(.trailing, from: config.theme.glyphSet), addsLineBreak: true)
+        let trailing = cap(.trailing, line: .structure(lineType))
+        attrString.appendString(trailing, addsLineBreak: true)
         
         
       case .double:
@@ -69,8 +73,8 @@ public extension SwiftBox {
         ///
         /// Leading cap
         ///
-        let leadingCap = "\(BoxLine.structure(lineType).cap(.leading, from: config.theme.glyphSet))"
-        attrString.appendString(leadingCap, addsLineBreak: false)
+        let leading = cap(.leading, line: .structure(lineType))
+        attrString.appendString(leading, addsLineBreak: false)
         
         /// Repeating section
         ///
@@ -86,21 +90,22 @@ public extension SwiftBox {
         
         /// Trailing cap
         ///
-        attrString.appendString(BoxLine.structure(lineType).cap(.trailing, from: config.theme.glyphSet), addsLineBreak: true)
+        
+        attrString.appendString(trailing, addsLineBreak: true)
         
         
         /// # Second line
         ///
         /// Leading vertical wall part (not a cap, that comes after the space)
         ///
-        let interiorCap = BoxPart.vertical(.exterior).character(from: self.config.theme.glyphSet)
+        let interiorCap = character(for: BoxPart.vertical(.exterior))
         attrString.appendString(interiorCap, addsLineBreak: false)
         
         /// Space
         attrString.appendString(" ", addsLineBreak: false)
         
         /// Leading cap
-        attrString.appendString(leadingCap, addsLineBreak: false)
+        attrString.appendString(leading, addsLineBreak: false)
         
         attrString.appendString(
           horizontalStructure(
@@ -110,8 +115,8 @@ public extension SwiftBox {
           addsLineBreak: false
         )
         
-        ///
-        attrString.appendString(BoxLine.structure(lineType).cap(.trailing, from: config.theme.glyphSet), addsLineBreak: false)
+        
+        attrString.appendString(trailing, addsLineBreak: false)
         
         /// Space
         attrString.appendString(" ", addsLineBreak: false)
@@ -142,7 +147,8 @@ public extension SwiftBox {
     attrString: inout AttributedString
   ) {
     
-    
+    let leading = cap(.leading, line: .text(lineType))
+    let trailing = cap(.trailing, line: .text(lineType))
     
     switch theme.frameStyle {
         
@@ -152,7 +158,8 @@ public extension SwiftBox {
         
         /// Set up leading cap
         ///
-        attrString.appendString(BoxLine.text(lineType).cap(.leading, from: config.theme.glyphSet), addsLineBreak: false)
+        
+        attrString.appendString(leading, addsLineBreak: false)
         //    attrString.appendString(lineType.cap(.leading, from: config.theme.glyphSet))
         
         /// Leading space
@@ -198,7 +205,8 @@ public extension SwiftBox {
         attrString.appendString(paddingString, addsLineBreak: false)
         
         /// Trailing cap
-        attrString.appendString(BoxLine.text(lineType).cap(.trailing, from: config.theme.glyphSet), addsLineBreak: false)
+        ///
+        attrString.appendString(trailing, addsLineBreak: false)
         
         /// And ensure that the line breaks, ready for the next one
         attrString.addLineBreak()
@@ -213,9 +221,7 @@ public extension SwiftBox {
         /// Set up leading cap
         ///
         
-        let leadingCap: String = "\( BoxLine.text(lineType).cap(.leading, from: config.theme.glyphSet))"
-        
-        let doubledLeadingCap = leadingCap + " " + leadingCap
+        let doubledLeadingCap = "\(leading)" + " " + "\(leading)"
         
         attrString.appendString(doubledLeadingCap, addsLineBreak: false)
         
@@ -241,9 +247,8 @@ public extension SwiftBox {
         
         /// Trailing cap
         ///
-        let trailingCap: String = "\(BoxLine.text(lineType).cap(.trailing, from: config.theme.glyphSet))"
         
-        let trailingDoubleCap = trailingCap + " " + trailingCap
+        let trailingDoubleCap = "\(trailing)" + " " + "\(trailing)"
         
         attrString.appendString(trailingDoubleCap, addsLineBreak: false)
         
@@ -275,7 +280,9 @@ public extension SwiftBox {
     /// Structural elements
 //    var output = AttributedString()
     
-    let partToRepeat = structure.repeatablePart(from: config.theme.glyphSet)
+    let partToRepeat = character(for: .horizontal(.exterior))
+    
+    
     
     /// Default
     
