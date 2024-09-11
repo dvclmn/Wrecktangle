@@ -63,14 +63,14 @@ struct BoxPrintView: View {
     VStack(spacing: 14) {
       
       Text(box01.attributedString)
-            Text(box02.attributedString)
+      Text(box02.attributedString)
       
     }
     .textSelection(.enabled)
     
     .monospaced()
     //    .padding(40)
-    .frame(width: 400, height: 600)
+    .frame(width: 370, height: 600)
     .background(.black.opacity(0.6))
     
   }

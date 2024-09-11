@@ -43,17 +43,7 @@ public extension SwiftBox {
       
     }
     
-    public enum Corner: Hashable {
-      /// ┏
-      case topLeading
-      /// ┓
-      case topTrailing
-      /// ┗
-      case bottomLeading
-      /// ┛
-      case bottomTrailing
-      
-    }
+
     
     public enum Location {
       case interior
@@ -65,6 +55,13 @@ public extension SwiftBox {
 
 
 public extension SwiftBox.BoxPart {
+  
+  enum PartMode {
+    case oneByOne
+    case threeByTwo
+  }
+  
+  
   
   /// This provides primary (only?) means to obtain the require `BoxPart`, in the
   /// current user-defined style.
@@ -85,11 +82,11 @@ public extension SwiftBox.BoxPart {
       let glyph: Character = requestedSet[requestedGlyphIndex]
       
       return glyph
-
+      
     } else {
       fatalError("There was an error retrieving part '\(self)' from the provided GlyphSet '\(glyphSet)'. Please double check the glyph set string and ensure the requested part is present.")
     }
-
+    
   }
   
   
@@ -111,32 +108,32 @@ public extension SwiftBox.BoxPart {
     [
       .horizontal(.exterior):     00, /// `━` horizontal exterior
       
-      .horizontal(.interior):     02, /// `─` horizontal interior
+        .horizontal(.interior):     02, /// `─` horizontal interior
       
-      .vertical(.exterior):       04, /// `┃` vertical exterior
+        .vertical(.exterior):       04, /// `┃` vertical exterior
       
-      .vertical(.interior):       06, /// `│` vertical interior
+        .vertical(.interior):       06, /// `│` vertical interior
       
-      .join(.top):                08, /// `┯` join top
+        .join(.top):                08, /// `┯` join top
       
-      .join(.bottom):             10, /// `┷` join bottom
+        .join(.bottom):             10, /// `┷` join bottom
       
-      .join(.leading):            12, /// `┠` join leading
+        .join(.leading):            12, /// `┠` join leading
       
-      .join(.trailing):           14, /// `┨` join trailing
+        .join(.trailing):           14, /// `┨` join trailing
       
-      .join(.cross):              16, /// `┼` join cross
+        .join(.cross):              16, /// `┼` join cross
       
-      .corner(.topLeading):       18, /// `┏` corner top leading
+        .corner(.topLeading):       18, /// `┏` corner top leading
       
-      .corner(.topTrailing):      20, /// `┓` corner top trailing
+        .corner(.topTrailing):      20, /// `┓` corner top trailing
       
-      .corner(.bottomLeading):    22, /// `┗` corner bottom leading
+        .corner(.bottomLeading):    22, /// `┗` corner bottom leading
       
-      .corner(.bottomTrailing):   24, /// `┛` corner bottom trailing
+        .corner(.bottomTrailing):   24, /// `┛` corner bottom trailing
       
     ]
-       
+    
   }
   
   //  public enum GlyphCount {
