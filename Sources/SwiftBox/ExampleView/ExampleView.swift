@@ -15,11 +15,11 @@ struct BoxPrintView: View {
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: SwiftBox.Config (
-      theme: .init(glyphSet: .sharp),
+      theme: .init(glyphSet: .double),
       width: 38,
-      headerLineLimit: 2,
-      contentLineLimit: 6,
-      metrics: .init(widthCounter: .full, lineNumbers: true, invisibles: true)
+      headerLineLimit: 1,
+      contentLineLimit: 3,
+      metrics: .init(widthCounter: .full, lineNumbers: false, invisibles: true)
     )
   )
   
@@ -58,7 +58,7 @@ struct BoxPrintView: View {
     
     .monospaced()
     //    .padding(40)
-    .frame(width: 400, height: 720)
+    .frame(width: 400, height: 600)
     .background(.black.opacity(0.6))
     
   }

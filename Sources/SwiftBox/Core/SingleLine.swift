@@ -9,49 +9,34 @@ import Foundation
 
 public extension SwiftBox {
   
-//  func buildCorner(_ corner: BoxPart.Corner) -> AttributedString {
-//    
-//    var output = AttributedString()
-//    
-//    /// For now, for simplicity, a corner is a 2x2 grid — 4 characters total
-//    ///
-//    switch corner {
-//      case .topLeading:
-//        
-//        
-//        
-//        output += BoxPart.corner(corner).character(with: self.config)
-//        
-//      case .topTrailing:
-//
-//      case .bottomLeading:
-//
-//      case .bottomTrailing:
-//        
-//        
-//        return output
-//    }
-//
-//    
-//  }
-  
+  func buildLine(
+    type: BoxLine,
+    string: String?,
+    attrString: inout AttributedString
+  ) {
+    
+    switch type {
+      case .structure(let lineType):
+        
+        buildStructuralLine(lineType, attrString: &attrString)
+        
+      case .text(let lineType):
+        
+        if let string = string {
+          buildTextLine(lineType, text: string, attrString: &attrString)
+        }
+      
+    }
+    
+  }
+
   func buildStructuralLine(
     _ lineType: BoxLine.Structure,
     attrString: inout AttributedString
   ) {
     
-    switch lineType {
-    case .top:
-        attrString.appendString(BoxLine.structure(.top).cap(.leading, from: config.theme.glyphSet))
-      
-      
-    case .divider:
-        attrString.appendString(BoxLine.structure(.divider).cap(.leading, from: config.theme.glyphSet))
-      
-      
-    case .bottom:
-        attrString.appendString(BoxLine.structure(.bottom).cap(.leading, from: config.theme.glyphSet))
-    }
+    /// 1. Leading cap
+    attrString.appendString(BoxLine.structure(lineType).cap(.leading, from: config.theme.glyphSet), addsLineBreak: false)
     
     //    if self.config.extraFrame {
     //
@@ -64,10 +49,10 @@ public extension SwiftBox {
     //
     //    } else {
     
-//    attrString += lineType.cap(.leading, with: config)
     
-//    
-    attrString.appendString(horizontalStructure(ofType: lineType))
+    attrString.appendString(horizontalStructure(ofType: lineType), addsLineBreak: true)
+    
+
 //    attrString.addLineBreak()
 //    attrString += horizontalStructure(for: lineType)
 //    attrString += lineType.cap(.trailing, with: config)
@@ -78,7 +63,7 @@ public extension SwiftBox {
   }
   
   func buildTextLine(
-    _ lineType: BoxLine,
+    _ lineType: BoxLine.Text,
     text: String,
     /// Line number support coming later
 //    lineCount: Int? = nil,
@@ -88,12 +73,12 @@ public extension SwiftBox {
     
     /// Set up leading cap
     ///
-    attrString.appendString(lineType.cap(.leading, from: config.theme.glyphSet))
-    attrString.appendString(lineType.cap(.leading, from: config.theme.glyphSet))
+    attrString.appendString(BoxLine.text(lineType).cap(.leading, from: config.theme.glyphSet), addsLineBreak: false)
+//    attrString.appendString(lineType.cap(.leading, from: config.theme.glyphSet))
     
     /// Leading space
     ///
-    attrString.appendString(" ")
+    attrString.appendString(" ", addsLineBreak: false)
     
     /// Line numbers
     ///
@@ -121,7 +106,10 @@ public extension SwiftBox {
     ///
     let paddingCharacter = self.config.metrics.invisibles ? Invisibles.padding.character : " "
     
-    let totalWidth = self.config.width - calculateReservedHorizontalSpace(for: lineType)
+    let reservedSpace: Int = 10
+    
+    let totalWidth = self.config.width - reservedSpace
+//    let totalWidth = self.config.width - calculateReservedHorizontalSpace(for: lineType)
     let paddingNeeded = max(0, totalWidth - text.count)
     
     var paddingString = AttributedString(String(repeating: paddingCharacter, count: paddingNeeded))
@@ -132,10 +120,10 @@ public extension SwiftBox {
     attrString += paddingString
     
     /// Add trailing space
-    attrString.appendString(" ")
+    attrString.appendString(" ", addsLineBreak: false)
     
     /// Trailing cap
-    attrString.appendString(lineType.cap(.trailing, from: config.theme.glyphSet))
+    attrString.appendString(BoxLine.text(lineType).cap(.trailing, from: config.theme.glyphSet), addsLineBreak: false)
     
     /// And ensure that the line breaks, ready for the next one
     attrString.addLineBreak()
@@ -158,11 +146,7 @@ public extension SwiftBox {
     
     /// Width set aside for the leading and trailing caps
     
-    let reservedSpace: Int =  2
-//    let reservedSpace: Int = self.config.extraFrame ? 4 : 2
-    let repeatCount: Int = self.config.width - reservedSpace
-    
-    let output = String(repeating: partToRepeat, count: repeatCount)
+    let output = String(repeating: partToRepeat, count: contentWidth)
     
 //    output.setAttributes(container(for: .secondary))
     return output
