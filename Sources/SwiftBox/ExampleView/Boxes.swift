@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-extension SwiftBox {
+public extension SwiftBox {
   
   private static let boxTests: String = """
   

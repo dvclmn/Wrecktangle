@@ -7,9 +7,9 @@
 
 import Foundation
 
-extension SwiftBox {
+public extension SwiftBox {
   
-  public enum BoxPart: Hashable {
+  enum BoxPart: Hashable {
     
     case horizontal(Location = .exterior)
     
@@ -64,7 +64,7 @@ extension SwiftBox {
 }
 
 
-extension SwiftBox.BoxPart {
+public extension SwiftBox.BoxPart {
   
   /// This provides primary (only?) means to obtain the require `BoxPart`, in the
   /// current user-defined style.

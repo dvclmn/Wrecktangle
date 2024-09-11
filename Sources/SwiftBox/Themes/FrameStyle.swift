@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 24/8/2024.
 //
 
-extension SwiftBox.Theme {
+public extension SwiftBox.Theme {
   
   public enum FrameStyle {
     case single

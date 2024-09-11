@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension SwiftBox {
+public extension SwiftBox {
   
 //  func buildCorner(_ corner: BoxPart.Corner) -> AttributedString {
 //    

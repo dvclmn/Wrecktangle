@@ -7,9 +7,9 @@
 
 import TextCore
 
-extension SwiftBox.Config {
+public extension SwiftBox.Config {
   
-  public struct Metrics {
+  struct Metrics {
     var widthCounter: TextCore.WidthCounterStyle
     var lineNumbers: Bool
     var invisibles: Bool

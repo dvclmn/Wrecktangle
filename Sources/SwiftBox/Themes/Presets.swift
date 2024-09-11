@@ -8,7 +8,7 @@
 import SwiftUI
 import BaseStyles
 
-extension SwiftBox.Theme.ColourSet {
+public extension SwiftBox.Theme.ColourSet {
   
   ///
   /// ```swift
@@ -16,21 +16,21 @@ extension SwiftBox.Theme.ColourSet {
   /// let purpleColorSet = ColorSet.purple
   /// let matrixColorSet = ColorSet.matrix
   /// ```
-  public static let `default`: ColourSet = ColourSet(
+  static let `default`: Self = Self(
     primary: Color.primary,
     secondary: Color.chalkBlue,
     tertiary: Color.tertiary,
     accent: Color.peach
   )
   
-  public static let purple: ColourSet = ColourSet(
+  static let purple: Self = Self(
     primary: Color.lavendar,
     secondary: Color.secondary,
     tertiary: Color.tertiary,
     accent: Color.peach
   )
   
-  public static let matrix: ColourSet = ColourSet(
+  static let matrix: Self = Self(
     primary: Color.green,
     secondary: Color.secondary,
     tertiary: Color.tertiary,

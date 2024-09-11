@@ -8,8 +8,9 @@
 import SwiftUI
 import BaseStyles
 
-extension SwiftBox {
-  public struct Theme {
+public extension SwiftBox {
+  
+  struct Theme {
     
     var glyphSet: GlyphSet
     var colour: ColourSet

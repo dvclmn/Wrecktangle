@@ -7,11 +7,11 @@
 
 import Foundation
 
-extension SwiftBox.Theme {
+public extension SwiftBox.Theme {
   
   
   
-  public struct GlyphSet {
+  struct GlyphSet {
     
     var set: String
     
@@ -43,7 +43,7 @@ extension SwiftBox.Theme {
 }
 
 
-//extension SwiftBox {
+//public extension SwiftBox {
   
 //  public protocol BoxFrame {
 //    func glyph(for part: SwiftBox.BoxPart) -> String
@@ -64,7 +64,7 @@ extension SwiftBox.Theme {
 //  
 //}
 
-//extension SwiftBox.BoxFrame where Self == SwiftBox.CustomBoxFrame {
+//public extension SwiftBox.BoxFrame where Self == SwiftBox.CustomBoxFrame {
   
 //  public static var singleLine: BoxFrame {
 //    SwiftBox.CustomBoxFrame(glyphMap: [

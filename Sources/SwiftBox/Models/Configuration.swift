@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 23/8/2024.
 //
 
-extension SwiftBox {
+public extension SwiftBox {
   
   /// A structure that defines the appearance and behavior of a `SwiftBox`.
   ///
@@ -13,7 +13,7 @@ extension SwiftBox {
   /// such as its theme, width, and content limitations.
   ///
   ///
-  public struct Config {
+  struct Config {
 
 
     /// The visual theme of the box.
@@ -71,8 +71,5 @@ extension SwiftBox {
     ///
     public static let `default` = Config()
   }
-
-
-
 
 }

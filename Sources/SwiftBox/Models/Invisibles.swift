@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 
-extension SwiftBox {
+public extension SwiftBox {
   
-  public enum Invisibles {
+  enum Invisibles {
     case line(LineType)
     case space
     case tab

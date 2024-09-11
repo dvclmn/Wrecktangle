@@ -8,12 +8,12 @@
 import SwiftUI
 import BaseStyles
 
-extension SwiftBox {
+//public extension SwiftBox {
   
   
   
   
-}
+//}
 
 
 

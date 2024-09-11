@@ -7,11 +7,11 @@
 
 import Foundation
 
-public typealias BoxLine = SwiftBox.BoxLine
+//public typealias BoxLine = SwiftBox.BoxLine
 //public typealias BoxFrame = SwiftBox.BoxFrame
-public typealias GlyphSet = SwiftBox.Theme.GlyphSet
-public typealias ColourSet = SwiftBox.Theme.ColourSet
-public typealias FrameStyle = SwiftBox.Theme.FrameStyle
+//public typealias GlyphSet = SwiftBox.Theme.GlyphSet
+//public typealias ColourSet = SwiftBox.Theme.ColourSet
+//public typealias FrameStyle = SwiftBox.Theme.FrameStyle
 
 public struct SwiftBox {
   
@@ -38,7 +38,7 @@ public struct SwiftBox {
   ///
   public enum BoxLine {
     
-    case structure(BoxLine.Structure)
+    case structure(Structure)
     case text(BoxLine.Text)
     
     public enum Structure {
@@ -54,42 +54,42 @@ public struct SwiftBox {
     
     /// Leading and trailing line caps
     ///
-    public var caps: (BoxPart, BoxPart) {
+    public var caps: (SwiftBox.BoxPart, SwiftBox.BoxPart) {
       switch self {
           
         case .structure(.top):
           (
-            BoxPart.corner(.topLeading),
-            BoxPart.corner(.topTrailing)
+            SwiftBox.BoxPart.corner(.topLeading),
+            SwiftBox.BoxPart.corner(.topTrailing)
           )
 
         case .structure(.divider):
           (
-            BoxPart.join(.leading),
-            BoxPart.join(.trailing)
+            SwiftBox.BoxPart.join(.leading),
+            SwiftBox.BoxPart.join(.trailing)
           )
           
         case .structure(.bottom):
           (
-            BoxPart.corner(.bottomLeading),
-            BoxPart.corner(.bottomTrailing)
+            SwiftBox.BoxPart.corner(.bottomLeading),
+            SwiftBox.BoxPart.corner(.bottomTrailing)
           )
           
         case .text(.header), .text(.content):
           (
-            BoxPart.vertical(.exterior),
-            BoxPart.vertical(.exterior)
+            SwiftBox.BoxPart.vertical(.exterior),
+            SwiftBox.BoxPart.vertical(.exterior)
           )
          
           
       }
     } // END caps
     
-    public func repeatableString(for config: Config) -> String {
+    public func repeatableString(for config: SwiftBox.Config) -> String {
       
-      let horizontalExterior: String = BoxPart.horizontal(.exterior).character(with: config).asString
+      let horizontalExterior: String = SwiftBox.BoxPart.horizontal(.exterior).character(with: config).asString
       
-      let horizontalInterior: String = BoxPart.horizontal(.interior).character(with: config).asString
+      let horizontalInterior: String = SwiftBox.BoxPart.horizontal(.interior).character(with: config).asString
       
       switch self {
           
@@ -115,7 +115,7 @@ public struct SwiftBox {
     
     public func cap(
       _ end: Cap,
-      with config: Config
+      with config: SwiftBox.Config
     ) -> AttributedString {
       
 //      var glyphCount: BoxPart.GlyphCount {

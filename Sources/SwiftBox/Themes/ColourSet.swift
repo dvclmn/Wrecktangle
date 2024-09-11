@@ -9,9 +9,9 @@ import SwiftUI
 import IdentifiedCollections
 import BaseStyles
 
-extension SwiftBox.Theme {
+public extension SwiftBox.Theme {
   
-  public struct ColourSet {
+  struct ColourSet {
     private var colors: IdentifiedArrayOf<Attributes>
     
     public init(
@@ -66,7 +66,7 @@ extension SwiftBox.Theme {
     }
   }
   
-  public enum ColourCategory: String, Identifiable {
+  enum ColourCategory: String, Identifiable {
     case primary    /// Text
     case secondary  /// Box frame
     case tertiary   /// Invisibles
@@ -88,7 +88,7 @@ extension SwiftBox.Theme {
   /// We can rely on the computed property `container` to return an *actual*
   /// container when we need it.
   ///
-  public struct Attributes: Identifiable {
+  struct Attributes: Identifiable {
     public let id: ColourCategory
     var foreground: Color
     var background: Color?
