@@ -20,7 +20,7 @@ public extension SwiftBox.Theme {
     public var reservedSpace: Int {
       switch self {
         case .single:       2
-        case .double:       4
+        case .double:       6
         case .shadow:       4
         case .intertwined:  4
       }

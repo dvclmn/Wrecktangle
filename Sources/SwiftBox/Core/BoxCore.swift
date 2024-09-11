@@ -91,6 +91,7 @@ public extension SwiftBox {
 //      output += self.constructBoxLine(" ", lineType: .content)
 //    }
     
+    
     /// Box floor
     self.buildStructuralLine(
       .bottom,
