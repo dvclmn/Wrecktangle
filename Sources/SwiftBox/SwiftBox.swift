@@ -7,12 +7,6 @@
 
 import Foundation
 
-//public typealias BoxLine = SwiftBox.BoxLine
-//public typealias BoxFrame = SwiftBox.BoxFrame
-//public typealias GlyphSet = SwiftBox.Theme.GlyphSet
-//public typealias ColourSet = SwiftBox.Theme.ColourSet
-//public typealias FrameStyle = SwiftBox.Theme.FrameStyle
-
 public struct SwiftBox {
   
   var header: String?
@@ -33,8 +27,8 @@ public struct SwiftBox {
     self.config = config
   }
   
-  /// Currently this implementaiton can only handle horizontal dividers, not vertical.
-  /// So we can process line-by-line vertically in a fairly straightforward way.
+  /// Currently this library can only handle horizontal dividers, not vertical.
+  /// So processing line-by-line, vertically, is fairly strightforward.
   ///
   public enum BoxLine {
     
@@ -87,9 +81,9 @@ public struct SwiftBox {
     
     public func repeatableString(for config: SwiftBox.Config) -> String {
       
-      let horizontalExterior: String = SwiftBox.BoxPart.horizontal(.exterior).character(with: config).asString
+      let horizontalExterior: String = SwiftBox.BoxPart.horizontal(.exterior).character(with: config).string
       
-      let horizontalInterior: String = SwiftBox.BoxPart.horizontal(.interior).character(with: config).asString
+      let horizontalInterior: String = SwiftBox.BoxPart.horizontal(.interior).character(with: config).string
       
       switch self {
           

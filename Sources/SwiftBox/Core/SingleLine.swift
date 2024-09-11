@@ -87,7 +87,8 @@ public extension SwiftBox {
   func buildTextLine(
     _ lineType: BoxLine,
     text: String,
-    lineCount: Int? = nil,
+    /// Line number support coming later
+//    lineCount: Int? = nil,
     attrString: inout AttributedString
   ) {
     
@@ -104,14 +105,14 @@ public extension SwiftBox {
     /// Line numbers
     ///
     
-    if let lineCount = lineCount, self.config.metrics.lineNumbers {
-      if lineCount <= 9 {
-        attrString.appendString(" ")
-      }
-      attrString.appendString(lineCount.description)
-      attrString.appendString("  ")
-      
-    }
+//    if let lineCount = lineCount, self.config.metrics.lineNumbers {
+//      if lineCount <= 9 {
+//        attrString.appendString(" ")
+//      }
+//      attrString.appendString(lineCount.description)
+//      attrString.appendString("  ")
+//      
+//    }
 
     /// Add the reflowed text
     ///

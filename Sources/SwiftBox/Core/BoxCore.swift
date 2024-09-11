@@ -20,9 +20,6 @@ public extension SwiftBox {
     
     var output = AttributedString()
     
-    /// Starting the count at 3 for the box roof, divider and floor
-    var lineCount: Int = self.config.theme.frameStyle != .single ? 7 : 3
-    
     /// Width counter
     if self.config.metrics.widthCounter != .off {
       output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
@@ -40,7 +37,6 @@ public extension SwiftBox {
       let headerWidth: Int = self.config.width - calculateReservedHorizontalSpace(for: .text(.header))
       let headerLines: [String] = headerText.reflowText(width: headerWidth, maxLines: config.headerLineLimit)
       for line in headerLines {
-        lineCount += 1
         self.buildTextLine(.text(.header), text: line, attrString: &output)
         //      output += self.constructBoxLine(line, lineType: .header)
       }
@@ -55,10 +51,9 @@ public extension SwiftBox {
     let contentLines: [String] = self.content.reflowText(width: contentWidth, maxLines: config.contentLineLimit)
     var contentLineCount: Int = 0
     for line in contentLines {
-      lineCount += 1
       contentLineCount += 1
-      self.buildTextLine(.text(.content), text: line, lineCount: lineCount, attrString: &output)
-//      output += self.constructBoxLine(line, lineType: .content, lineCount: contentLineCount)
+      self.buildTextLine(.text(.content), text: line, attrString: &output)
+//      output += self.constructBoxLine(line, lineType: .content)
     }
     
     /// This could be made conditional on whether the theme's `GlyphSet`

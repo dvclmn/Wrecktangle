@@ -15,9 +15,10 @@ struct BoxPrintView: View {
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: SwiftBox.Config (
-      theme: .init(glyphSet: .double),
+      theme: .init(glyphSet: .sharp),
       width: 38,
-      contentLineLimit: 5,
+      headerLineLimit: 2,
+      contentLineLimit: 6,
       metrics: .init(widthCounter: .full, lineNumbers: true, invisibles: true)
     )
   )

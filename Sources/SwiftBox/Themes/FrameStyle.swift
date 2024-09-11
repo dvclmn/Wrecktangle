@@ -7,11 +7,10 @@
 
 public extension SwiftBox.Theme {
   
-  public enum FrameStyle {
+  enum FrameStyle {
     case single
     case double
     case shadow
     case intertwined
   }
-  
 }

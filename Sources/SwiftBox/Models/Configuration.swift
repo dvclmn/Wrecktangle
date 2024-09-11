@@ -15,11 +15,9 @@ public extension SwiftBox {
   ///
   struct Config {
 
-
     /// The visual theme of the box.
     ///
     public var theme: Theme
-    
     
     /// The width of the box in characters.
     ///
@@ -28,14 +26,12 @@ public extension SwiftBox {
     ///
     public var width: Int
     
-    
     /// The maximum number of lines for the header.
     ///
     /// If set, the header will be truncated if it exceeds this number of lines.
     /// Set to `nil` for no limit.
     ///
     public var headerLineLimit: Int?
-    
     
     /// The maximum number of lines for the main content.
     ///
@@ -44,10 +40,7 @@ public extension SwiftBox {
     ///
     public var contentLineLimit: Int?
     
-    
-    /// A boolean value that determines whether to display metrics about the box.
-    ///
-    /// When `true`, information such as character count and line count will be shown.
+    /// Display metadata about the box itself
     ///
     public var metrics: Metrics
     
@@ -65,7 +58,6 @@ public extension SwiftBox {
       self.metrics = metrics
     }
     
-
 
     /// The default configuration for a `SwiftBox`.
     ///

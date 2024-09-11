@@ -23,6 +23,5 @@ public extension SwiftBox.Config {
       self.lineNumbers = lineNumbers
       self.invisibles = invisibles
     }
-
   }
 }

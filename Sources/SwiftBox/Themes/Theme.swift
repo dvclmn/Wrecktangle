@@ -13,6 +13,8 @@ public extension SwiftBox {
   struct Theme {
     
     var glyphSet: GlyphSet
+    
+    /// This is only relevant for SwiftUI views, not the console output
     var colour: ColourSet
     var frameStyle: FrameStyle
     var padding: Int
@@ -28,6 +30,5 @@ public extension SwiftBox {
       self.frameStyle = frameStyle
       self.padding = padding
     }
-    
   }
 }
