@@ -69,26 +69,27 @@ public extension SwiftBox.BoxPart {
   /// This provides primary (only?) means to obtain the require `BoxPart`, in the
   /// current user-defined style.
   ///
-  public func character(
-    with config: SwiftBox.Config,
-    container: AttributeContainer? = nil
-  ) -> AttributedString {
-    
-    var output = AttributedString()
+  func character(
+    from glyphSet: SwiftBox.Theme.GlyphSet
+  ) -> Character {
     
     /// This identifies the glyphSet from the selected `Theme`
     ///
-    let glyphSet = config.theme.glyphSet.set
+    let requestedSet: String = glyphSet.set
     
-    if let index = glyphMap[self], index < glyphSet.count {
-      let glyph = String(glyphSet[glyphSet.index(glyphSet.startIndex, offsetBy: index)])
-      output.appendString(glyph)
+    if let index = glyphMap[self], index < requestedSet.count {
+      
+      let startIndex = requestedSet.startIndex
+      let requestedGlyphIndex = requestedSet.index(startIndex, offsetBy: index)
+      
+      let glyph: Character = requestedSet[requestedGlyphIndex]
+      
+      return glyph
+
+    } else {
+      fatalError("There was an error retrieving part '\(self)' from the provided GlyphSet '\(glyphSet)'. Please double check the glyph set string and ensure the requested part is present.")
     }
-    
-    if let container = container {
-      output.setAttributes(container)
-    }
-    return output
+
   }
   
   

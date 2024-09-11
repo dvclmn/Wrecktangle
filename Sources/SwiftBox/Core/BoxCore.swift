@@ -9,6 +9,7 @@ import Foundation
 import SwiftUICore
 import BaseHelpers
 import TextCore
+import AppKit
 
 public extension SwiftBox {
   
@@ -18,17 +19,20 @@ public extension SwiftBox {
   
   func drawBox() -> AttributedString {
     
+    /// We start off with a fresh, blank attr. string. The 'build process' is based
+    /// on concatenation, added section-by-section, starting from the top.
     var output = AttributedString()
     
-    /// Width counter
+    /// Add a width counter, if needed
     if self.config.metrics.widthCounter != .off {
       output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
     }
     
     /// Box roof
-//    output += self.constructBoxLine(lineType: .top)
+    self.buildStructuralLine(.top, attrString: &output)
     
-    self.buildStructuralLine(.structure(.top), attrString: &output)
+    output = output.quickHighlight
+    
     
     /// Header
     
@@ -43,7 +47,7 @@ public extension SwiftBox {
     }
     
     /// Divider
-    self.buildStructuralLine(.structure(.divider), attrString: &output)
+    self.buildStructuralLine(.divider, attrString: &output)
 //    output += self.constructBoxLine(lineType: .divider)
     
     /// Content
@@ -65,8 +69,10 @@ public extension SwiftBox {
 //    }
     
     /// Box floor
-    self.buildStructuralLine(.structure(.bottom), attrString: &output)
+    self.buildStructuralLine(.bottom, attrString: &output)
 //    output += self.constructBoxLine(lineType: .bottom)
+    
+    
     
     return output
   }

@@ -36,36 +36,29 @@ public extension SwiftBox {
 //  }
   
   func buildStructuralLine(
-    _ lineType: BoxLine,
+    _ lineType: BoxLine.Structure,
     attrString: inout AttributedString
   ) {
     
     switch lineType {
-    case .structure(.top):
-      
-      attrString += lineType.cap(.leading, with: config)
-      
-      
-    case .structure(.divider):
-      
-      attrString += lineType.cap(.leading, with: config)
+    case .top:
+        attrString.appendString(BoxLine.structure(.top).cap(.leading, from: config.theme.glyphSet))
       
       
-    case .structure(.bottom):
+    case .divider:
+        attrString.appendString(BoxLine.structure(.divider).cap(.leading, from: config.theme.glyphSet))
       
-      attrString += lineType.cap(.leading, with: config)
       
-
-    case .text:
-      break
+    case .bottom:
+        attrString.appendString(BoxLine.structure(.bottom).cap(.leading, from: config.theme.glyphSet))
     }
     
     //    if self.config.extraFrame {
     //
     //      string += lineType.cap(.leading, with: config)
-    //      string += repeatingPart(for: lineType)
+    //      string += horizontalStructure(for: lineType)
     //      string.addLineBreak()
-    //      string += repeatingPart(for: lineType)
+    //      string += horizontalStructure(for: lineType)
     //      string += lineType.cap(.trailing, with: config)
     //      string.addLineBreak()
     //
@@ -74,9 +67,9 @@ public extension SwiftBox {
 //    attrString += lineType.cap(.leading, with: config)
     
 //    
-//    attrString += repeatingPart(for: lineType)
+    attrString.appendString(horizontalStructure(ofType: lineType))
 //    attrString.addLineBreak()
-//    attrString += repeatingPart(for: lineType)
+//    attrString += horizontalStructure(for: lineType)
 //    attrString += lineType.cap(.trailing, with: config)
 //    attrString.addLineBreak()
 
@@ -95,8 +88,8 @@ public extension SwiftBox {
     
     /// Set up leading cap
     ///
-    attrString += lineType.cap(.leading, with: config)
-    attrString += lineType.cap(.leading, with: config)
+    attrString.appendString(lineType.cap(.leading, from: config.theme.glyphSet))
+    attrString.appendString(lineType.cap(.leading, from: config.theme.glyphSet))
     
     /// Leading space
     ///
@@ -142,7 +135,7 @@ public extension SwiftBox {
     attrString.appendString(" ")
     
     /// Trailing cap
-    attrString += lineType.cap(.trailing, with: config)
+    attrString.appendString(lineType.cap(.trailing, from: config.theme.glyphSet))
     
     /// And ensure that the line breaks, ready for the next one
     attrString.addLineBreak()
@@ -155,17 +148,21 @@ public extension SwiftBox {
   
   /// This function should *only* return the repeating part, no caps
   ///
-  private func repeatingPart(for line: BoxLine) -> AttributedString {
+  private func horizontalStructure(ofType structure: BoxLine.Structure) -> String {
     
-    var output = AttributedString()
-    let partToRepeat = line.repeatableString(for: config)
+//    var output = AttributedString()
+    
+    let partToRepeat = structure.repeatablePart(from: config.theme.glyphSet)
+    
+    
+    
     /// Width set aside for the leading and trailing caps
     
     let reservedSpace: Int =  2
 //    let reservedSpace: Int = self.config.extraFrame ? 4 : 2
     let repeatCount: Int = self.config.width - reservedSpace
     
-    output += AttributedString(String(repeating: partToRepeat, count: repeatCount))
+    let output = String(repeating: partToRepeat, count: repeatCount)
     
 //    output.setAttributes(container(for: .secondary))
     return output
