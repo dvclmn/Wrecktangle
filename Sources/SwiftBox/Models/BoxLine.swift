@@ -14,12 +14,20 @@ public extension SwiftBox {
   enum BoxLine {
     
     case top
-    case header(String)
+    case header
     case divider
-    case content(String)
+    case content
     case bottom
     
-
+    public var isStructural: Bool {
+      switch self {
+        case .top, .divider, .bottom:
+          true
+        default:
+          false
+      }
+    }
+    
   }
 
   

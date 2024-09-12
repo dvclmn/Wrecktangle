@@ -7,39 +7,27 @@
 
 import Foundation
 
-public extension SwiftBox.Theme {
+public extension SwiftBox {
   
-  
-  
-  struct GlyphSet {
+    //                                      0 0 0 0 0 1 1 1 1 1 2 2 2
+    //                                      0 2 4 6 8 0 2 4 6 8 0 2 4
+    static let other =       GlyphSet(set: "─ ─ │ │ ┯ ┷ ┠ ┨ ┼ ╱ ╲ ╲ ╱")
     
-    var set: String
+    static let sharp =       GlyphSet(set: "━ ─ ┃ │ ┯ ┷ ┠ ┨ ┼ ┏ ┓ ┗ ┛")
     
-    public init(set: String) {
-      self.set = set
-    }
+    static let sharpThin =   GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ┌ ┐ └ ┘")
     
+    static let sharpBold =   GlyphSet(set: "━ ━ ┃ ┃ ┳ ┻ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
     
+    static let rounded =     GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
     
-    //                                             0 0 0 0 0 1 1 1 1 1 2 2 2
-    //                                             0 2 4 6 8 0 2 4 6 8 0 2 4
-    public static let other =       GlyphSet(set: "─ ─ │ │ ┯ ┷ ┠ ┨ ┼ ╱ ╲ ╲ ╱")
+    static let double =      GlyphSet(set: "═ ─ ║ │ ╤ ╧ ╟ ╢ ┼ ╔ ╗ ╚ ╝")
     
-    public static let sharp =       GlyphSet(set: "━ ─ ┃ │ ┯ ┷ ┠ ┨ ┼ ┏ ┓ ┗ ┛")
+    static let ascii =       GlyphSet(set: "- - | | + + + + + + + + +")
     
-    public static let sharpThin =   GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ┌ ┐ └ ┘")
+    static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ┐ └ ╯")
     
-    public static let sharpBold =   GlyphSet(set: "━ ━ ┃ ┃ ┳ ┻ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
-    
-    public static let rounded =     GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
-    
-    public static let double =      GlyphSet(set: "═ ─ ║ │ ╤ ╧ ╟ ╢ ┼ ╔ ╗ ╚ ╝")
-    
-    public static let ascii =       GlyphSet(set: "- - | | + + + + + + + + +")
-    
-    public static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ┐ └ ╯")
-    
-  } // END glyph set
+
 }
 
 

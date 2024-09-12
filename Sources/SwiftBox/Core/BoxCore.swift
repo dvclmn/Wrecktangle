@@ -21,7 +21,7 @@ public extension SwiftBox {
     
     /// Add a width counter, according to user's preference ()
     output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
-
+    
     /// Box roof
     self.buildLine(
       type: .top,
@@ -30,15 +30,15 @@ public extension SwiftBox {
       attrString: &output
     )
     
-//    output.quickHighlight()
+    //    output.quickHighlight()
     
     /// Content width, adjusted to take structural elements into account
     
-   
+    
     /// Header
     
     if let headerText = self.header {
-
+      
       let headerLines: [String] = headerText.reflowText(
         width: adjustedBoxWidth(for: .header),
         maxLines: config.headerLineLimit,
@@ -59,24 +59,24 @@ public extension SwiftBox {
     
     /// Divider
     self.buildStructuralLine(
-      .,
+      .divider,
       theme: self.config.theme,
       attrString: &output
     )
-
-
+    
+    
     /// Content
-
+    
     let contentLines: [String] = self.content.reflowText(
       width: adjustedBoxWidth(for: .content),
       maxLines: config.contentLineLimit,
       paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
     )
-
+    
     for line in contentLines {
-
+      
       self.buildLine(
-        type: .text(.content),
+        type: .content,
         string: line,
         theme: self.config.theme,
         attrString: &output
@@ -87,9 +87,9 @@ public extension SwiftBox {
     /// requires it, but this ensures that if there's an alternating frame part,
     /// the number of lines won't create alignment/joining issues
     ///
-//    if !lineCount.isEven {
-//      output += self.constructBoxLine(" ", lineType: .content)
-//    }
+    //    if !lineCount.isEven {
+    //      output += self.constructBoxLine(" ", lineType: .content)
+    //    }
     
     
     /// Box floor
@@ -98,58 +98,28 @@ public extension SwiftBox {
       theme: self.config.theme,
       attrString: &output
     )
-//    output += self.constructBoxLine(lineType: .bottom)
+    //    output += self.constructBoxLine(lineType: .bottom)
     
     
     
     return output
   }
   
-  
 
-  /// Width set aside for leading and trailing box parts and spaces
-  /// and adjusted to compensate for the extra frame option
-  ///
-//  func calculateReservedHorizontalSpace(for lineType: BoxLine) -> Int {
-//    
-//    var reserved: Int = 4
-//    
-//    /// The header doesn't need to account for line numbers
-//    ///
-////    switch lineType {
-////      case .text(.header):
-////        if self.config.extraFrame {
-////          reserved += 4
-////        }
-////        
-////      case .text(.content):
-////        if self.config.extraFrame {
-////          reserved += 4
-////        }
-////        if self.config.metrics.lineNumbers {
-////          reserved += 4
-////        }
-////      default: break
-////    }
-//    
-//    return reserved
-//  }
-  
-  
   func adjustedBoxWidth(
     for type: BoxLine
   ) -> Int {
     
     var textPadding: Int
     
-    switch type {
-      case .structure:
-        /// Don't want spaces in our structural lines
-        textPadding = 0
-        
-      case .text:
-        /// Extra space on either side of text lines
-        textPadding = (self.config.theme.padding * 2)
+    if type.isStructural {
+      /// Don't want spaces in our structural lines
+      textPadding = 0
+      
+    } else {
+      
+      /// Extra space on either side of text lines
+      textPadding = (self.config.theme.padding * 2)
     }
     
     let structure: Int = self.config.theme.frameStyle.reservedSpace
