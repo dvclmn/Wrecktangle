@@ -124,10 +124,9 @@ public extension SwiftBox.PartPreset {
 public extension SwiftBox {
   
   func partPreset(
-    for part: BoxGlyph,
-    with resolution: PartPreset.Resolution
+    for part: BoxGlyph
   ) -> PartPreset {
-    switch resolution {
+    switch self.resolution {
       case .oneByOne:
         return oneByOnePreset(for: part)
       case .threeByTwo:

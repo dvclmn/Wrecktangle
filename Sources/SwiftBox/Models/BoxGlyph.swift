@@ -10,6 +10,11 @@ import Foundation
 public extension SwiftBox {
 
   enum BoxGlyph: Hashable {
+    
+    
+    
+    
+    
     case horizontal(Location = .exterior)
     case vertical(Location = .exterior)
     case join(Join)

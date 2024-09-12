@@ -14,35 +14,42 @@ public extension SwiftBox {
     attrString: inout AttributedString
   ) {
     
-    let leadingPart: BoxGlyph
-    let trailingPart: BoxGlyph
-    let text: String?
+    let leadingPart: PartPreset
+    let trailingPart: PartPreset
+    var text: String? = nil
     
     switch type {
       case .top:
-        leadingPart = partPreset(for: .corner(.topLeading), with: <#T##PartPreset.Resolution#>)
+        leadingPart = partPreset(for: .corner(.topLeading))
+        trailingPart = partPreset(for: .corner(.topTrailing))
+        
       case .bottom:
+        leadingPart = partPreset(for: .corner(.topLeading))
+        trailingPart = partPreset(for: .corner(.topTrailing))
+        
       case .divider:
+        leadingPart = partPreset(for: .corner(.topLeading))
+        trailingPart = partPreset(for: .corner(.topTrailing))
+        
       case .header(let headerText):
         text = headerText
+        leadingPart = partPreset(for: .corner(.topLeading))
+        trailingPart = partPreset(for: .corner(.topTrailing))
         
       case .content(let contentText):
         text = contentText
+        leadingPart = partPreset(for: .corner(.topLeading))
+        trailingPart = partPreset(for: .corner(.topTrailing))
         
     }
     
-    let preset = partPreset(for: part, with: .threeByTwo)
+    let leadingString = leadingPart.constructBoxPart(for: type, width: self.config.width)
+    let trailingString = trailingPart.constructBoxPart(for: type, width: self.config.width)
     
-    let presetPart = preset.constructBoxPart(for: type, width: self.config.width)
     
-    print(preset)
-    
-    attrString.appendString(presetPart, addsLineBreak: true)
-    
-    if let string = string {
+    if let text = text {
       
-      let leading = partPreset(for: .vertical(), with: resolution).constructBoxPart(for: type, width: self.config.width)
-      let cappedText = leading + string + leading
+      let cappedText = leadingString + text + trailingString
       attrString.appendString(cappedText, addsLineBreak: true)
       
     }

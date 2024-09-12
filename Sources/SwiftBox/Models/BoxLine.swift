@@ -28,5 +28,9 @@ public extension SwiftBox {
       }
     }
     
+    public var caps: PartPreset {
+      
+    }
+    
   }
 }

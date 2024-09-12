@@ -25,7 +25,6 @@ public extension SwiftBox {
     /// Box roof
     self.buildLine(
       type: .top,
-      string: nil,
       attrString: &output
     )
     
@@ -63,7 +62,7 @@ public extension SwiftBox {
     /// Content
     
     let contentLines: [String] = self.content.reflowText(
-      width: adjustedBoxWidth(for: .content),
+      width: adjustedBoxWidth(for: .content()),
       maxLines: config.contentLineLimit,
       paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
     )
@@ -71,8 +70,7 @@ public extension SwiftBox {
     for line in contentLines {
       
       self.buildLine(
-        type: .content,
-        string: line,
+        type: .content(line),
         attrString: &output
       )
     }
