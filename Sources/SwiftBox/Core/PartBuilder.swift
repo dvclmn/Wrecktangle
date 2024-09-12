@@ -20,69 +20,50 @@ public extension SwiftBox {
   
   private func oneByOnePreset(for partType: PartType) -> BoxPart {
     
-    let layout: [[Character]]
+    let character: Character
     
     switch partType {
       case .horizontal:
-        layout = [
-          ["━"]
-        ]
-        
+        character = "━"
         
       case .vertical:
-        layout = [
-          ["┃"]
-        ]
-    
+        character = "┃"
      
       case .joinLeading:
-        layout = [
-          ["├"]
-        ]
+        character = "├"
+        
       case .joinTrailing:
-        layout = [
-          ["┤"]
-        ]
+        character = "┤"
+        
       case .joinTop:
-        layout = [
-          ["┬"]
-        ]
+        character = "┬"
+        
       case .joinBottom:
-        layout = [
-          ["┴"]
-        ]
+        character = "┴"
+        
       case .joinCross:
-        layout = [
-          ["┼"]
-        ]
+        character = "┼"
+        
         
         /// Corners
         ///
       case .cornerTopLeading:
-        layout = [
-          ["┌"]
-        ]
+        character = "┌"
+        
       case .cornerTopTrailing:
-        layout = [
-          ["┐"]
-        ]
+        character = "┐"
+        
       case .cornerBottomLeading:
-        layout = [
-          ["└"]
-        ]
+        character = "└"
+        
       case .cornerBottomTrailing:
-        layout = [
-          ["┘"]
-        ]
+        character = "┘"
+        
     }
     
     var grid = CharacterGrid(columns: 1, rows: 1)
     
-    for (rowIndex, row) in layout.enumerated() {
-      for (columnIndex, char) in row.enumerated() {
-        grid[columnIndex, rowIndex] = glyph(char)
-      }
-    }
+    grid[0, 0] = self.glyph(character)
     
     return BoxPart(content: grid, type: partType)
     
@@ -94,7 +75,7 @@ public extension SwiftBox {
     
     switch partType {
 
-      case .horizontal(.top):
+      case .horizontal(.none):
         layout = [
           ["━", "━", "━"],
           ["━", "━", "━"]

@@ -39,14 +39,8 @@ public extension SwiftBox {
   
   enum PartType {
     
-    case horizontal(
-      location: HorizontalPosition? = nil,
-      isRepeating: Bool = true
-    )
-    case vertical(
-      location: VerticalPosition? = nil,
-      isRepeating: Bool = true
-    )
+    case horizontal(location: HorizontalPosition? = nil)
+    case vertical(location: VerticalPosition? = nil)
     
     case joinLeading            /// ┠
     case joinTrailing           /// ┨
