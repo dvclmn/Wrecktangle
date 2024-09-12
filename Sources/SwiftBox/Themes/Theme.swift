@@ -20,12 +20,12 @@ public extension SwiftBox {
     var padding: Int
     
     public init(
-      glyphSet: GlyphSet = .sharp,
+      glyphSet: GlyphSetPreset = .sharp,
       colour: ColourSet = .default,
       frameStyle: FrameStyle = .single,
       padding: Int = 1
     ) {
-      self.glyphSet = glyphSet
+      self.glyphSet = glyphSet.glyphSet
       self.colour = colour
       self.frameStyle = frameStyle
       self.padding = padding

@@ -51,8 +51,13 @@ public extension SwiftBox {
   struct BoxPartPresetFactory {
     let glyphSet: GlyphSet
     
+
     init(glyphSet: GlyphSet) {
       self.glyphSet = glyphSet
+    }
+    
+    init(preset: GlyphSetPreset) {
+      self.glyphSet = preset.glyphSet
     }
     
     func partPreset(for part: BoxGlyph, with resolution: BoxGlyph.Resolution) -> BoxGlyph.Preset {

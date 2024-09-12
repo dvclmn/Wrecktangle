@@ -11,7 +11,7 @@ public extension SwiftBox {
   
   func buildLine(
     type: BoxLine,
-    string: String?,
+    string: String? = nil,
     attrString: inout AttributedString
   ) {
     

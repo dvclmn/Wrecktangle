@@ -26,9 +26,5 @@ public struct SwiftBox {
     self.content = content
     self.config = config
   }
-  
-  
-  
 
-  
 }

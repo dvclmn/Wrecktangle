@@ -26,7 +26,6 @@ public extension SwiftBox {
     self.buildLine(
       type: .top,
       string: nil,
-      theme: self.config.theme,
       attrString: &output
     )
     
@@ -50,7 +49,6 @@ public extension SwiftBox {
         self.buildLine(
           type: .header,
           string: line,
-          theme: self.config.theme,
           attrString: &output
         )
         
@@ -58,11 +56,7 @@ public extension SwiftBox {
     }
     
     /// Divider
-    self.buildStructuralLine(
-      .divider,
-      theme: self.config.theme,
-      attrString: &output
-    )
+    self.buildLine(type: .divider, attrString: &output)
     
     
     /// Content
@@ -78,7 +72,6 @@ public extension SwiftBox {
       self.buildLine(
         type: .content,
         string: line,
-        theme: self.config.theme,
         attrString: &output
       )
     }
@@ -93,12 +86,7 @@ public extension SwiftBox {
     
     
     /// Box floor
-    self.buildStructuralLine(
-      .bottom,
-      theme: self.config.theme,
-      attrString: &output
-    )
-    //    output += self.constructBoxLine(lineType: .bottom)
+    self.buildLine(type: .bottom, attrString: &output)
     
     
     

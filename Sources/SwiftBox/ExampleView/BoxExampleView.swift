@@ -15,7 +15,7 @@ struct BoxPrintView: View {
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: SwiftBox.Config (
-      theme: SwiftBox.Theme(glyphSet: SwiftBox.GlyphSet., colour: <#T##SwiftBox.Theme.ColourSet#>, frameStyle: <#T##SwiftBox.Theme.FrameStyle#>, padding: <#T##Int#>),
+      theme: SwiftBox.Theme(glyphSet: .sharp),
       width: 38,
       headerLineLimit: 2,
       contentLineLimit: 9,
@@ -23,17 +23,17 @@ struct BoxPrintView: View {
     )
   )
   
-  let box02 = SwiftBox(
-    header: TestStrings.conversationTitles[1],
-    content: TestStrings.paragraphs[7],
-    config: SwiftBox.Config (
-      theme: .init(glyphSet: .double, frameStyle: .double),
-      width: 38,
-      headerLineLimit: 2,
-      contentLineLimit: 9,
-      metrics: .init(widthCounter: .off, lineNumbers: true, invisibles: false)
-    )
-  )
+//  let box02 = SwiftBox(
+//    header: TestStrings.conversationTitles[1],
+//    content: TestStrings.paragraphs[7],
+//    config: SwiftBox.Config (
+//      theme: .init(glyphSet: .double, frameStyle: .double),
+//      width: 38,
+//      headerLineLimit: 2,
+//      contentLineLimit: 9,
+//      metrics: .init(widthCounter: .off, lineNumbers: true, invisibles: false)
+//    )
+//  )
   
   
   
@@ -64,15 +64,15 @@ struct BoxPrintView: View {
       
       Text(box01.attributedString)
       HStack {
-        Text("top leading\n" + box01.partPreset(for: .corner(.topLeading), with: .threeByTwo))
-        Text("top trailing\n" + box01.partPreset(for: .corner(.topTrailing), with: .threeByTwo))
-        Text("bottom leading\n" + box01.partPreset(for: .corner(.bottomLeading), with: .threeByTwo))
-        Text("bottom trailing\n" + box01.partPreset(for: .corner(.bottomTrailing), with: .threeByTwo))
+//        Text("top leading\n" + box01.partPreset(for: .corner(.topLeading), with: .threeByTwo))
+//        Text("top trailing\n" + box01.partPreset(for: .corner(.topTrailing), with: .threeByTwo))
+//        Text("bottom leading\n" + box01.partPreset(for: .corner(.bottomLeading), with: .threeByTwo))
+//        Text("bottom trailing\n" + box01.partPreset(for: .corner(.bottomTrailing), with: .threeByTwo))
       }
-      HStack {
-        Text("Hor. Ext.\n" + box01.partPreset(for: .horizontal(), with: .threeByTwo))
-        Text("Vert. Ext\n" + box01.partPreset(for: .vertical(), with: .threeByTwo))
-      }
+//      HStack {
+//        Text("Hor. Ext.\n" + box01.partPreset(for: .horizontal(), with: .threeByTwo))
+//        Text("Vert. Ext\n" + box01.partPreset(for: .vertical(), with: .threeByTwo))
+//      }
 //      Text(box02.attributedString)
       
     }
