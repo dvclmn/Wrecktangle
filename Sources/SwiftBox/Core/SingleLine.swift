@@ -51,7 +51,7 @@ public extension SwiftBox {
     if let text = text {
       // For header and content lines
       leadingString.appendTo(&attrString, addsLineBreak: false)
-      attrString += AttributedString(text)
+      attrString.appendString(text, addsLineBreak: false)
       trailingString.appendTo(&attrString, addsLineBreak: true)
     } else {
       // For top, bottom, and divider lines

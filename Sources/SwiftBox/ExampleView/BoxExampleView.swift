@@ -15,25 +15,25 @@ struct BoxPrintView: View {
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: SwiftBox.Config (
-      theme: SwiftBox.Theme(glyphSet: .sharp, frameStyle: .double),
+      theme: SwiftBox.Theme(glyphSet: .sharp, frameStyle: .single),
       width: 38,
-      headerLineLimit: 2,
-      contentLineLimit: 4,
+      headerLineLimit: 1,
+      contentLineLimit: 3,
       metrics: .init(widthCounter: .full, lineNumbers: false, invisibles: true)
     )
   )
   
-//  let box02 = SwiftBox(
-//    header: TestStrings.conversationTitles[1],
-//    content: TestStrings.paragraphs[7],
-//    config: SwiftBox.Config (
-//      theme: .init(glyphSet: .double, frameStyle: .double),
-//      width: 38,
-//      headerLineLimit: 2,
-//      contentLineLimit: 9,
-//      metrics: .init(widthCounter: .off, lineNumbers: true, invisibles: false)
-//    )
-//  )
+  let box02 = SwiftBox(
+    header: TestStrings.conversationTitles[1],
+    content: TestStrings.paragraphs[7],
+    config: SwiftBox.Config (
+      theme: .init(glyphSet: .double, frameStyle: .double),
+      width: 38,
+      headerLineLimit: 2,
+      contentLineLimit: 3,
+      metrics: .init(widthCounter: .off, lineNumbers: false, invisibles: false)
+    )
+  )
   
   
   
@@ -63,6 +63,7 @@ struct BoxPrintView: View {
     VStack(spacing: 14) {
       
       Text(box01.attributedString)
+      Text(box02.attributedString)
       HStack {
         
 //        Text("top leading\n" + box01.partPreset(for: .corner(.topLeading), with: .threeByTwo))

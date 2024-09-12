@@ -12,22 +12,23 @@ public extension SwiftBox {
   
   struct BoxPart {
     public var content: CharacterGrid
-    public var resolution: Resolution
     public var type: PartType
     
     public init(
       content: CharacterGrid,
-      resolution: Resolution,
       type: PartType
     ) {
-      self.resolution = resolution
       
-      precondition(
-        content.rows == resolution.rows
-        && content.columns == resolution.columns,
-        "Content grid size must match resolution"
-      )
-      
+//      precondition(
+//        content.rows == self.resolution.rows
+//        && content.columns == resolution.columns,
+//        """
+//        Content grid size must match resolution.
+//        Grid Columns: \(content.columns), Rows: \(content.rows)
+//        Resolution: \(resolution.columns)x\(resolution.rows)
+//        """
+//      )
+//      
       self.content = content
       self.type = type
     }
@@ -38,8 +39,14 @@ public extension SwiftBox {
   
   enum PartType {
     
-    case horizontal(location: HorizontalPosition? = nil)          /// ━
-    case vertical(location: VerticalPosition? = nil)            /// ┃
+    case horizontal(
+      location: HorizontalPosition? = nil,
+      isRepeating: Bool = true
+    )
+    case vertical(
+      location: VerticalPosition? = nil,
+      isRepeating: Bool = true
+    )
     
     case joinLeading            /// ┠
     case joinTrailing           /// ┨
@@ -61,6 +68,36 @@ public extension SwiftBox {
       case leading
       case trailing
     }
+    
+//    public var boxGlyphEquivalent: BoxGlyph {
+//      switch self {
+//        case .horizontal(.top):
+//          BoxGlyph.horizontalExterior
+//        case .horizontal(.bottom):
+//          <#code#>
+//        case .vertical(.leading):
+//        case .vertical(.trailing):
+//          <#code#>
+//        case .joinLeading:
+//          <#code#>
+//        case .joinTrailing:
+//          <#code#>
+//        case .joinTop:
+//          <#code#>
+//        case .joinBottom:
+//          <#code#>
+//        case .joinCross:
+//          <#code#>
+//        case .cornerTopLeading:
+//          <#code#>
+//        case .cornerTopTrailing:
+//          <#code#>
+//        case .cornerBottomLeading:
+//          <#code#>
+//        case .cornerBottomTrailing:
+//          <#code#>
+//      }
+//    }
     
   }
   
@@ -115,6 +152,7 @@ extension SwiftBox.BoxPart {
 
 
 public extension SwiftBox {
+  
   struct MultiRowString {
     var rows: [String]
     

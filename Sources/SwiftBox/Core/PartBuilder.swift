@@ -7,54 +7,6 @@
 
 public extension SwiftBox {
   
-  var glyphSet: GlyphSet {
-    self.config.theme.glyphSet
-  }
-  
-  var resolution: BoxPart.Resolution {
-    self.config.theme.frameStyle.resolution
-  }
- 
-}
-
-
-//public extension SwiftBox.BoxPart {
-//  
-//  func constructBoxPart(
-//    for line: SwiftBox.BoxLine,
-//    width: Int
-//  ) -> String {
-//    
-//    switch (self.resolution, line) {
-//      case (.oneByOne, _):
-//        return String(repeating: self.content[0, 0], count: width)
-//        
-//      case (.threeByTwo, .top):
-//        let left = self.content[0, 0]
-//        let middle = String(repeating: self.content[0, 1], count: width - 2)
-//        let right = self.content[0, 2]
-//        return "\(left)\(middle)\(right)"
-//        
-//      case (.threeByTwo, .bottom):
-//        let left = self.content[1, 0]
-//        let middle = String(repeating: self.content[1, 1], count: width - 2)
-//        let right = self.content[1, 2]
-//        return "\(left)\(middle)\(right)"
-//        
-//      case (.threeByTwo, .header), (.threeByTwo, .divider), (.threeByTwo, .content):
-//        let left = self.content[1, 0]
-//        let middle = String(repeating: " ", count: width - 2)
-//        let right = self.content[1, 2]
-//        return "\(left)\(middle)\(right)"
-//        
-//    }
-//  }
-//  
-//}
-
-
-public extension SwiftBox {
-  
   func partPreset(
     for partType: PartType
   ) -> BoxPart {
@@ -68,36 +20,72 @@ public extension SwiftBox {
   
   private func oneByOnePreset(for partType: PartType) -> BoxPart {
     
-//    switch partType {
-//      case .horizontal:
-//        <#code#>
-//      case .vertical:
-//        <#code#>
-//      case .joinLeading:
-//        <#code#>
-//      case .joinTrailing:
-//        <#code#>
-//      case .joinTop:
-//        <#code#>
-//      case .joinBottom:
-//        <#code#>
-//      case .joinCross:
-//        <#code#>
-//      case .cornerTopLeading:
-//        <#code#>
-//      case .cornerTopTrailing:
-//        <#code#>
-//      case .cornerBottomLeading:
-//        <#code#>
-//      case .cornerBottomTrailing:
-//        <#code#>
-//    }
-//    
-//    let char = glyphSet.character(for: part)
-//    var grid = CharacterGrid(rows: 1, columns: 1)
-//    grid[0, 0] = char
-    fatalError("Not implemented yet")
-//    return BoxPart(content: CharacterGrid(rows: 1, columns: 1), resolution: .oneByOne, type: partType)
+    let layout: [[Character]]
+    
+    switch partType {
+      case .horizontal:
+        layout = [
+          ["━"]
+        ]
+        
+        
+      case .vertical:
+        layout = [
+          ["┃"]
+        ]
+    
+     
+      case .joinLeading:
+        layout = [
+          ["├"]
+        ]
+      case .joinTrailing:
+        layout = [
+          ["┤"]
+        ]
+      case .joinTop:
+        layout = [
+          ["┬"]
+        ]
+      case .joinBottom:
+        layout = [
+          ["┴"]
+        ]
+      case .joinCross:
+        layout = [
+          ["┼"]
+        ]
+        
+        /// Corners
+        ///
+      case .cornerTopLeading:
+        layout = [
+          ["┌"]
+        ]
+      case .cornerTopTrailing:
+        layout = [
+          ["┐"]
+        ]
+      case .cornerBottomLeading:
+        layout = [
+          ["└"]
+        ]
+      case .cornerBottomTrailing:
+        layout = [
+          ["┘"]
+        ]
+    }
+    
+    var grid = CharacterGrid(columns: 1, rows: 1)
+    
+    for (rowIndex, row) in layout.enumerated() {
+      for (columnIndex, char) in row.enumerated() {
+        grid[columnIndex, rowIndex] = glyph(char)
+      }
+    }
+    
+    return BoxPart(content: grid, type: partType)
+    
   }
   
   private func threeByTwoPreset(for partType: PartType) -> BoxPart {
@@ -106,7 +94,7 @@ public extension SwiftBox {
     
     switch partType {
 
-      case .horizontal(.none):
+      case .horizontal(.top):
         layout = [
           ["━", "━", "━"],
           ["━", "━", "━"]
@@ -204,16 +192,16 @@ public extension SwiftBox {
       }
     }
     
-    return BoxPart(content: grid, resolution: .threeByTwo, type: partType)
+    return BoxPart(content: grid, type: partType)
   }
   
   private func glyph(_ char: Character) -> Character {
     switch char {
         
-      case "━": return glyphSet.character(for: .horizontalExterior)
-      case "─": return glyphSet.character(for: .horizontalInterior)
-      case "┃": return glyphSet.character(for: .verticalExterior)
-      case "│": return glyphSet.character(for: .verticalInterior)
+      case "━": return glyphSet.character(for: .horizontal)
+      case "─": return glyphSet.character(for: .horizontalAlt)
+      case "┃": return glyphSet.character(for: .vertical)
+      case "│": return glyphSet.character(for: .verticalAlt)
         
       case "├": return glyphSet.character(for: .joinLeading)
       case "┤": return glyphSet.character(for: .joinTrailing)

@@ -13,6 +13,19 @@ import AppKit
 
 public extension SwiftBox {
   
+  var glyphSet: GlyphSet {
+    self.config.theme.glyphSet
+  }
+  
+  var resolution: BoxPart.Resolution {
+    self.config.theme.frameStyle.resolution
+  }
+  
+  var width: Int {
+    self.config.width
+  }
+  
+  
   func drawBox() -> AttributedString {
     
     /// We start off with a fresh, blank attr. string. The 'build process' is based
@@ -28,20 +41,20 @@ public extension SwiftBox {
     
     /// Header
     
-//    if let headerText = self.header {
-//      
-//      let headerLines: [String] = headerText.reflowText(
-//        width: adjustedBoxWidth(for: .header()),
-//        maxLines: config.headerLineLimit,
-//        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-//      )
-//      
-//      for line in headerLines {
-//        
-//        self.buildLine(.header(line), attrString: &output)
-//        
-//      }
-//    }
+    if let headerText = self.header {
+      
+      let headerLines: [String] = headerText.reflowText(
+        width: remainingBoxWidth(for: .header()),
+        maxLines: config.headerLineLimit,
+        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+      )
+      
+      for line in headerLines {
+        
+        self.buildLine(.header(line), attrString: &output)
+        
+      }
+    }
     
     /// Divider
 //    self.buildLine(.divider, attrString: &output)
@@ -50,7 +63,7 @@ public extension SwiftBox {
     /// Content
     
 //    let contentLines: [String] = self.content.reflowText(
-//      width: adjustedBoxWidth(for: .content()),
+//      width: remainingBoxWidth(for: .content()),
 //      maxLines: config.contentLineLimit,
 //      paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
 //    )
@@ -79,7 +92,7 @@ public extension SwiftBox {
   }
   
 
-  func adjustedBoxWidth(
+  func remainingBoxWidth(
     for type: BoxLine
   ) -> Int {
     
@@ -102,10 +115,6 @@ public extension SwiftBox {
     
     return result
   }
-  
-  
-  
-  
-  
+
   
 }

@@ -13,6 +13,13 @@ public extension SwiftBox.BoxPart {
     case oneByOne
     case threeByTwo
     
+    var columns: Int {
+      switch self {
+        case .oneByOne: return 1
+        case .threeByTwo: return 3
+      }
+    }
+
     var rows: Int {
       switch self {
         case .oneByOne: return 1
@@ -20,12 +27,6 @@ public extension SwiftBox.BoxPart {
       }
     }
     
-    var columns: Int {
-      switch self {
-        case .oneByOne: return 1
-        case .threeByTwo: return 3
-      }
-    }
   }
 }
 
