@@ -101,18 +101,20 @@ public extension SwiftBox {
   }
   
   private func threeByTwoPreset(for partType: PartType) -> BoxPart {
-    var grid = CharacterGrid(rows: 2, columns: 3)
+    var grid = CharacterGrid(columns: 3, rows: 2)
+    
     switch partType {
         
       case .horizontal:
         /// First row
         grid[0, 0] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
         grid[1, 0] = glyphSet.character(for: .horizontalExterior)
+        grid[2, 0] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
         grid[1, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[1, 2] = glyphSet.character(for: .horizontalExterior)
+        grid[2, 1] = glyphSet.character(for: .horizontalExterior)
+
         
       case .vertical:
         /// First row
@@ -217,6 +219,30 @@ public extension SwiftBox {
         grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
     }
     return BoxPart(content: grid, resolution: .threeByTwo, type: partType)
+  }
+  
+  private func glyph(_ char: Character) -> Character {
+    switch char {
+        
+      case "━": return glyphSet.character(for: .horizontalExterior)
+      case "─": return glyphSet.character(for: .horizontalInterior)
+      case "┃": return glyphSet.character(for: .verticalExterior)
+      case "│": return glyphSet.character(for: .verticalInterior)
+        
+      case "├": return glyphSet.character(for: .joinLeading)
+      case "┤": return glyphSet.character(for: .joinTrailing)
+      case "┬": return glyphSet.character(for: .joinTop)
+      case "┴": return glyphSet.character(for: .joinBottom)
+      case "┼": return glyphSet.character(for: .joinCross)
+
+      case "┌": return glyphSet.character(for: .cornerTopLeading)
+      case "┐": return glyphSet.character(for: .cornerTopTrailing)
+      case "└": return glyphSet.character(for: .cornerBottomLeading)
+      case "┘": return glyphSet.character(for: .cornerBottomTrailing)
+      case " ": return " "
+        
+      default: return "@" // Default character for undefined glyphs
+    }
   }
 
   

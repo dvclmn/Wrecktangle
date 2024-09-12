@@ -62,7 +62,7 @@ public extension SwiftBox.BoxPart {
     
     let rowStrings = (0..<rows).map { row in
       (0..<columns).map { column in
-        String(self.content[row, column])
+        String(self.content[column, row])
       }.joined()
     }
     
@@ -74,27 +74,27 @@ public extension SwiftBox.BoxPart {
 }
 
 
-extension SwiftBox.BoxPart: CustomStringConvertible {
-  
-  public var description: String {
-    let gridDescription = self.content.description
-    return """
-        Preset(resolution: \(self.resolution))
-        \(gridDescription)
-        
-        """
-  }
-}
-extension SwiftBox.CharacterGrid: CustomStringConvertible {
-  public var description: String {
-    let rowStrings = (0..<rows).map { row in
-      (0..<columns).map { column in
-        String(self[row, column])
-      }.joined()
-    }
-    return rowStrings.joined(separator: "\n")
-  }
-}
+//extension SwiftBox.BoxPart: CustomStringConvertible {
+//  
+//  public var description: String {
+//    let gridDescription = self.content.description
+//    return """
+//        Preset(resolution: \(self.resolution))
+//        \(gridDescription)
+//        
+//        """
+//  }
+//}
+//extension SwiftBox.CharacterGrid: CustomStringConvertible {
+//  public var description: String {
+//    let rowStrings = (0..<rows).map { row in
+//      (0..<columns).map { column in
+//        String(self[row, column])
+//      }.joined()
+//    }
+//    return rowStrings.joined(separator: "\n")
+//  }
+//}
 
 
 
