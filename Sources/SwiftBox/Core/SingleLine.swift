@@ -15,18 +15,37 @@ public extension SwiftBox {
     attrString: inout AttributedString
   ) {
     
-    
-    
-    
-    if type.isStructural {
-      
-      let part = partPreset(for: .corner(.topLeading), with: .threeByTwo)
-      
-      print(part)
-      
-    } else {
-      
+    let part: BoxGlyph
+    switch type {
+      case .top:
+        part = .corner(.topLeading)
+      case .bottom:
+        part = .corner(.bottomLeading)
+      case .divider:
+        part = .join(.leading)
+      case .header, .content:
+        part = .vertical(.exterior)
     }
+    
+    let preset = partPreset(for: part, with: .threeByTwo)
+    
+    let string = preset.constructBoxPart(for: type, width: self.config.width)
+    
+    attrString.appendString(string, addsLineBreak: false)
+    
+//
+//    
+//    
+    
+//    let part = partPreset(for: .corner(.topTrailing), with: .threeByTwo)
+//    
+//    print(part)
+//    
+//    if type.isStructural {
+//      
+//    } else {
+//      
+//    }
       
 //
 //      buildStructuralLine(type, attrString: &<#T##AttributedString#>)(
