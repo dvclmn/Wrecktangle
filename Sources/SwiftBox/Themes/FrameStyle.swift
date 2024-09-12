@@ -29,7 +29,7 @@ public extension SwiftBox.Theme {
 //      }
 //    }
     
-    public var resolution: SwiftBox.PartPreset.Resolution {
+    public var resolution: SwiftBox.BoxPart.Resolution {
       switch self {
         case .single:
             .oneByOne

@@ -7,9 +7,10 @@
 
 public extension SwiftBox {
   
-  struct PartPreset {
+  struct BoxPart {
     public var content: CharacterGrid
     public var resolution: Resolution
+    
     
     public init(
       content: CharacterGrid,
@@ -30,7 +31,15 @@ public extension SwiftBox {
 
 }
 
-extension SwiftBox.PartPreset: CustomStringConvertible {
+public extension SwiftBox {
+  
+  enum Structure {
+    case 
+  }
+  
+}
+
+extension SwiftBox.BoxPart: CustomStringConvertible {
   
   public var description: String {
     let gridDescription = self.content.description

@@ -14,8 +14,8 @@ public extension SwiftBox {
     attrString: inout AttributedString
   ) {
     
-    let leadingPart: PartPreset
-    let trailingPart: PartPreset
+    let leadingPart: BoxPart
+    let trailingPart: BoxPart
     var text: String? = nil
     
     switch type {

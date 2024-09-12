@@ -11,14 +11,14 @@ public extension SwiftBox {
     self.config.theme.glyphSet
   }
   
-  var resolution: PartPreset.Resolution {
+  var resolution: BoxPart.Resolution {
     self.config.theme.frameStyle.resolution
   }
   
   //  func partPreset(
   //    for part: BoxGlyph,
-  //    with resolution: PartPreset.Resolution
-  //  ) -> PartPreset {
+  //    with resolution: BoxPart.Resolution
+  //  ) -> BoxPart {
   //
   //    switch resolution {
   //      case .oneByOne:
@@ -29,14 +29,14 @@ public extension SwiftBox {
   //
   //  }
   //
-  //  private func oneByOnePreset(for part: BoxGlyph) -> PartPreset {
+  //  private func oneByOnePreset(for part: BoxGlyph) -> BoxPart {
   //
   //    var grid = CharacterGrid(rows: 1, columns: 1)
   //    grid[0, 0] = glyphSet.character(for: part)
-  //    return PartPreset(content: grid, resolution: .oneByOne)
+  //    return BoxPart(content: grid, resolution: .oneByOne)
   //  }
   //
-  //  private func threeByTwoPreset(for part: BoxGlyph) -> PartPreset {
+  //  private func threeByTwoPreset(for part: BoxGlyph) -> BoxPart {
   //    var grid = CharacterGrid(rows: 2, columns: 3)
   //
   //    switch part {
@@ -86,14 +86,14 @@ public extension SwiftBox {
   //
   //    }
   //
-  //    return PartPreset(content: grid, resolution: .threeByTwo)
+  //    return BoxPart(content: grid, resolution: .threeByTwo)
   //  }
   //
   
 }
 
 
-public extension SwiftBox.PartPreset {
+public extension SwiftBox.BoxPart {
   
   func constructBoxPart(for line: SwiftBox.BoxLine, width: Int) -> String {
     
@@ -125,7 +125,7 @@ public extension SwiftBox {
   
   func partPreset(
     for part: BoxGlyph
-  ) -> PartPreset {
+  ) -> BoxPart {
     switch self.resolution {
       case .oneByOne:
         return oneByOnePreset(for: part)
@@ -134,14 +134,14 @@ public extension SwiftBox {
     }
   }
   
-  private func oneByOnePreset(for part: BoxGlyph) -> PartPreset {
+  private func oneByOnePreset(for part: BoxGlyph) -> BoxPart {
     let char = glyphSet.character(for: part)
     var grid = CharacterGrid(rows: 1, columns: 1)
     grid[0, 0] = char
-    return PartPreset(content: grid, resolution: .oneByOne)
+    return BoxPart(content: grid, resolution: .oneByOne)
   }
   
-  private func threeByTwoPreset(for part: BoxGlyph) -> PartPreset {
+  private func threeByTwoPreset(for part: BoxGlyph) -> BoxPart {
     var grid = CharacterGrid(rows: 2, columns: 3)
     switch part {
       case .corner(.topLeading):
@@ -172,7 +172,7 @@ public extension SwiftBox {
           }
         }
     }
-    return PartPreset(content: grid, resolution: .threeByTwo)
+    return BoxPart(content: grid, resolution: .threeByTwo)
   }
   
   
@@ -202,7 +202,7 @@ public extension SwiftBox {
 
 extension Character {
   func constructBoxPart(for line: SwiftBox.BoxLine, width: Int) -> String {
-    let preset = SwiftBox.PartPreset(
+    let preset = SwiftBox.BoxPart(
       content: SwiftBox.CharacterGrid(rows: 1, columns: 1, defaultValue: self),
       resolution: .oneByOne
     )

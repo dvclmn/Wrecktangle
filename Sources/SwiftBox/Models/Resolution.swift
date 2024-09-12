@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension SwiftBox.PartPreset {
+public extension SwiftBox.BoxPart {
   
   enum Resolution {
     case oneByOne
@@ -29,7 +29,7 @@ public extension SwiftBox.PartPreset {
   }
 }
 
-extension SwiftBox.PartPreset.Resolution: CustomStringConvertible {
+extension SwiftBox.BoxPart.Resolution: CustomStringConvertible {
   
   public var description: String {
     switch self {

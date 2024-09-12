@@ -9,29 +9,15 @@ import Foundation
 
 public extension SwiftBox {
   
-  //                                      0 0 0 0 0 1 1 1 1 1 2 2 2
-  //                                      0 2 4 6 8 0 2 4 6 8 0 2 4
-//  static let other =       GlyphSet(set: "─ ─ │ │ ┯ ┷ ┠ ┨ ┼ ╱ ╲ ╲ ╱")
-//  
-//  static let sharp =       GlyphSet(set: "━ ─ ┃ │ ┯ ┷ ┠ ┨ ┼ ┏ ┓ ┗ ┛")
-//  
-//  static let sharpThin =   GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ┌ ┐ └ ┘")
-//  
-//  static let sharpBold =   GlyphSet(set: "━ ━ ┃ ┃ ┳ ┻ ┣ ┫ ╋ ┏ ┓ ┗ ┛")
-//  
-//  static let rounded =     GlyphSet(set: "─ ─ │ │ ┬ ┴ ├ ┤ ┼ ╭ ╮ ╰ ╯")
-//  
-//  static let double =      GlyphSet(set: "═ ─ ║ │ ╤ ╧ ╟ ╢ ┼ ╔ ╗ ╚ ╝")
-//  
-//  static let ascii =       GlyphSet(set: "- - | | + + + + + + + + +")
-//  
-//  static let dashed =      GlyphSet(set: "╌ ╌ ╎ ╎ ┬ ┴ ├ ┤ ┼ ╭ ┐ └ ╯")
-//  
-  
   enum GlyphSetPreset {
     case other
     case sharp
-  
+    case sharpThin
+    case sharpBold
+    case rounded
+    case double
+    case ascii
+    case dashed
     
     var glyphSet: SwiftBox.GlyphSet {
       switch self {
@@ -68,9 +54,115 @@ public extension SwiftBox {
             .corner(.bottomLeading): "┗",
             .corner(.bottomTrailing): "┛"
           ])
+        case .sharpThin:
+          
+          return SwiftBox.GlyphSet(set: [
+            .horizontal(.exterior): "─",
+            .horizontal(.interior): "─",
+            .vertical(.exterior): "│",
+            .vertical(.interior): "│",
+            .join(.top): "┬",
+            .join(.bottom): "┴",
+            .join(.leading): "├",
+            .join(.trailing): "┤",
+            .join(.cross): "┼",
+            .corner(.topLeading): "┌",
+            .corner(.topTrailing): "┐",
+            .corner(.bottomLeading): "└",
+            .corner(.bottomTrailing): "┘"
+          ])
+          
+        case .sharpBold:
+          
+          return SwiftBox.GlyphSet(set: [
+            .horizontal(.exterior): "━",
+            .horizontal(.interior): "━",
+            .vertical(.exterior): "┃",
+            .vertical(.interior): "┃",
+            .join(.top): "┳",
+            .join(.bottom): "┻",
+            .join(.leading): "┣",
+            .join(.trailing): "┫",
+            .join(.cross): "╋",
+            .corner(.topLeading): "┏",
+            .corner(.topTrailing): "┓",
+            .corner(.bottomLeading): "┗",
+            .corner(.bottomTrailing): "┛"
+          ])
+          
+        case .rounded:
+          
+          return SwiftBox.GlyphSet(set: [
+            .horizontal(.exterior): "─",
+            .horizontal(.interior): "─",
+            .vertical(.exterior): "│",
+            .vertical(.interior): "│",
+            .join(.top): "┬",
+            .join(.bottom): "┴",
+            .join(.leading): "├",
+            .join(.trailing): "┤",
+            .join(.cross): "┼",
+            .corner(.topLeading): "╭",
+            .corner(.topTrailing): "╮",
+            .corner(.bottomLeading): "╰",
+            .corner(.bottomTrailing): "╯"
+          ])
+          
+        case .double:
+          return SwiftBox.GlyphSet(set: [
+            .horizontal(.exterior): "═",
+            .horizontal(.interior): "─",
+            .vertical(.exterior): "║",
+            .vertical(.interior): "│",
+            .join(.top): "╤",
+            .join(.bottom): "╧",
+            .join(.leading): "╟",
+            .join(.trailing): "╢",
+            .join(.cross): "┼",
+            .corner(.topLeading): "╔",
+            .corner(.topTrailing): "╗",
+            .corner(.bottomLeading): "╚",
+            .corner(.bottomTrailing): "╝"
+          ])
+          
+        case .ascii:
+          
+          
+          return SwiftBox.GlyphSet(set: [
+            .horizontal(.exterior): "-",
+            .horizontal(.interior): "-",
+            .vertical(.exterior): "|",
+            .vertical(.interior): "|",
+            .join(.top): "+",
+            .join(.bottom): "+",
+            .join(.leading): "+",
+            .join(.trailing): "+",
+            .join(.cross): "+",
+            .corner(.topLeading): "+",
+            .corner(.topTrailing): "+",
+            .corner(.bottomLeading): "+",
+            .corner(.bottomTrailing): "+"
+          ])
+          
+        case .dashed:
+          return SwiftBox.GlyphSet(set: [
+            .horizontal(.exterior): "╌",
+            .horizontal(.interior): "╌",
+            .vertical(.exterior): "╎",
+            .vertical(.interior): "╎",
+            .join(.top): "┬",
+            .join(.bottom): "┴",
+            .join(.leading): "├",
+            .join(.trailing): "┤",
+            .join(.cross): "┼",
+            .corner(.topLeading): "╭",
+            .corner(.topTrailing): "┐",
+            .corner(.bottomLeading): "└",
+            .corner(.bottomTrailing): "╯"
+          ])
       }
     }
-  }
+  } // END Glyphset preset
   
 }
 
