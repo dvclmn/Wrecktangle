@@ -28,9 +28,9 @@ public extension SwiftBox {
       }
     }
     
-    public var caps: BoxPart {
+//    public var caps: BoxPart {
       
-    }
+//    }
     
   }
 }

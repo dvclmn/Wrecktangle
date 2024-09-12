@@ -43,16 +43,18 @@ public extension SwiftBox {
         
     }
     
-    let leadingString = leadingPart.constructBoxPart(for: type, width: self.config.width)
-    let trailingString = trailingPart.constructBoxPart(for: type, width: self.config.width)
+//    let leadingString = leadingPart.constructBoxPart(for: type, width: self.config.width)
+//    let trailingString = trailingPart.constructBoxPart(for: type, width: self.config.width)
     
     
     if let text = text {
       
-      let cappedText = leadingString + text + trailingString
+      let cappedText = "leadingString" + text + "trailingString"
       attrString.appendString(cappedText, addsLineBreak: true)
       
     }
+    
+    print(leadingPart)
     
 //
 //    
@@ -369,7 +371,7 @@ public extension SwiftBox {
 ////    output.setAttributes(container(for: .secondary))
 //    return output
     
-    return ""
+    return "horizontal"
   }
   
   

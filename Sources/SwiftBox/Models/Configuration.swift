@@ -58,7 +58,6 @@ public extension SwiftBox {
       self.metrics = metrics
     }
     
-
     /// The default configuration for a `SwiftBox`.
     ///
     public static let `default` = Config()

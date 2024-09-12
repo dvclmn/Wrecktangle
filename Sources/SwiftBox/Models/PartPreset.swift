@@ -11,7 +11,6 @@ public extension SwiftBox {
     public var content: CharacterGrid
     public var resolution: Resolution
     
-    
     public init(
       content: CharacterGrid,
       resolution: Resolution
@@ -29,14 +28,6 @@ public extension SwiftBox {
 
   }
 
-}
-
-public extension SwiftBox {
-  
-  enum Structure {
-    case 
-  }
-  
 }
 
 extension SwiftBox.BoxPart: CustomStringConvertible {
