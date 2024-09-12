@@ -15,8 +15,20 @@ public extension SwiftBox {
     attrString: inout AttributedString
   ) {
     
-//    if type.isStructural {
-//      
+    
+    
+    
+    if type.isStructural {
+      
+      let part = partPreset(for: .corner(.topLeading), with: .threeByTwo)
+      
+      print(part)
+      
+    } else {
+      
+    }
+      
+//
 //      buildStructuralLine(type, attrString: &<#T##AttributedString#>)(
 //        lineType,
 //        text: string,
@@ -35,8 +47,7 @@ public extension SwiftBox {
 //            attrString: &attrString
 //          )
 //        }
-//      
-//    }
+//
     
   }
 

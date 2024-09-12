@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension SwiftBox.BoxGlyph {
+public extension SwiftBox {
   
   struct CharacterGrid {
     private var grid: [[Character]]

@@ -64,6 +64,7 @@ struct BoxPrintView: View {
       
       Text(box01.attributedString)
       HStack {
+        
 //        Text("top leading\n" + box01.partPreset(for: .corner(.topLeading), with: .threeByTwo))
 //        Text("top trailing\n" + box01.partPreset(for: .corner(.topTrailing), with: .threeByTwo))
 //        Text("bottom leading\n" + box01.partPreset(for: .corner(.bottomLeading), with: .threeByTwo))

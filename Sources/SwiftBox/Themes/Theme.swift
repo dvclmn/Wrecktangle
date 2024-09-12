@@ -12,12 +12,12 @@ public extension SwiftBox {
   
   struct Theme {
     
-    var glyphSet: GlyphSet
+    public var glyphSet: GlyphSet
     
     /// This is only relevant for SwiftUI views, not the console output
-    var colour: ColourSet
-    var frameStyle: FrameStyle
-    var padding: Int
+    public var colour: ColourSet
+    public var frameStyle: FrameStyle
+    public var padding: Int
     
     public init(
       glyphSet: GlyphSetPreset = .sharp,

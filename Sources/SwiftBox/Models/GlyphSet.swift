@@ -15,7 +15,11 @@ public extension SwiftBox {
       self.glyphMap = set
     }
 
-    func character(for glyph: BoxGlyph) -> Character {
+    /// I need to get clear on which parts of this package really rely
+    /// on which *other* parts. This `character` function is very
+    /// important — and I think `BoxGlyph` might use it the most?
+    ///
+    public func character(for glyph: BoxGlyph) -> Character {
       return glyphMap[glyph] ?? " "
     }
     

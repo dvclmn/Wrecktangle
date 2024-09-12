@@ -33,10 +33,10 @@ public extension SwiftBox {
     case sharp
   
     
-    var glyphSet: GlyphSet {
+    var glyphSet: SwiftBox.GlyphSet {
       switch self {
         case .other:
-          return GlyphSet(set: [
+          return SwiftBox.GlyphSet(set: [
             .horizontal(.exterior): "─",
             .horizontal(.interior): "─",
             .vertical(.exterior): "│",
@@ -53,7 +53,7 @@ public extension SwiftBox {
           ])
           
         case .sharp:
-          return GlyphSet(set: [
+          return SwiftBox.GlyphSet(set: [
             .horizontal(.exterior): "━",
             .horizontal(.interior): "─",
             .vertical(.exterior): "┃",
