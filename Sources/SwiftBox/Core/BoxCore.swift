@@ -41,7 +41,7 @@ public extension SwiftBox {
     if let headerText = self.header {
       
       let headerLines: [String] = headerText.reflowText(
-        width: adjustedBoxWidth(for: .header),
+        width: adjustedBoxWidth(for: .header()),
         maxLines: config.headerLineLimit,
         paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
       )
@@ -49,8 +49,7 @@ public extension SwiftBox {
       for line in headerLines {
         
         self.buildLine(
-          type: .header,
-          string: line,
+          type: .header(line),
           attrString: &output
         )
         
@@ -112,7 +111,7 @@ public extension SwiftBox {
       textPadding = (self.config.theme.padding * 2)
     }
     
-    let structure: Int = self.config.theme.frameStyle.reservedSpace
+    let structure: Int = self.config.theme.frameStyle.resolution.columns
     
     let totalReserved: Int = textPadding + structure
     let result = self.config.width - totalReserved

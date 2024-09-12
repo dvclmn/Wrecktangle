@@ -11,6 +11,10 @@ public extension SwiftBox {
     self.config.theme.glyphSet
   }
   
+  var resolution: PartPreset.Resolution {
+    self.config.theme.frameStyle.resolution
+  }
+  
   //  func partPreset(
   //    for part: BoxGlyph,
   //    with resolution: PartPreset.Resolution
@@ -92,6 +96,7 @@ public extension SwiftBox {
 public extension SwiftBox.PartPreset {
   
   func constructBoxPart(for line: SwiftBox.BoxLine, width: Int) -> String {
+    
     switch (self.resolution, line) {
       case (.oneByOne, _):
         return String(repeating: self.content[0, 0], count: width)
@@ -118,28 +123,10 @@ public extension SwiftBox.PartPreset {
 
 public extension SwiftBox {
   
-//  func buildLine(_ line: BoxLine) -> String {
-//    let part: BoxGlyph
-//    switch line {
-//      case .top:
-//        part = .corner(.topLeading)
-//      case .bottom:
-//        part = .corner(.bottomLeading)
-//      case .divider:
-//        part = .join(.leading)
-//      case .header, .content:
-//        part = .vertical(.exterior)
-//    }
-//    
-//    let preset = partPreset(for: part, with: .threeByTwo)
-//    return preset.constructBoxPart(for: line, width: self.config.width)
-//  }
-  
-//  func buildBox(lines: [BoxLine]) -> String {
-//    return lines.map { buildLine($0) }.joined(separator: "\n")
-//  }
-  
-  func partPreset(for part: BoxGlyph, with resolution: PartPreset.Resolution) -> PartPreset {
+  func partPreset(
+    for part: BoxGlyph,
+    with resolution: PartPreset.Resolution
+  ) -> PartPreset {
     switch resolution {
       case .oneByOne:
         return oneByOnePreset(for: part)
@@ -159,13 +146,25 @@ public extension SwiftBox {
     var grid = CharacterGrid(rows: 2, columns: 3)
     switch part {
       case .corner(.topLeading):
+        /// First row
         grid[0, 0] = glyphSet.character(for: .corner(.topLeading))
         grid[0, 1] = glyphSet.character(for: .horizontal(.exterior))
         grid[0, 2] = glyphSet.character(for: .horizontal(.exterior))
+        /// Second row
         grid[1, 0] = glyphSet.character(for: .vertical(.exterior))
         grid[1, 1] = " "
         grid[1, 2] = glyphSet.character(for: .corner(.topLeading))
-        // Add cases for other parts as needed
+        
+      case .corner(.topTrailing):
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .corner(.topLeading))
+        grid[0, 1] = glyphSet.character(for: .horizontal(.exterior))
+        grid[0, 2] = glyphSet.character(for: .horizontal(.exterior))
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .vertical(.exterior))
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .corner(.topLeading))
+        
       default:
         // Fill with space characters if not implemented
         for row in 0..<2 {

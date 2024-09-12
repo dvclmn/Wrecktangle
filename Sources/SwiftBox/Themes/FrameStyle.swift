@@ -20,12 +20,21 @@ public extension SwiftBox.Theme {
     /// This could be improved upon by utilising the
     /// `SwiftBox.BoxGlyph.Resolution` type.
     ///
-    public var reservedSpace: Int {
+//    public var reservedSpace: Int {
+//      switch self {
+//        case .single:       2
+//        case .double:       6
+//        case .shadow:       4
+//        case .intertwined:  4
+//      }
+//    }
+    
+    public var resolution: SwiftBox.PartPreset.Resolution {
       switch self {
-        case .single:       2
-        case .double:       6
-        case .shadow:       4
-        case .intertwined:  4
+        case .single:
+            .oneByOne
+        case .double, .shadow, .intertwined:
+            .threeByTwo
       }
     }
   }

@@ -11,27 +11,41 @@ public extension SwiftBox {
   
   func buildLine(
     type: BoxLine,
-    string: String? = nil,
     attrString: inout AttributedString
   ) {
     
-    let part: BoxGlyph
+    let leadingPart: BoxGlyph
+    let trailingPart: BoxGlyph
+    let text: String?
+    
     switch type {
       case .top:
-        part = .corner(.topLeading)
+        leadingPart = partPreset(for: .corner(.topLeading), with: <#T##PartPreset.Resolution#>)
       case .bottom:
-        part = .corner(.bottomLeading)
       case .divider:
-        part = .join(.leading)
-      case .header, .content:
-        part = .vertical(.exterior)
+      case .header(let headerText):
+        text = headerText
+        
+      case .content(let contentText):
+        text = contentText
+        
     }
     
     let preset = partPreset(for: part, with: .threeByTwo)
     
-    let string = preset.constructBoxPart(for: type, width: self.config.width)
+    let presetPart = preset.constructBoxPart(for: type, width: self.config.width)
     
-    attrString.appendString(string, addsLineBreak: false)
+    print(preset)
+    
+    attrString.appendString(presetPart, addsLineBreak: true)
+    
+    if let string = string {
+      
+      let leading = partPreset(for: .vertical(), with: resolution).constructBoxPart(for: type, width: self.config.width)
+      let cappedText = leading + string + leading
+      attrString.appendString(cappedText, addsLineBreak: true)
+      
+    }
     
 //
 //    

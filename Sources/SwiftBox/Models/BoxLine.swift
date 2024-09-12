@@ -14,9 +14,9 @@ public extension SwiftBox {
   enum BoxLine {
     
     case top
-    case header
+    case header(String? = nil)
     case divider
-    case content
+    case content(String? = nil)
     case bottom
     
     public var isStructural: Bool {
