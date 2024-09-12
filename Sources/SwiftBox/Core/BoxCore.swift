@@ -24,7 +24,7 @@ public extension SwiftBox {
 
     /// Box roof
     self.buildLine(
-      type: .structure(.top),
+      type: .top,
       string: nil,
       theme: self.config.theme,
       attrString: &output
@@ -40,7 +40,7 @@ public extension SwiftBox {
     if let headerText = self.header {
 
       let headerLines: [String] = headerText.reflowText(
-        width: adjustedBoxWidth(for: .text(.header)),
+        width: adjustedBoxWidth(for: .header),
         maxLines: config.headerLineLimit,
         paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
       )
@@ -48,7 +48,7 @@ public extension SwiftBox {
       for line in headerLines {
         
         self.buildLine(
-          type: .text(.header),
+          type: .header,
           string: line,
           theme: self.config.theme,
           attrString: &output
@@ -59,7 +59,7 @@ public extension SwiftBox {
     
     /// Divider
     self.buildStructuralLine(
-      .divider,
+      .,
       theme: self.config.theme,
       attrString: &output
     )
@@ -68,7 +68,7 @@ public extension SwiftBox {
     /// Content
 
     let contentLines: [String] = self.content.reflowText(
-      width: adjustedBoxWidth(for: .text(.content)),
+      width: adjustedBoxWidth(for: .content),
       maxLines: config.contentLineLimit,
       paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
     )

@@ -17,6 +17,9 @@ public extension SwiftBox.Theme {
     /// in the horizontal and vertical dimension. This does not include any
     /// space characters, this is handled by the `Theme`s `padding` property.
     ///
+    /// This could be improved upon by utilising the
+    /// `SwiftBox.BoxGlyph.Resolution` type.
+    ///
     public var reservedSpace: Int {
       switch self {
         case .single:       2

@@ -70,10 +70,8 @@ struct BoxPrintView: View {
         Text("bottom trailing\n" + box01.partPreset(for: .corner(.bottomTrailing), with: .threeByTwo))
       }
       HStack {
-        Text("Hor. Ext.\n" + box01.partPreset(for: .horizontal(.exterior), with: .threeByTwo))
-        Text("Hor. Int\n" + box01.partPreset(for: .horizontal(.interior), with: .threeByTwo))
-        Text("Vert. Ext\n" + box01.partPreset(for: .vertical(.exterior), with: .threeByTwo))
-        Text("Vert. Int\n" + box01.partPreset(for: .vertical(.interior), with: .threeByTwo))
+        Text("Hor. Ext.\n" + box01.partPreset(for: .horizontal(), with: .threeByTwo))
+        Text("Vert. Ext\n" + box01.partPreset(for: .vertical(), with: .threeByTwo))
       }
 //      Text(box02.attributedString)
       

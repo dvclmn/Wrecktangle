@@ -1,5 +1,5 @@
 //
-//  BoxPart.swift
+//  BoxGlyph.swift
 //  SwiftBox
 //
 //  Created by Dave Coleman on 23/8/2024.
@@ -8,8 +8,9 @@
 import Foundation
 
 public extension SwiftBox {
+
   
-  enum BoxPart: Hashable {
+  enum BoxGlyph: Hashable {
     
     case horizontal(Location = .exterior)
     
@@ -19,8 +20,9 @@ public extension SwiftBox {
     
     case corner(Corner)
     
+    
     /// This `Join` struct exists to keep horizontal and vertical joins seperate,
-    /// so that `BoxPart` cases `horizontal` and `vertical` are
+    /// so that `BoxGlyph` cases `horizontal` and `vertical` are
     /// more safely typed.
     ///
     public enum Join {
@@ -43,32 +45,34 @@ public extension SwiftBox {
       
     }
     
-
-    
     public enum Location {
       case interior
       case exterior
     }
     
+    
+    public enum Corner: Hashable {
+      /// ┏
+      case topLeading
+      /// ┓
+      case topTrailing
+      /// ┗
+      case bottomLeading
+      /// ┛
+      case bottomTrailing
+      
+    }
+    
   }
 }
-
-public extension SwiftBox.BoxPart {
-  
-  enum PartMode {
-    case oneByOne
-    case threeByTwo
-  }
-}
-
 
 public extension SwiftBox {
 
   
-  /// This provides primary (only?) means to obtain the require `BoxPart`, in the
+  /// This provides primary (only?) means to obtain the require `BoxGlyph`, in the
   /// current user-defined style.
   ///
-  func character(for part: SwiftBox.BoxPart) -> Character {
+  func character(for part: SwiftBox.BoxGlyph) -> Character {
     
     /// This identifies the glyphSet from the selected `Theme`
     ///
@@ -100,13 +104,13 @@ public extension SwiftBox {
   /// style is defined below.
   ///
   
-  /// See ``BoxPart`` for more information on the structural elements used to make boxes.
+  /// See ``BoxGlyph`` for more information on the structural elements used to make boxes.
   ///
   
-  private var glyphMap: [SwiftBox.BoxPart: Int] {
+  private var glyphMap: [SwiftBox.BoxGlyph: Int] {
     
     [
-      .horizontal(.exterior):     00, /// `━` horizontal exterior
+        .horizontal(.exterior):     00, /// `━` horizontal exterior
       
         .horizontal(.interior):     02, /// `─` horizontal interior
       
@@ -135,13 +139,6 @@ public extension SwiftBox {
     ]
     
   }
-  
-  //  public enum GlyphCount {
-  //    case single
-  //    case double
-  //  }
-  //
-  
-  
+
 }
 

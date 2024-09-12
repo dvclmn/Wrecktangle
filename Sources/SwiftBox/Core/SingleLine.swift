@@ -17,13 +17,9 @@ public extension SwiftBox {
   ) {
     
     switch type {
-      case .structure(let lineType):
+      case .top, .bottom:
         
-        buildStructuralLine(
-          lineType,
-          theme: theme,
-          attrString: &attrString
-        )
+        
         
       case .text(let lineType):
         
@@ -41,13 +37,15 @@ public extension SwiftBox {
   }
 
   func buildStructuralLine(
-    _ lineType: BoxLine.Structure,
+    _ lineType: BoxLine,
     theme: Theme,
     attrString: inout AttributedString
   ) {
     
-    let leading = cap(.leading, line: .structure(lineType))
-    let trailing = cap(.trailing, line: .structure(lineType))
+//    
+//    
+//    let leading = cap(.leading, line: lineType)
+//    let trailing = cap(.trailing, line: .structure(lineType))
 
     switch theme.frameStyle {
       case .single:
@@ -55,7 +53,7 @@ public extension SwiftBox {
         /// Leading cap
         ///
         
-        attrString.appendString(leading, addsLineBreak: false)
+        attrString.appendString(partPreset(for: .corner(.), with: BoxGlyph.Resolution), addsLineBreak: false)
         
         /// Repeating section
         ///
@@ -98,7 +96,7 @@ public extension SwiftBox {
         ///
         /// Leading vertical wall part (not a cap, that comes after the space)
         ///
-        let interiorCap = character(for: BoxPart.vertical(.exterior))
+        let interiorCap = character(for: BoxGlyph.vertical(.exterior))
         attrString.appendString(interiorCap, addsLineBreak: false)
         
         /// Space
