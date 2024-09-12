@@ -10,7 +10,7 @@ import Foundation
 public extension SwiftBox {
   
   func buildLine(
-    type: BoxLine,
+    _ line: BoxLine,
     attrString: inout AttributedString
   ) {
     
@@ -18,43 +18,51 @@ public extension SwiftBox {
     let trailingPart: BoxPart
     var text: String? = nil
     
-    switch type {
+    switch line {
       case .top:
-        leadingPart = partPreset(for: .corner(.topLeading))
-        trailingPart = partPreset(for: .corner(.topTrailing))
+        leadingPart = partPreset(for: .cornerTopLeading)
+        trailingPart = partPreset(for: .cornerTopTrailing)
         
       case .bottom:
-        leadingPart = partPreset(for: .corner(.topLeading))
-        trailingPart = partPreset(for: .corner(.topTrailing))
+        leadingPart = partPreset(for: .cornerBottomLeading)
+        trailingPart = partPreset(for: .cornerBottomTrailing)
         
       case .divider:
-        leadingPart = partPreset(for: .corner(.topLeading))
-        trailingPart = partPreset(for: .corner(.topTrailing))
+        leadingPart = partPreset(for: .joinLeading)
+        trailingPart = partPreset(for: .joinTrailing)
         
       case .header(let headerText):
         text = headerText
-        leadingPart = partPreset(for: .corner(.topLeading))
-        trailingPart = partPreset(for: .corner(.topTrailing))
+        leadingPart = partPreset(for: .vertical)
+        trailingPart = partPreset(for: .vertical)
         
       case .content(let contentText):
         text = contentText
-        leadingPart = partPreset(for: .corner(.topLeading))
-        trailingPart = partPreset(for: .corner(.topTrailing))
+        leadingPart = partPreset(for: .vertical)
+        trailingPart = partPreset(for: .vertical)
         
     }
     
-//    let leadingString = leadingPart.constructBoxPart(for: type, width: self.config.width)
-//    let trailingString = trailingPart.constructBoxPart(for: type, width: self.config.width)
+    let leadingString = leadingPart.output
+    let trailingString = trailingPart.output
     
     
     if let text = text {
       
-      let cappedText = "leadingString" + text + "trailingString"
+      let cappedText = leadingString + text + trailingString
+      attrString.appendString(cappedText, addsLineBreak: true)
+      
+      
+    } else {
+      
+      let cappedText = leadingString + trailingString
       attrString.appendString(cappedText, addsLineBreak: true)
       
     }
     
     print(leadingPart)
+    
+    
     
 //
 //    

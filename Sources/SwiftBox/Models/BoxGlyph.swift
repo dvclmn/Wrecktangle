@@ -19,24 +19,22 @@ public extension SwiftBox {
 
   enum BoxGlyph: Hashable {
     
-    case horizontalInterior
-    case horizontalExterior
-    case verticalInterior
-    case verticalExterior
+    case horizontalExterior     /// ━
+    case horizontalInterior     /// ─
+    case verticalExterior       /// ┃
+    case verticalInterior       /// │
     
-    case joinLeading
-    case joinTrailing
-    case joinTop
-    case joinBottom
-    case joinCross
+    case joinLeading            /// ┠
+    case joinTrailing           /// ┨
+    case joinTop                /// ┯
+    case joinBottom             /// ┷
+    case joinCross              /// ┼
     
-    case cornerTopLeading
-    case cornerTopTrailing
-    case cornerBottomLeading
-    case cornerBottomTrailing
+    case cornerTopLeading       /// ┏
+    case cornerTopTrailing      /// ┓
+    case cornerBottomLeading    /// ┗
+    case cornerBottomTrailing   /// ┛
     
-    
-
   }
   
 }

@@ -10,10 +10,12 @@ public extension SwiftBox {
   struct BoxPart {
     public var content: CharacterGrid
     public var resolution: Resolution
+    public var type: PartType
     
     public init(
       content: CharacterGrid,
-      resolution: Resolution
+      resolution: Resolution,
+      type: PartType
     ) {
       self.resolution = resolution
       
@@ -24,11 +26,53 @@ public extension SwiftBox {
       )
       
       self.content = content
+      self.type = type
     }
-
+    
+    
   }
-
+  
+  
+  enum PartType {
+    
+    case horizontal             /// ━
+    case vertical               /// ┃
+    
+    case joinLeading            /// ┠
+    case joinTrailing           /// ┨
+    case joinTop                /// ┯
+    case joinBottom             /// ┷
+    case joinCross              /// ┼
+    
+    case cornerTopLeading       /// ┏
+    case cornerTopTrailing      /// ┓
+    case cornerBottomLeading    /// ┗
+    case cornerBottomTrailing   /// ┛
+    
+  }
+  
 }
+
+public extension SwiftBox.BoxPart {
+  
+  var output: String {
+    
+    let rows = self.content.rows
+    let columns = self.content.columns
+    
+    let rowStrings = (0..<rows).map { row in
+      (0..<columns).map { column in
+        String(self.content[row, column])
+      }.joined()
+    }
+    
+    let result = rowStrings.joined(separator: "\n")
+    
+    return result
+  }
+  
+}
+
 
 extension SwiftBox.BoxPart: CustomStringConvertible {
   

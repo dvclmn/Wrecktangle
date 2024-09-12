@@ -10,11 +10,11 @@ import Foundation
 public extension SwiftBox {
   
   struct CharacterGrid {
-    private var grid: [[BoxGlyph]]
+    private var grid: [[Character]]
     let rows: Int
     let columns: Int
     
-    init(rows: Int, columns: Int, defaultValue: BoxGlyph = .horizontal(.exterior)) {
+    init(rows: Int, columns: Int, defaultValue: Character = " ") {
       self.rows = rows
       self.columns = columns
       self.grid = Array(repeating: Array(repeating: defaultValue, count: columns), count: rows)

@@ -56,61 +56,173 @@ public extension SwiftBox {
 public extension SwiftBox {
   
   func partPreset(
-    for part: BoxGlyph
+    for partType: PartType
   ) -> BoxPart {
     switch self.resolution {
       case .oneByOne:
-        return oneByOnePreset(for: part)
+        return oneByOnePreset(for: partType)
       case .threeByTwo:
-        return threeByTwoPreset(for: part)
+        return threeByTwoPreset(for: partType)
     }
   }
   
-  private func oneByOnePreset(for part: BoxGlyph) -> BoxPart {
-    let char = glyphSet.character(for: part)
-    var grid = CharacterGrid(rows: 1, columns: 1)
-    grid[0, 0] = char
-    return BoxPart(content: grid, resolution: .oneByOne)
+  private func oneByOnePreset(for partType: PartType) -> BoxPart {
+    
+//    switch partType {
+//      case .horizontal:
+//        <#code#>
+//      case .vertical:
+//        <#code#>
+//      case .joinLeading:
+//        <#code#>
+//      case .joinTrailing:
+//        <#code#>
+//      case .joinTop:
+//        <#code#>
+//      case .joinBottom:
+//        <#code#>
+//      case .joinCross:
+//        <#code#>
+//      case .cornerTopLeading:
+//        <#code#>
+//      case .cornerTopTrailing:
+//        <#code#>
+//      case .cornerBottomLeading:
+//        <#code#>
+//      case .cornerBottomTrailing:
+//        <#code#>
+//    }
+//    
+//    let char = glyphSet.character(for: part)
+//    var grid = CharacterGrid(rows: 1, columns: 1)
+//    grid[0, 0] = char
+    fatalError("Not implemented yet")
+//    return BoxPart(content: CharacterGrid(rows: 1, columns: 1), resolution: .oneByOne, type: partType)
   }
   
-  private func threeByTwoPreset(for part: BoxGlyph) -> BoxPart {
+  private func threeByTwoPreset(for partType: PartType) -> BoxPart {
     var grid = CharacterGrid(rows: 2, columns: 3)
-    switch part {
-      case .corner(.topLeading):
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .corner(.topLeading))
-        grid[0, 1] = glyphSet.character(for: .horizontal(.exterior))
-        grid[0, 2] = glyphSet.character(for: .horizontal(.exterior))
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .vertical(.exterior))
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .corner(.topLeading))
+    switch partType {
         
-      case .corner(.topTrailing):
+      case .horizontal:
         /// First row
-        grid[0, 0] = glyphSet.character(for: .corner(.topLeading))
-        grid[0, 1] = glyphSet.character(for: .horizontal(.exterior))
-        grid[0, 2] = glyphSet.character(for: .horizontal(.exterior))
+        grid[0, 0] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
         /// Second row
-        grid[1, 0] = glyphSet.character(for: .vertical(.exterior))
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .corner(.topLeading))
+        grid[1, 0] = glyphSet.character(for: .horizontalExterior)
+        grid[1, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[1, 2] = glyphSet.character(for: .horizontalExterior)
         
-      default:
-        // Fill with space characters if not implemented
-        for row in 0..<2 {
-          for col in 0..<3 {
-            grid[row, col] = "x"
-          }
-        }
+      case .vertical:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        
+      case .joinLeading:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        
+      case .joinTrailing:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        
+      case .joinTop:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        
+      case .joinBottom:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        
+      case .joinCross:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        
+      case .cornerTopLeading:
+      
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+
+      case .cornerTopTrailing:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+
+        
+      case .cornerBottomLeading:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        
+      case .cornerBottomTrailing:
+        /// First row
+        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
+        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
+        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
+        /// Second row
+        grid[1, 0] = glyphSet.character(for: .verticalExterior)
+        grid[1, 1] = " "
+        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
     }
-    return BoxPart(content: grid, resolution: .threeByTwo)
+    return BoxPart(content: grid, resolution: .threeByTwo, type: partType)
   }
 
   
 }
 
-
+//
 //extension Character {
 //  func constructBoxPart(for line: SwiftBox.BoxLine, width: Int) -> String {
 //    let preset = SwiftBox.BoxPart(

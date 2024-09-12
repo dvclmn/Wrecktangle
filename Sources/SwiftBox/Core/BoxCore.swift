@@ -23,17 +23,8 @@ public extension SwiftBox {
     output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
     
     /// Box roof
-    self.buildLine(
-      type: .top,
-      attrString: &output
-    )
-    
-    
-    
-    //    output.quickHighlight()
-    
-    /// Content width, adjusted to take structural elements into account
-    
+    self.buildLine(.top, attrString: &output)
+
     
     /// Header
     
@@ -47,16 +38,13 @@ public extension SwiftBox {
       
       for line in headerLines {
         
-        self.buildLine(
-          type: .header(line),
-          attrString: &output
-        )
+        self.buildLine(.header(line), attrString: &output)
         
       }
     }
     
     /// Divider
-    self.buildLine(type: .divider, attrString: &output)
+    self.buildLine(.divider, attrString: &output)
     
     
     /// Content
@@ -70,7 +58,7 @@ public extension SwiftBox {
     for line in contentLines {
       
       self.buildLine(
-        type: .content(line),
+        .content(line),
         attrString: &output
       )
     }
@@ -85,10 +73,8 @@ public extension SwiftBox {
     
     
     /// Box floor
-    self.buildLine(type: .bottom, attrString: &output)
-    
-    
-    
+    self.buildLine(.bottom, attrString: &output)
+
     return output
   }
   
