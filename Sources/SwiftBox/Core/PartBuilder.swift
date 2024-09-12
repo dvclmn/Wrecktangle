@@ -101,123 +101,102 @@ public extension SwiftBox {
   }
   
   private func threeByTwoPreset(for partType: PartType) -> BoxPart {
-    var grid = CharacterGrid(columns: 3, rows: 2)
+    
+    let layout: [[Character]]
     
     switch partType {
-        
-      case .horizontal:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .horizontalExterior)
-        grid[1, 0] = glyphSet.character(for: .horizontalExterior)
-        grid[2, 0] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[1, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[2, 1] = glyphSet.character(for: .horizontalExterior)
 
+      case .horizontal(.none):
+        layout = [
+          ["━", "━", "━"],
+          ["━", "━", "━"]
+        ]
         
-      case .vertical:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+      case .horizontal(.top):
+        layout = [
+          ["━", "━", "━"],
+          ["─", "─", "─"]
+        ]
+        
+      case .horizontal(.bottom):
+        layout = [
+          ["─", "─", "─"],
+          ["━", "━", "━"]
+        ]
+        
+      case .vertical(.none):
+        layout = [
+          ["┃", " ", "┃"],
+          ["┃", " ", "┃"]
+        ]
+
+      case .vertical(.leading):
+        layout = [
+          ["┃", " ", "│"],
+          ["┃", " ", "│"]
+        ]
+        
+      case .vertical(.trailing):
+        layout = [
+          ["│", " ", "┃"],
+          ["│", " ", "┃"]
+        ]
         
       case .joinLeading:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-        
+        layout = [
+          ["├", "─", "─"],
+          ["│", " ", " "]
+        ]
       case .joinTrailing:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-        
+        layout = [
+          ["─", "─", "┤"],
+          [" ", " ", "│"]
+        ]
       case .joinTop:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-        
+        layout = [
+          ["┬", "─", "┬"],
+          ["│", " ", "│"]
+        ]
       case .joinBottom:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-        
+        layout = [
+          ["│", " ", "│"],
+          ["┴", "─", "┴"]
+        ]
       case .joinCross:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-        
+        layout = [
+          ["┼", "─", "┼"],
+          ["│", " ", "│"]
+        ]
       case .cornerTopLeading:
-      
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-
+        layout = [
+          ["┌", "─", "─"],
+          ["│", " ", " "]
+        ]
       case .cornerTopTrailing:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-
-        
+        layout = [
+          ["─", "─", "┐"],
+          [" ", " ", "│"]
+        ]
       case .cornerBottomLeading:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
-        
+        layout = [
+          ["│", " ", " "],
+          ["└", "─", "─"]
+        ]
       case .cornerBottomTrailing:
-        /// First row
-        grid[0, 0] = glyphSet.character(for: .cornerTopLeading)
-        grid[0, 1] = glyphSet.character(for: .horizontalExterior)
-        grid[0, 2] = glyphSet.character(for: .horizontalExterior)
-        /// Second row
-        grid[1, 0] = glyphSet.character(for: .verticalExterior)
-        grid[1, 1] = " "
-        grid[1, 2] = glyphSet.character(for: .cornerTopLeading)
+        layout = [
+          [" ", " ", "│"],
+          ["─", "─", "┘"]
+        ]
     }
+
+    var grid = CharacterGrid(columns: 3, rows: 2)
+    
+    for (rowIndex, row) in layout.enumerated() {
+      for (columnIndex, char) in row.enumerated() {
+        grid[columnIndex, rowIndex] = glyph(char)
+      }
+    }
+    
     return BoxPart(content: grid, resolution: .threeByTwo, type: partType)
   }
   

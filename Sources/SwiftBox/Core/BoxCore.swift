@@ -28,40 +28,40 @@ public extension SwiftBox {
     
     /// Header
     
-    if let headerText = self.header {
-      
-      let headerLines: [String] = headerText.reflowText(
-        width: adjustedBoxWidth(for: .header()),
-        maxLines: config.headerLineLimit,
-        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-      )
-      
-      for line in headerLines {
-        
-        self.buildLine(.header(line), attrString: &output)
-        
-      }
-    }
+//    if let headerText = self.header {
+//      
+//      let headerLines: [String] = headerText.reflowText(
+//        width: adjustedBoxWidth(for: .header()),
+//        maxLines: config.headerLineLimit,
+//        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+//      )
+//      
+//      for line in headerLines {
+//        
+//        self.buildLine(.header(line), attrString: &output)
+//        
+//      }
+//    }
     
     /// Divider
-    self.buildLine(.divider, attrString: &output)
+//    self.buildLine(.divider, attrString: &output)
     
     
     /// Content
     
-    let contentLines: [String] = self.content.reflowText(
-      width: adjustedBoxWidth(for: .content()),
-      maxLines: config.contentLineLimit,
-      paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-    )
-    
-    for line in contentLines {
-      
-      self.buildLine(
-        .content(line),
-        attrString: &output
-      )
-    }
+//    let contentLines: [String] = self.content.reflowText(
+//      width: adjustedBoxWidth(for: .content()),
+//      maxLines: config.contentLineLimit,
+//      paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+//    )
+//    
+//    for line in contentLines {
+//      
+//      self.buildLine(
+//        .content(line),
+//        attrString: &output
+//      )
+//    }
     
     /// This could be made conditional on whether the theme's `GlyphSet`
     /// requires it, but this ensures that if there's an alternating frame part,
@@ -73,7 +73,7 @@ public extension SwiftBox {
     
     
     /// Box floor
-    self.buildLine(.bottom, attrString: &output)
+//    self.buildLine(.bottom, attrString: &output)
 
     return output
   }

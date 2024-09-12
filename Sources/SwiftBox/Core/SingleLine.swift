@@ -33,13 +33,13 @@ public extension SwiftBox {
         
       case .header(let headerText):
         text = headerText
-        leadingPart = partPreset(for: .vertical)
-        trailingPart = partPreset(for: .vertical)
+        leadingPart = partPreset(for: .vertical(location: .leading))
+        trailingPart = partPreset(for: .vertical(location: .trailing))
         
       case .content(let contentText):
         text = contentText
-        leadingPart = partPreset(for: .vertical)
-        trailingPart = partPreset(for: .vertical)
+        leadingPart = partPreset(for: .vertical(location: .leading))
+        trailingPart = partPreset(for: .vertical(location: .trailing))
         
     }
     
@@ -55,7 +55,9 @@ public extension SwiftBox {
       
     } else {
       
-      let cappedText = leadingString + trailingString
+      
+      
+      let cappedText = leadingString + "&&&&&&&" + trailingString
       attrString.appendString(cappedText, addsLineBreak: true)
       
     }
