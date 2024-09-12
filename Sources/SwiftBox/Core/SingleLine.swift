@@ -9,6 +9,7 @@ import Foundation
 
 public extension SwiftBox {
   
+
   func buildLine(
     _ line: BoxLine,
     attrString: inout AttributedString
@@ -43,27 +44,32 @@ public extension SwiftBox {
         
     }
     
-    let leadingString = leadingPart.output
-    let trailingString = trailingPart.output
+    let leadingString = leadingPart.multiLineAttributedString
+    let trailingString = trailingPart.multiLineAttributedString
     
     
     if let text = text {
-      
-      let cappedText = leadingString + text + trailingString
-      attrString.appendString(cappedText, addsLineBreak: true)
-      
-      
+      // For header and content lines
+      leadingString.appendTo(&attrString, addsLineBreak: false)
+      attrString += AttributedString(text)
+      trailingString.appendTo(&attrString, addsLineBreak: true)
     } else {
+      // For top, bottom, and divider lines
+      var fullLine = leadingString
+      
+      // Add horizontal parts if needed (e.g., for top, bottom, divider)
+      //      if case .top = line, let horizontalPart = partPreset(for: .horizontal(location: .top)) {
+      //        let repeatingPart = horizontalPart.multiLineAttributedString.repeated(/* calculate width */)
+      //        fullLine.append(repeatingPart)
+      //      }
+      // Add similar conditions for bottom and divider if needed
+      
+      fullLine.append(trailingString)
+      fullLine.appendTo(&attrString, addsLineBreak: true)
       
       
-      
-      let cappedText = leadingString + "&&&&&&&" + trailingString
-      attrString.appendString(cappedText, addsLineBreak: true)
       
     }
-    
-    print(leadingPart)
-    
     
     
 //

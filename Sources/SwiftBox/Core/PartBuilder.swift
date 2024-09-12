@@ -167,25 +167,32 @@ public extension SwiftBox {
           ["┼", "─", "┼"],
           ["│", " ", "│"]
         ]
+        
+        /// Corners
+        ///
       case .cornerTopLeading:
         layout = [
-          ["┌", "─", "─"],
-          ["│", " ", " "]
+          ["┌","━","━"],
+          
+          ["┃"," ","┌"]
         ]
       case .cornerTopTrailing:
         layout = [
-          ["─", "─", "┐"],
-          [" ", " ", "│"]
+          ["━","━","┐"],
+      
+          ["┐"," ","┃"]
         ]
       case .cornerBottomLeading:
         layout = [
-          ["│", " ", " "],
-          ["└", "─", "─"]
+          ["┃"," ","└"],
+      
+          ["└","━","━"]
         ]
       case .cornerBottomTrailing:
         layout = [
-          [" ", " ", "│"],
-          ["─", "─", "┘"]
+          ["┘"," ","┃"],
+      
+          ["━","━","┘"]
         ]
     }
 

@@ -5,6 +5,9 @@
 //  Created by Dave Coleman on 11/9/2024.
 //
 
+import TextCore
+import Foundation
+
 public extension SwiftBox {
   
   struct BoxPart {
@@ -80,6 +83,71 @@ public extension SwiftBox.BoxPart {
     
     return result
   }
+  
+  
+  
+  var multiRowString: SwiftBox.MultiRowString {
+      let rows = (0..<content.rows).map { row in
+        String((0..<content.columns).map { column in
+          content[column, row]
+        })
+      }
+    return SwiftBox.MultiRowString(rows)
+    }
+
+}
+
+
+extension SwiftBox.BoxPart {
+  var multiLineAttributedString: MultiLineAttributedString {
+    var result = MultiLineAttributedString()
+    for row in 0..<content.rows {
+      var lineString = AttributedString()
+      for column in 0..<content.columns {
+        lineString += AttributedString(String(content[column, row]))
+      }
+      result.appendLine(lineString)
+    }
+    return result
+  }
+}
+
+
+
+public extension SwiftBox {
+  struct MultiRowString {
+    var rows: [String]
+    
+    init(_ rows: [String]) {
+      self.rows = rows
+    }
+    
+    static func +(lhs: MultiRowString, rhs: MultiRowString) -> MultiRowString {
+      let maxRows = max(lhs.rows.count, rhs.rows.count)
+      var result: [String] = []
+      
+      for i in 0..<maxRows {
+        let leftRow = i < lhs.rows.count ? lhs.rows[i] : String(repeating: " ", count: lhs.rows.first?.count ?? 0)
+        let rightRow = i < rhs.rows.count ? rhs.rows[i] : String(repeating: " ", count: rhs.rows.first?.count ?? 0)
+        result.append(leftRow + rightRow)
+      }
+      
+      return MultiRowString(result)
+    }
+    
+    func repeated(_ count: Int) -> MultiRowString {
+      let repeatedRows = rows.map { row in
+        String(repeating: row, count: count)
+      }
+      return MultiRowString(repeatedRows)
+    }
+    
+    var description: String {
+      return rows.joined(separator: "\n")
+    }
+  }
+  
+  
   
 }
 
