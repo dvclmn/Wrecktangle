@@ -134,7 +134,10 @@ public extension SwiftBox {
         leading = nil
         repeater = nil
         trailing = nil
-        textContent = content
+        
+        let textPadding = String(repeating: invisibleIfNeeded(.space), count: theme.padding)
+        
+        textContent = textPadding + content + textPadding
         textLineLimit = lineLimit
         
     } // END switch line preset

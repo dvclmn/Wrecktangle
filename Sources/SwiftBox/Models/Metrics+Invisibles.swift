@@ -34,15 +34,18 @@ public extension SwiftBox {
       }
     }
     
-    static public func ifNeeded(
-      _ character: Invisibles,
-      fallBackCharacter: Character = " ",
-      isShowing isShowingInvisibles: Bool
-    ) -> Character {
-      let result = isShowingInvisibles ? character.character : fallBackCharacter
-      
-      return result
-    }
+  }
+  
+  func invisibleIfNeeded(
+    _ character: Invisibles,
+    fallBackCharacter: Character = " " // I.e. character to return if invisibles are not needed
+  ) -> Character {
+    
+    let isShowing = self.config.metrics.invisibles
+    
+    let result = isShowing ? character.character : fallBackCharacter
+    
+    return result
   }
   
 }

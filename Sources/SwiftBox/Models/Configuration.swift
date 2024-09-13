@@ -38,7 +38,7 @@ public extension SwiftBox {
     /// If set, the content will be truncated if it exceeds this number of lines.
     /// Set to `nil` for no limit.
     ///
-    public var contentLineLimit: Int?
+    public var contentLineLimit: Int
     
     /// Display metadata about the box itself
     ///

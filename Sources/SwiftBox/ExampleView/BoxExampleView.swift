@@ -19,7 +19,7 @@ struct BoxPrintView: View {
       width: 38,
       headerLineLimit: 1,
       contentLineLimit: 3,
-      metrics: .init(widthCounter: .full, lineNumbers: false, invisibles: true)
+      metrics: .init(widthCounter: .full, lineNumbers: false, invisibles: false)
     )
   )
   
@@ -30,7 +30,7 @@ struct BoxPrintView: View {
       theme: .init(glyphSet: .double, frameStyle: .double),
       width: 38,
       headerLineLimit: 2,
-      contentLineLimit: 3,
+      contentLineLimit: 7,
       metrics: .init(widthCounter: .off, lineNumbers: false, invisibles: false)
     )
   )

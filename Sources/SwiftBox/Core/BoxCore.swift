@@ -28,13 +28,12 @@ public extension SwiftBox {
     output.appendString(top, addsLineBreak: true)
     
     /// Header
-    
     if let headerText = self.header {
       
       let headerLines: [String] = headerText.reflowText(
         width: widthLeftForText,
         maxLines: config.headerLineLimit,
-        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+        paddingCharacter: invisibleIfNeeded(.space)
       )
       
       for headerLine in headerLines {
@@ -44,10 +43,22 @@ public extension SwiftBox {
     }
     
     /// Divider
-//    self.buildLine(.divider, attrString: &output)
+    let divider = line(.divider)
+    output.appendString(divider, addsLineBreak: true)
     
     
     /// Content
+
+    let contentLines: [String] = self.content.reflowText(
+        width: widthLeftForText,
+        maxLines: config.contentLineLimit,
+        paddingCharacter: invisibleIfNeeded(.space)
+      )
+      
+      for contentLine in contentLines {
+        let boxLine = line(.text(content: contentLine, lineLimit: config.contentLineLimit))
+        output.appendString(boxLine, addsLineBreak: true)
+      }
     
 //    let contentLines: [String] = self.content.reflowText(
 //      width: remainingBoxWidth(for: .content()),
