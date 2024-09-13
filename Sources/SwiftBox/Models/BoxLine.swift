@@ -23,11 +23,11 @@ public extension SwiftBox {
   struct StructuralContent: LineContent {
     public let rawContent: String
     public let type: LineType = .structural
-    let repeatingPattern: CharacterGrid
+    let repeatingPattern: BoxPart
     
-    init(repeatingPattern: CharacterGrid) {
+    init(repeatingPattern: BoxPart) {
       self.repeatingPattern = repeatingPattern
-      self.rawContent = repeatingPattern.map { String($0) }.joined(separator: "\n")
+      self.rawContent = repeatingPattern.content.map { String($0) }.joined(separator: "\n")
     }
     
     func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> [[Character]] {
@@ -53,22 +53,13 @@ public extension SwiftBox {
     /// Default initialiser
     ///
     init(
-      content: LineContent,
+      repeater: BoxPart,
       leadingCap: BoxPart,
       trailingCap: BoxPart
     ) {
-      self.content = content
+      self.content = StructuralContent(repeatingPattern: repeater)
       self.leadingCap = leadingCap
       self.trailingCap = trailingCap
-      
-      if content.type == .text {
-        let conditions = Self.checkConditions(leadingCap: leadingCap, trailingCap: trailingCap)
-        
-        precondition(
-          conditions.condition,
-          conditions.message
-        )
-      }
       
       
     }
@@ -90,7 +81,7 @@ public extension SwiftBox {
     
     
     
-    func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> [String] {
+    func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> String {
       let contentWidth = width - leadingCap.width - trailingCap.width
       let renderedContent: [[Character]]
       
@@ -103,12 +94,14 @@ public extension SwiftBox {
           renderedContent = [[Character]](repeating: [Character](repeating: " ", count: contentWidth), count: 1)
       }
       
-      return renderedContent.enumerated().map { index, row in
+      let outputLines: [String] = renderedContent.enumerated().map { index, row in
         let leadingCapRow = index < leadingCap.content.count ? leadingCap.content[index] : [Character](repeating: " ", count: leadingCap.width)
         let trailingCapRow = index < trailingCap.content.count ? trailingCap.content[index] : [Character](repeating: " ", count: trailingCap.width)
         
         return String(leadingCapRow + row + trailingCapRow)
       }
+      
+      return outputLines.joined(separator: "\n")
     }
   }
 }

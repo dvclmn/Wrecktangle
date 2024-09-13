@@ -10,14 +10,15 @@ public extension SwiftBox {
   
   struct GlyphSet {
     
-    let glyphMap: [PartType: Character]
+    let glyphMap: [GlyphType: Character]
     
-    init(set: [PartType: Character]) {
+    init(_ set: [GlyphType: Character]) {
       self.glyphMap = set
     }
     
-    public func character(for glyph: PartType) -> Character {
-      return glyphMap[glyph] ?? " "
+    public func character(for part: PartType) -> Character {
+      
+      return glyphMap[part.toGlyphType] ?? " "
     }
     
     

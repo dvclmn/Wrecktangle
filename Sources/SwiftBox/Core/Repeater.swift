@@ -13,33 +13,33 @@ public extension SwiftBox {
   }
   
   static func repeatHorizontally(
-    _ content: [[Character]],
+    _ part: BoxPart,
     toWidth width: Int,
     trimMethod: TrimMethod = .crop
   ) -> [[Character]] {
     
-    guard !content.isEmpty && !content[0].isEmpty else { return [] }
+    guard !part.content.isEmpty && !part.content[0].isEmpty else { return [] }
     
-    let patternWidth = content[0].count
-    let patternHeight = content.count
+    let patternWidth = part.content[0].count
+    let patternHeight = part.content.count
     
     let repetitions = width / patternWidth
     let remainder = width % patternWidth
     
-    var result: [[Character]] = Array(repeating: [], count: patternHeight)
+    var result: CharacterGrid = Array(repeating: [], count: patternHeight)
     
     for row in 0..<patternHeight {
       for _ in 0..<repetitions {
-        result[row].append(contentsOf: content[row])
+        result[row].append(contentsOf: part.content[row])
       }
       
       if remainder > 0 {
         switch trimMethod {
           case .leaveSpace:
-            result[row].append(contentsOf: content[row][0..<remainder])
+            result[row].append(contentsOf: part.content[row][0..<remainder])
             result[row].append(contentsOf: Array(repeating: " ", count: patternWidth - remainder))
           case .crop:
-            result[row].append(contentsOf: content[row][0..<remainder])
+            result[row].append(contentsOf: part.content[row][0..<remainder])
         }
       }
     }

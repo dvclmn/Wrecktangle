@@ -9,15 +9,13 @@ import Foundation
 
 public extension SwiftBox.GlyphSet {
   
-  static let sharp = SwiftBox.GlyphSet(set: [
+  static let sharp = SwiftBox.GlyphSet([
     
-    .horizontal(.top): "━",
-    .horizontal(.bottom): "━",
-    .horizontal(.interior): "─",
+    .horizontal: "━",
+    .horizontalAlt: "─",
     ///
-    .vertical(.leading): "┃",
-    .vertical(.trailing): "┃",
-    .vertical(.interior): "│",
+    .vertical: "┃",
+    .verticalAlt: "│",
     ///
     .joinLeading: "┠",
     .joinTrailing: "┨",
@@ -31,15 +29,13 @@ public extension SwiftBox.GlyphSet {
     .cornerBottomTrailing: "┛"
   ])
   
-  static let rounded = SwiftBox.GlyphSet(set: [
+  static let rounded = SwiftBox.GlyphSet([
     
-    .horizontal(.top): "─",
-    .horizontal(.bottom): "─",
-    .horizontal(.interior): "─",
+    .horizontal: "─",
+    .horizontalAlt: "━",
     ///
-    .vertical(.leading): "│",
-    .vertical(.trailing): "│",
-    .vertical(.interior): "│",
+    .vertical: "│",
+    .verticalAlt: "┃",
     ///
     .joinLeading: "├",
     .joinTrailing: "┤",
@@ -54,15 +50,13 @@ public extension SwiftBox.GlyphSet {
     
   ])
   
-  static let double = SwiftBox.GlyphSet(set: [
+  static let double = SwiftBox.GlyphSet([
     
-    .horizontal(.top): "═",
-    .horizontal(.bottom): "═",
-    .horizontal(.interior): "─",
+    .horizontal: "═",
+    .horizontalAlt: "─",
     ///
-    .vertical(.leading): "║",
-    .vertical(.trailing): "║",
-    .vertical(.interior): "│",
+    .vertical: "║",
+    .verticalAlt: "│",
     ///
     .joinLeading: "╟",
     .joinTrailing: "╢",

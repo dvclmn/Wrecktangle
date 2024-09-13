@@ -10,7 +10,7 @@ public extension SwiftBox {
   /// This function provides a way to obtain a part of any resolution (as defined
   /// by the current `SwiftBox` instance Theme settings).
   ///
-  func part(_ type: PartType, width: Int? = nil) -> BoxPart {
+  func part(_ type: PartType) -> BoxPart {
     
     let theme = self.config.theme
     
@@ -152,5 +152,6 @@ public extension SwiftBox {
     return representative
   }
 
+  
   
 }

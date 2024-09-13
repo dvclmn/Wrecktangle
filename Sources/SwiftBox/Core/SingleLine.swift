@@ -10,76 +10,76 @@ import Foundation
 public extension SwiftBox {
   
 
-  func buildLine(
-    _ line: BoxLine,
-    attrString: inout AttributedString
-  ) {
-    
-    let leadingPart: BoxPart
-    let trailingPart: BoxPart
-    var repeatingPart: BoxPart = partPreset(for: .horizontal(location: .bottom))
-    var text: String? = nil
-    
-    switch line {
-      case .top:
-        leadingPart = partPreset(for: .cornerTopLeading)
-        trailingPart = partPreset(for: .cornerTopTrailing)
-        repeatingPart = partPreset(for: .horizontal(location: .top))
-        
-      case .bottom:
-        leadingPart = partPreset(for: .cornerBottomLeading)
-        trailingPart = partPreset(for: .cornerBottomTrailing)
-        
-      case .divider:
-        leadingPart = partPreset(for: .joinLeading)
-        trailingPart = partPreset(for: .joinTrailing)
-        
-      case .header(let headerText):
-        text = headerText
-        leadingPart = partPreset(for: .vertical(location: .leading))
-        trailingPart = partPreset(for: .vertical(location: .trailing))
-        
-      case .content(let contentText):
-        text = contentText
-        leadingPart = partPreset(for: .vertical(location: .leading))
-        trailingPart = partPreset(for: .vertical(location: .trailing))
-        
-    }
-    
-    let leadingString = leadingPart.multiLineAttributedString
-    let trailingString = trailingPart.multiLineAttributedString
-    
-    
-    if let text = text {
-      // For header and content lines
-      leadingString.appendTo(&attrString, addsLineBreak: false)
-      attrString.appendString(text, addsLineBreak: false)
-      trailingString.appendTo(&attrString, addsLineBreak: true)
-    } else {
-      // For top, bottom, and divider lines
-      
-      var fullLine = leadingString
-      
-      
-      
-      
-      // Add horizontal parts if needed (e.g., for top, bottom, divider)
-      //      if case .top = line, let horizontalPart = partPreset(for: .horizontal(location: .top)) {
-      //        let repeatingPart = horizontalPart.multiLineAttributedString.repeated(/* calculate width */)
-      //        fullLine.append(repeatingPart)
-      //      }
-      // Add similar conditions for bottom and divider if needed
-      
-      fullLine.append(repeatingPart.multiLineAttributedString.repeated(remainingBoxWidth(for: .top)))
-      
-      fullLine.append(trailingString)
-      
-      
-      fullLine.appendTo(&attrString, addsLineBreak: true)
-      
-      
-      
-    }
+//  func buildLine(
+//    _ line: BoxLine,
+//    attrString: inout AttributedString
+//  ) {
+//    
+//    let leadingPart: BoxPart
+//    let trailingPart: BoxPart
+//    var repeatingPart: BoxPart = partPreset(for: .horizontal(location: .bottom))
+//    var text: String? = nil
+//    
+//    switch line {
+//      case .top:
+//        leadingPart = partPreset(for: .cornerTopLeading)
+//        trailingPart = partPreset(for: .cornerTopTrailing)
+//        repeatingPart = partPreset(for: .horizontal(location: .top))
+//        
+//      case .bottom:
+//        leadingPart = partPreset(for: .cornerBottomLeading)
+//        trailingPart = partPreset(for: .cornerBottomTrailing)
+//        
+//      case .divider:
+//        leadingPart = partPreset(for: .joinLeading)
+//        trailingPart = partPreset(for: .joinTrailing)
+//        
+//      case .header(let headerText):
+//        text = headerText
+//        leadingPart = partPreset(for: .vertical(location: .leading))
+//        trailingPart = partPreset(for: .vertical(location: .trailing))
+//        
+//      case .content(let contentText):
+//        text = contentText
+//        leadingPart = partPreset(for: .vertical(location: .leading))
+//        trailingPart = partPreset(for: .vertical(location: .trailing))
+//        
+//    }
+//    
+//    let leadingString = leadingPart.multiLineAttributedString
+//    let trailingString = trailingPart.multiLineAttributedString
+//    
+//    
+//    if let text = text {
+//      // For header and content lines
+//      leadingString.appendTo(&attrString, addsLineBreak: false)
+//      attrString.appendString(text, addsLineBreak: false)
+//      trailingString.appendTo(&attrString, addsLineBreak: true)
+//    } else {
+//      // For top, bottom, and divider lines
+//      
+//      var fullLine = leadingString
+//      
+//      
+//      
+//      
+//      // Add horizontal parts if needed (e.g., for top, bottom, divider)
+//      //      if case .top = line, let horizontalPart = partPreset(for: .horizontal(location: .top)) {
+//      //        let repeatingPart = horizontalPart.multiLineAttributedString.repeated(/* calculate width */)
+//      //        fullLine.append(repeatingPart)
+//      //      }
+//      // Add similar conditions for bottom and divider if needed
+//      
+//      fullLine.append(repeatingPart.multiLineAttributedString.repeated(remainingBoxWidth(for: .top)))
+//      
+//      fullLine.append(trailingString)
+//      
+//      
+//      fullLine.appendTo(&attrString, addsLineBreak: true)
+//      
+//      
+//      
+//    }
     
     
 //
@@ -117,13 +117,13 @@ public extension SwiftBox {
 //        }
 //
     
-  }
+//  }
 
-  func buildStructuralLine(
-    _ lineType: BoxLine,
-    attrString: inout AttributedString
-  ) {
-    
+//  func buildStructuralLine(
+//    _ lineType: BoxLine,
+//    attrString: inout AttributedString
+//  ) {
+//    
 //    
 //    
 //    let leading = cap(.leading, line: lineType)
@@ -216,15 +216,15 @@ public extension SwiftBox {
 
 
     
-  }
+//  }
   
-  func buildTextLine(
-    _ lineType: SwiftBox.BoxLine,
-    text: String,
-    /// Line number support coming later
-//    lineCount: Int? = nil,
-    attrString: inout AttributedString
-  ) {
+//  func buildTextLine(
+//    _ lineType: SwiftBox.BoxLine,
+//    text: String,
+//    /// Line number support coming later
+////    lineCount: Int? = nil,
+//    attrString: inout AttributedString
+//  ) {
 //    
 //    let leading = cap(.leading, line: .text(lineType))
 //    let trailing = cap(.trailing, line: .text(lineType))
@@ -341,21 +341,21 @@ public extension SwiftBox {
 //    }
 //    
     
-  }
+//  }
   
-  enum DoubleFrameSection {
-    case interior
-    case exterior
-  }
-  
+//  enum DoubleFrameSection {
+//    case interior
+//    case exterior
+//  }
+//  
   
   /// This function should *only* return the repeating part, no caps
   ///
-  private func horizontalStructure(
-    type: SwiftBox.BoxLine,
-    frameSection: DoubleFrameSection? = nil
-  ) -> String {
-    
+//  private func horizontalStructure(
+//    type: SwiftBox.BoxLine,
+//    frameSection: DoubleFrameSection? = nil
+//  ) -> String {
+//    
     /// Structural elements
 //    var output = AttributedString()
     
@@ -397,8 +397,8 @@ public extension SwiftBox {
 ////    output.setAttributes(container(for: .secondary))
 //    return output
     
-    return "horizontal"
-  }
+//    return "horizontal"
+//  }
   
   
 //  func container(for style: ColourSet) -> AttributeContainer {

@@ -32,28 +32,34 @@ public extension SwiftBox {
     output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
     
     /// Box roof
-    self.buildLine(.top, attrString: &output)
+//    self.buildLine(.top, attrString: &output)
+    
+    let repeater: BoxPart = self.part(.horizontal(.top))
+    let leading: BoxPart = self.part(.cornerTopLeading)
+    let trailing: BoxPart = self.part(.cornerTopTrailing)
+    let topLine = BoxLine(repeater: repeater, leadingCap: leading, trailingCap: trailing)
 
+    output.appendString(topLine.render(width: boxWidth), addsLineBreak: true)
     
     /// Header
     
-    if let headerText = self.header {
-      
-      let headerLines: [String] = headerText.reflowText(
-        width: remainingBoxWidth(for: .header()),
-        maxLines: config.headerLineLimit,
-        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-      )
-      
-      for line in headerLines {
-        
-        self.buildLine(.header(line), attrString: &output)
-        
-      }
-    }
+//    if let headerText = self.header {
+//      
+//      let headerLines: [String] = headerText.reflowText(
+//        width: remainingBoxWidth(for: .header()),
+//        maxLines: config.headerLineLimit,
+//        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+//      )
+//      
+//      for line in headerLines {
+//        
+//        self.buildLine(.header(line), attrString: &output)
+//        
+//      }
+//    }
     
     /// Divider
-    self.buildLine(.divider, attrString: &output)
+//    self.buildLine(.divider, attrString: &output)
     
     
     /// Content
@@ -88,30 +94,30 @@ public extension SwiftBox {
   }
   
 
-  func remainingBoxWidth(
-    for type: BoxLine
-  ) -> Int {
-    
-    var textPadding: Int
-    
-    if type.isStructural {
-      
-      /// Don't want spaces in our structural lines
-      textPadding = 0
-      
-    } else {
-      
-      /// Extra space on either side of text lines
-      textPadding = (self.config.theme.padding * 2)
-    }
-    
-    let structure: Int = self.config.theme.frameStyle.resolution.columns
-    
-    let totalReserved: Int = textPadding + structure
-    let result = self.config.width - totalReserved
-    
-    return result
-  }
+//  func remainingBoxWidth(
+//    for type: BoxLine
+//  ) -> Int {
+//    
+//    var textPadding: Int
+//    
+//    if type.isStructural {
+//      
+//      /// Don't want spaces in our structural lines
+//      textPadding = 0
+//      
+//    } else {
+//      
+//      /// Extra space on either side of text lines
+//      textPadding = (self.config.theme.padding * 2)
+//    }
+//    
+//    let structure: Int = self.config.theme.frameStyle.resolution.columns
+//    
+//    let totalReserved: Int = textPadding + structure
+//    let result = self.config.width - totalReserved
+//    
+//    return result
+//  }
 
   
 }
