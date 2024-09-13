@@ -15,7 +15,7 @@ struct BoxPrintView: View {
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: SwiftBox.Config (
-      theme: SwiftBox.Theme(glyphSet: .sharp, frameStyle: .single),
+      theme: SwiftBox.Theme(glyphSet: .rounded, frameStyle: .single, shadow: .simple),
       width: 38,
       headerLineLimit: 1,
       contentLineLimit: 3,
@@ -27,11 +27,11 @@ struct BoxPrintView: View {
     header: TestStrings.conversationTitles[1],
     content: TestStrings.paragraphs[7],
     config: SwiftBox.Config (
-      theme: .init(glyphSet: .double, frameStyle: .double),
+      theme: SwiftBox.Theme(glyphSet: .double, frameStyle: .double),
       width: 38,
       headerLineLimit: 2,
       contentLineLimit: 7,
-      metrics: .init(widthCounter: .off, lineNumbers: false, invisibles: false)
+      metrics: .init(widthCounter: .compact, lineNumbers: false, invisibles: false)
     )
   )
   

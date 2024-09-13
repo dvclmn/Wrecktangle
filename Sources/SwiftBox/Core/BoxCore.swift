@@ -59,20 +59,7 @@ public extension SwiftBox {
         let boxLine = line(.text(content: contentLine, lineLimit: config.contentLineLimit))
         output.appendString(boxLine, addsLineBreak: true)
       }
-    
-//    let contentLines: [String] = self.content.reflowText(
-//      width: remainingBoxWidth(for: .content()),
-//      maxLines: config.contentLineLimit,
-//      paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-//    )
-//    
-//    for line in contentLines {
-//      
-//      self.buildLine(
-//        .content(line),
-//        attrString: &output
-//      )
-//    }
+
     
     /// This could be made conditional on whether the theme's `GlyphSet`
     /// requires it, but this ensures that if there's an alternating frame part,
@@ -83,39 +70,13 @@ public extension SwiftBox {
     //    }
     
     
-    /// Box floor
-//    self.buildLine(.bottom, attrString: &output)
+    /// Bottom
+    let bottom = line(.bottom)
+    output.appendString(bottom, addsLineBreak: true)
+    
 
     return output
   }
   
 
-  
-
-//  func remainingBoxWidth(
-//    for type: BoxLine
-//  ) -> Int {
-//    
-//    var textPadding: Int
-//    
-//    if type.isStructural {
-//      
-//      /// Don't want spaces in our structural lines
-//      textPadding = 0
-//      
-//    } else {
-//      
-//      /// Extra space on either side of text lines
-//      textPadding = (self.config.theme.padding * 2)
-//    }
-//    
-//    let structure: Int = self.config.theme.frameStyle.resolution.columns
-//    
-//    let totalReserved: Int = textPadding + structure
-//    let result = self.config.width - totalReserved
-//    
-//    return result
-//  }
-
-  
 }
