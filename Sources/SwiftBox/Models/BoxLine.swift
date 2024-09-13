@@ -39,9 +39,11 @@ public extension SwiftBox {
   struct TextContent: LineContent {
     public let rawContent: String
     public let type: LineType = .text
+    public let lineLimit: Int
     
-    init(_ text: String) {
+    init(_ text: String, lineLimit: Int = 0) {
       self.rawContent = text
+      self.lineLimit = lineLimit
     }
   }
 
@@ -111,6 +113,23 @@ public extension SwiftBox {
   enum LineType {
     case structural
     case text
+    
+  }
+  
+  /// What kinds of lines could there be, in a box?
+  ///
+  /// Note: These, by definition, describe a *whole* line, stretching
+  /// from one end to the other. Not just a sub-component.
+  ///
+  /// E.g. `top` would consist of a leading cap, repeating part, and trailing cap.
+  ///
+  enum LinePreset {
+    case top
+    case divider
+    case bottom
   }
   
 }
+
+
+
