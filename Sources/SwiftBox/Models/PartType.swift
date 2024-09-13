@@ -27,6 +27,28 @@ public extension SwiftBox {
     case cornerBottomTrailing   /// ┛
     
     
+    public static let toPartType: [GlyphType: PartType] = [
+      .horizontal: .horizontal(),
+      .horizontalAlt: .horizontal(.interior),
+      .vertical: .vertical(),
+      .verticalAlt: .vertical(.interior),
+      .joinLeading: .joinLeading,
+      .joinTrailing: .joinTrailing,
+      .joinTop: .joinTop,
+      .joinBottom: .joinBottom,
+      .joinCross: .joinCross,
+      .cornerTopLeading: .cornerTopLeading,
+      .cornerTopTrailing: .cornerTopTrailing,
+      .cornerBottomLeading: .cornerBottomLeading,
+      .cornerBottomTrailing: .cornerBottomTrailing
+    ]
+
+    static let fromPartType: [PartType: GlyphType] = Dictionary(uniqueKeysWithValues: toPartType.map { ($1, $0) })
+    
+    var toPartType: PartType {
+      return GlyphType.toPartType[self] ?? .horizontal()
+    }
+    
     
   }
   
@@ -58,47 +80,22 @@ public extension SwiftBox {
       case interior // Divider
     }
     
-    public var toGlyphType: GlyphType {
+    var toGlyphType: GlyphType {
       switch self {
         case .horizontal(.top), .horizontal(.bottom):
-          GlyphType.horizontal
-
+          return .horizontal
+          
         case .horizontal(.interior):
-          GlyphType.horizontalAlt
+          return .horizontalAlt
           
         case .vertical(.leading), .vertical(.trailing):
-          GlyphType.vertical
+          return .vertical
           
         case .vertical(.interior):
-          GlyphType.verticalAlt
+          return .verticalAlt
           
-        case .joinLeading:
-          GlyphType.joinLeading
-          
-        case .joinTrailing:
-          GlyphType.joinTrailing
-          
-        case .joinTop:
-          GlyphType.joinTop
-          
-        case .joinBottom:
-          GlyphType.joinBottom
-          
-        case .joinCross:
-          GlyphType.joinCross
-          
-        case .cornerTopLeading:
-          GlyphType.cornerTopLeading
-          
-        case .cornerTopTrailing:
-          GlyphType.cornerTopTrailing
-          
-        case .cornerBottomLeading:
-          GlyphType.cornerBottomLeading
-          
-        case .cornerBottomTrailing:
-          GlyphType.cornerBottomTrailing
-          
+        default:
+          return GlyphType.fromPartType[self] ?? .horizontal
       }
     }
 

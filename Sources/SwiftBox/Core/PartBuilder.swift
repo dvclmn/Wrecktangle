@@ -143,9 +143,9 @@ public extension SwiftBox {
     let reverseMap = Dictionary(uniqueKeysWithValues: archetypeSet.glyphMap.map { ($1, $0) })
     
     // Find the PartType for the representative character
-    if let partType = reverseMap[representative] {
+    if let glyphType = reverseMap[representative] {
       // Return the corresponding character from the user's chosen set
-      return set.character(for: partType)
+      return set.character(for: glyphType.toPartType)
     }
     
     // If no match is found, return the original character

@@ -43,20 +43,20 @@ public extension SwiftBox {
     
     /// Header
     
-//    if let headerText = self.header {
-//      
-//      let headerLines: [String] = headerText.reflowText(
-//        width: remainingBoxWidth(for: .header()),
-//        maxLines: config.headerLineLimit,
-//        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-//      )
-//      
-//      for line in headerLines {
-//        
-//        self.buildLine(.header(line), attrString: &output)
-//        
-//      }
-//    }
+    if let headerText = self.header {
+      
+      let headerLines: [String] = headerText.reflowText(
+        width: remainingBoxWidth(for: .header()),
+        maxLines: config.headerLineLimit,
+        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+      )
+      
+      for line in headerLines {
+        
+        self.buildLine(.header(line), attrString: &output)
+        
+      }
+    }
     
     /// Divider
 //    self.buildLine(.divider, attrString: &output)
