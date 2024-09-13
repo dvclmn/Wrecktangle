@@ -28,6 +28,47 @@ public extension SwiftBox.Theme {
 
 public extension SwiftBox.Theme.BoxShadow {
   
+  /// What do we need to know to create a shadow for a side?
+  /// 
+  /// 1. Dimensions — only 1x character high for text lines, but need
+  /// height to make sure I match structural lines
+  /// 2. Whether it repeats horizontally
+  /// 3. Alignment based on light source
+  ///
+  func shadow(for side: SwiftBox.BoxSide, boxWidth: Int) -> String {
+    
+    var shadowWidth: Int {
+      let width: Int
+      switch side.shadowMode {
+        case .repeating:
+          width = boxWidth
+        case .cap:
+          width = 1
+      }
+    }
+    
+    var shadowHeight: Int {
+      
+    }
+    
+    
+    switch side {
+      case .top:
+        <#code#>
+      case .bottom:
+        <#code#>
+      case .leading:
+        <#code#>
+      case .trailing:
+        <#code#>
+    }
+    
+    
+    switch self.lightSource {
+      case .
+    }
+  }
+  
   /// Referring to horizontal space only
   ///
   var reservedSpace: Int {
@@ -97,10 +138,30 @@ public extension SwiftBox.Theme.BoxShadow {
 }
 
 public extension SwiftBox {
+  
   enum BoxSide {
     case top
     case bottom
     case leading
     case trailing
+    
+    /// Depending on which side of the box the shadow needs to
+    /// be drawn on, the shadow may repeat, or act as a line cap.
+    ///
+    public var shadowMode: ShadowMode {
+      switch self {
+        case .top, .bottom:
+            .repeating
+        case .leading, .trailing:
+            .cap
+      }
+    }
+    
+    public enum ShadowMode {
+      case cap
+      case repeating
+    }
+    
   }
+  
 }

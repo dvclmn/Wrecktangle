@@ -104,7 +104,8 @@ public extension SwiftBox {
         case .text, .shadow:
           nil
       }
-    }
+    } // END parts
+    
   }
   
 }

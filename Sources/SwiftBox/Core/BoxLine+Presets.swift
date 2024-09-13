@@ -52,33 +52,18 @@ public extension SwiftBox {
         return lineAndShadow
         
       case .shadow:
-        
-        
-        let shadowWidth: Int = boxWidth() - 2
+
+        let shadowWidth: Int = boxWidth()
         let shadowRepeated = String(repeating: shadowCharacter, count: shadowWidth)
-        let shadowResult: String
         
-        if shadow.sideHasShadow(.leading) {
-          shadowResult = " " + shadowRepeated
-        } else if shadow.sideHasShadow(.trailing) {
-          shadowResult = shadowRepeated + " "
-        } else {
-          shadowResult = "nil"
-        }
+        let shadowWithCaps = shadowCap(.leading) + shadowRepeated + shadowCap(.trailing)
         
-        return shadowResult
+        return shadowWithCaps
     }
     
     
   } // END create line
   
   
-  func shadowCap(_ side: SwiftBox.BoxSide) -> String {
-    
-    let result: String = shadow.sideHasShadow(side) ? "\(shadowCharacter)" : ""
-    
-    return result
-    
-  }
-
+ 
 }
