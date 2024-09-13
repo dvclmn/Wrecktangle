@@ -5,14 +5,15 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
-public extension SwiftBox {
+public extension SwiftBox.BoxPart {
   
   /// This function provides a way to obtain a part of any resolution (as defined
   /// by the current `SwiftBox` instance Theme settings).
   ///
-  func part(_ type: PartType) -> BoxPart {
-    
-    let theme = self.config.theme
+  static func create(
+    _ type: SwiftBox.PartType,
+    theme: SwiftBox.Theme
+  ) -> SwiftBox.BoxPart {
     
     switch theme.frameStyle {
         
@@ -21,15 +22,15 @@ public extension SwiftBox {
         
         /// Single is quite simple, and should just directly obtain the correct `1x1` character
         /// from the user's selected `GlyphSet`, chosen via `Theme`.
-        let grid: CharacterGrid = [[theme.glyphSet.character(for: type)]]
-        let part = BoxPart(content: grid, type: type)
+        let grid: SwiftBox.CharacterGrid = [[theme.glyphSet.character(for: type)]]
+        let part = SwiftBox.BoxPart(content: grid, type: type)
         return part
         
         
         // MARK: - Double frame
       case .double, .shadow, .intertwined:
         
-        let content: CharacterGrid
+        let content: SwiftBox.CharacterGrid
         
         switch type {
             
@@ -120,24 +121,27 @@ public extension SwiftBox {
         
         
         // Perform the hot swapping after the switch
-        let swappedContent = swapCharacters(in: content)
+        let swappedContent = swapCharacters(in: content, with: theme)
         
-        return BoxPart(content: swappedContent, type: type)
+        return SwiftBox.BoxPart(content: swappedContent, type: type)
         
     }
     
   }
   
-  private func swapCharacters(in grid: CharacterGrid) -> CharacterGrid {
+  private static func swapCharacters(
+    in grid: SwiftBox.CharacterGrid,
+    with theme: SwiftBox.Theme
+  ) -> SwiftBox.CharacterGrid {
     return grid.map { row in
       row.map { char in
-        glyph(char, set: self.glyphSet)
+        glyph(char, set: theme.glyphSet)
       }
     }
   }
   
-  private func glyph(_ representative: Character, set: GlyphSet) -> Character {
-    let archetypeSet: GlyphSet = .sharp
+  private static func glyph(_ representative: Character, set: SwiftBox.GlyphSet) -> Character {
+    let archetypeSet: SwiftBox.GlyphSet = .sharp
     
     // Create a reverse mapping of Character to PartType for the archetype set
     let reverseMap = Dictionary(uniqueKeysWithValues: archetypeSet.glyphMap.map { ($1, $0) })

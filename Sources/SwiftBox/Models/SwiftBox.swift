@@ -28,3 +28,20 @@ public struct SwiftBox {
   }
 
 }
+
+public extension SwiftBox {
+  
+  var theme: Theme {
+    self.config.theme
+  }
+  
+  var glyphSet: GlyphSet {
+    self.config.theme.glyphSet
+  }
+  
+  var boxWidth: Int {
+    self.config.width
+  }
+  
+  
+}

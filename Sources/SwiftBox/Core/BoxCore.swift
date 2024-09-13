@@ -13,15 +13,7 @@ import AppKit
 
 public extension SwiftBox {
   
-  var glyphSet: GlyphSet {
-    self.config.theme.glyphSet
-  }
-  
-  var boxWidth: Int {
-    self.config.width
-  }
-  
-  
+
   func drawBox() -> AttributedString {
     
     /// We start off with a fresh, blank attr. string. The 'build process' is based
@@ -29,34 +21,30 @@ public extension SwiftBox {
     var output = AttributedString()
     
     /// Add a width counter, according to user's preference ()
-    output += TextCore.widthCounter(self.config.width, style: self.config.metrics.widthCounter)
+    output += TextCore.widthCounter(boxWidth, style: self.config.metrics.widthCounter)
     
     /// Box roof
-//    self.buildLine(.top, attrString: &output)
-    
-    let repeater: BoxPart = self.part(.horizontal(.top))
-    let leading: BoxPart = self.part(.cornerTopLeading)
-    let trailing: BoxPart = self.part(.cornerTopTrailing)
-    let topLine = BoxLine(repeater: repeater, leadingCap: leading, trailingCap: trailing)
+    let top = line(.top)
+    output.appendString(top, addsLineBreak: true)
 
-    output.appendString(topLine.render(width: boxWidth), addsLineBreak: true)
+//    output.appendString(topLine.render(width: boxWidth), addsLineBreak: true)
     
     /// Header
     
-    if let headerText = self.header {
-      
-      let headerLines: [String] = headerText.reflowText(
-        width: remainingBoxWidth(for: .header()),
-        maxLines: config.headerLineLimit,
-        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-      )
-      
-      for line in headerLines {
-        
-        self.buildLine(.header(line), attrString: &output)
-        
-      }
-    }
+//    if let headerText = self.header {
+//      
+//      let headerLines: [String] = headerText.reflowText(
+//        width: remainingBoxWidth(for: .header()),
+//        maxLines: config.headerLineLimit,
+//        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+//      )
+//      
+//      for line in headerLines {
+//        
+//        self.buildLine(.header(line), attrString: &output)
+//        
+//      }
+//    }
     
     /// Divider
 //    self.buildLine(.divider, attrString: &output)

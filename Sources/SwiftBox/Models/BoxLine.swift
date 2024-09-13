@@ -10,9 +10,6 @@
 /// So processing line-by-line, vertically, is fairly strightforward.
 ///
 
-
-
-
 public extension SwiftBox {
   
   protocol LineContent {
@@ -34,19 +31,9 @@ public extension SwiftBox {
       return SwiftBox.repeatHorizontally(repeatingPattern, toWidth: width, trimMethod: trimMethod)
     }
   }
-
   
-  struct TextContent: LineContent {
-    public let rawContent: String
-    public let type: LineType = .text
-    public let lineLimit: Int
-    
-    init(_ text: String, lineLimit: Int = 0) {
-      self.rawContent = text
-      self.lineLimit = lineLimit
-    }
-  }
-
+  
+ 
   struct BoxLine {
     let content: LineContent
     let leadingCap: BoxPart
@@ -68,42 +55,19 @@ public extension SwiftBox {
     
     /// Convenience initialiser for text-based content
     ///
-    init(text: String, leadingCap: BoxPart, trailingCap: BoxPart) {
+    init(text: String, lineLimit: Int, theme: SwiftBox.Theme) {
       
-      let conditions = Self.checkConditions(leadingCap: leadingCap, trailingCap: trailingCap)
+      self.content = TextContent(text, lineLimit: lineLimit)
+      self.leadingCap = BoxPart.create(.vertical(.leading), theme: theme)
+      self.trailingCap = BoxPart.create(.vertical(.trailing), theme: theme)
+      
+      let conditions = Self.checkConditions(leadingCap: self.leadingCap, trailingCap: self.trailingCap)
       
       precondition(
         conditions.condition,
         conditions.message
       )
-      self.content = TextContent(text)
-      self.leadingCap = leadingCap
-      self.trailingCap = trailingCap
-    }
-    
-    
-    
-    func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> String {
-      let contentWidth = width - leadingCap.width - trailingCap.width
-      let renderedContent: [[Character]]
       
-      switch content {
-        case let structuralContent as StructuralContent:
-          renderedContent = structuralContent.render(width: contentWidth, trimMethod: trimMethod)
-        case let textContent as TextContent:
-          renderedContent = [Array(textContent.rawContent.padding(toLength: contentWidth, withPad: " ", startingAt: 0))]
-        default:
-          renderedContent = [[Character]](repeating: [Character](repeating: " ", count: contentWidth), count: 1)
-      }
-      
-      let outputLines: [String] = renderedContent.enumerated().map { index, row in
-        let leadingCapRow = index < leadingCap.content.count ? leadingCap.content[index] : [Character](repeating: " ", count: leadingCap.width)
-        let trailingCapRow = index < trailingCap.content.count ? trailingCap.content[index] : [Character](repeating: " ", count: trailingCap.width)
-        
-        return String(leadingCapRow + row + trailingCapRow)
-      }
-      
-      return outputLines.joined(separator: "\n")
     }
   }
 }
@@ -127,9 +91,69 @@ public extension SwiftBox {
     case top
     case divider
     case bottom
+    case text(content: String, lineLimit: Int = 0)
   }
   
 }
 
+public extension SwiftBox {
+  
+  func line(
+    _ preset: LinePreset
+  ) -> String {
+    
+    let leading: BoxPart?
+    let repeater: BoxPart?
+    let trailing: BoxPart?
+    let textContent: String?
+    let textLineLimit: Int?
 
-
+    switch preset {
+      case .top:
+        leading = BoxPart.create(.cornerTopLeading, theme: theme)
+        repeater = BoxPart.create(.horizontal(.top), theme: theme)
+        trailing = BoxPart.create(.cornerTopTrailing, theme: theme)
+        textContent = nil
+        textLineLimit = nil
+        
+      case .divider:
+        leading = BoxPart.create(.joinLeading, theme: theme)
+        repeater = BoxPart.create(.horizontal(.interior), theme: theme)
+        trailing = BoxPart.create(.joinTrailing, theme: theme)
+        textContent = nil
+        textLineLimit = nil
+        
+      case .bottom:
+        leading = BoxPart.create(.cornerBottomLeading, theme: theme)
+        repeater = BoxPart.create(.horizontal(.bottom), theme: theme)
+        trailing = BoxPart.create(.cornerBottomTrailing, theme: theme)
+        textContent = nil
+        textLineLimit = nil
+        
+      case let .text(content, lineLimit):
+        leading = nil
+        repeater = nil
+        trailing = nil
+        textContent = content
+        textLineLimit = lineLimit
+        
+    } // END switch line preset
+    
+    let lineResult: SwiftBox.BoxLine
+    
+    if let text = textContent, let lineLimit = textLineLimit {
+      lineResult = SwiftBox.BoxLine(text: text, lineLimit: lineLimit, theme: theme)
+      
+    } else if let leading = leading, let repeater = repeater, let trailing = trailing {
+      lineResult = BoxLine(repeater: repeater, leadingCap: leading, trailingCap: trailing)
+    } else {
+      fatalError("The above *should* be supplying this function with what it needs.")
+    }
+    
+    let result = lineResult.render(width: boxWidth)
+    
+    return result
+    
+  } // END create line
+  
+}

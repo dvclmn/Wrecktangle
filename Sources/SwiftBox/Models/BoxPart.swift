@@ -16,10 +16,8 @@ public extension SwiftBox {
     public var content: CharacterGrid
     public var type: PartType
     
-    public init(
-      content: CharacterGrid,
-      type: PartType
-    ) {
+//    @available(*, deprecated, message: "Use `SwiftBox.part(_:)` to create parts.")
+    public init(content: CharacterGrid, type: PartType) {
       self.content = content
       self.type = type
     }
