@@ -15,11 +15,7 @@ public extension SwiftBox {
     init(set: [PartType: Character]) {
       self.glyphMap = set
     }
-
-    /// I need to get clear on which parts of this package really rely
-    /// on which *other* parts. This `character` function is very
-    /// important — and I think `BoxGlyph` might use it the most?
-    ///
+    
     public func character(for glyph: PartType) -> Character {
       return glyphMap[glyph] ?? " "
     }

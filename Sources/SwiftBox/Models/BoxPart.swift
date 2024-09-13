@@ -17,6 +17,7 @@ public extension SwiftBox {
     public init(
       content: CharacterGrid,
       type: PartType
+      
     ) {
       
 //      precondition(
@@ -37,85 +38,55 @@ public extension SwiftBox {
   }
   
 
-  enum PartType: Hashable {
-    
-    case horizontal(location: HorizontalLocation = .top)
-    case vertical(location: VerticalLocation = .leading)
-    
-    case joinLeading            /// ┠
-    case joinTrailing           /// ┨
-    case joinTop                /// ┯
-    case joinBottom             /// ┷
-    case joinCross              /// ┼
-    
-    case cornerTopLeading       /// ┏
-    case cornerTopTrailing      /// ┓
-    case cornerBottomLeading    /// ┗
-    case cornerBottomTrailing   /// ┛
-    
-    public enum HorizontalLocation: Hashable {
-      case top
-      case bottom
-      case interior // Divider
-    }
-    
-    public enum VerticalLocation: Hashable {
-      case leading
-      case trailing
-      case interior // Divider
-    }
-    
-
-    
-  }
+  
   
 }
 
-public extension SwiftBox.BoxPart {
-  
-  var output: String {
-    
-    let rows = self.content.rows
-    let columns = self.content.columns
-    
-    let rowStrings = (0..<rows).map { row in
-      (0..<columns).map { column in
-        String(self.content[column, row])
-      }.joined()
-    }
-    
-    let result = rowStrings.joined(separator: "\n")
-    
-    return result
-  }
-  
-  
-  
-  var multiRowString: SwiftBox.MultiRowString {
-      let rows = (0..<content.rows).map { row in
-        String((0..<content.columns).map { column in
-          content[column, row]
-        })
-      }
-    return SwiftBox.MultiRowString(rows)
-    }
-
-}
-
-
-extension SwiftBox.BoxPart {
-  var multiLineAttributedString: MultiLineAttributedString {
-    var result = MultiLineAttributedString()
-    for row in 0..<content.rows {
-      var lineString = AttributedString()
-      for column in 0..<content.columns {
-        lineString += AttributedString(String(content[column, row]))
-      }
-      result.appendLine(lineString)
-    }
-    return result
-  }
-}
+//public extension SwiftBox.BoxPart {
+//  
+//  var output: String {
+//    
+//    let rows = self.content.rows
+//    let columns = self.content.columns
+//    
+//    let rowStrings = (0..<rows).map { row in
+//      (0..<columns).map { column in
+//        String(self.content[column, row])
+//      }.joined()
+//    }
+//    
+//    let result = rowStrings.joined(separator: "\n")
+//    
+//    return result
+//  }
+//  
+//  
+//  
+//  var multiRowString: SwiftBox.MultiRowString {
+//      let rows = (0..<content.rows).map { row in
+//        String((0..<content.columns).map { column in
+//          content[column, row]
+//        })
+//      }
+//    return SwiftBox.MultiRowString(rows)
+//    }
+//
+//}
+//
+//
+//extension SwiftBox.BoxPart {
+//  var multiLineAttributedString: MultiLineAttributedString {
+//    var result = MultiLineAttributedString()
+//    for row in 0..<content.rows {
+//      var lineString = AttributedString()
+//      for column in 0..<content.columns {
+//        lineString += AttributedString(String(content[column, row]))
+//      }
+//      result.appendLine(lineString)
+//    }
+//    return result
+//  }
+//}
 
 
 

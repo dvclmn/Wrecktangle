@@ -8,34 +8,45 @@
 import Foundation
 
 public extension SwiftBox.GlyphSet {
-
+  
   static let sharp = SwiftBox.GlyphSet(set: [
-    .horizontal: "━",
-    .horizontalAlt: "─",
-    .vertical: "┃",
-    .verticalAlt: "│",
+    
+    .horizontal(.top): "━",
+    .horizontal(.bottom): "━",
+    .horizontal(.interior): "─",
+    ///
+    .vertical(.leading): "┃",
+    .vertical(.trailing): "┃",
+    .vertical(.interior): "│",
+    ///
     .joinLeading: "┠",
     .joinTrailing: "┨",
     .joinTop: "┯",
     .joinBottom: "┷",
     .joinCross: "┼",
+    ///
     .cornerTopLeading: "┏",
     .cornerTopTrailing: "┓",
     .cornerBottomLeading: "┗",
     .cornerBottomTrailing: "┛"
   ])
-
+  
   static let rounded = SwiftBox.GlyphSet(set: [
     
-    .horizontal: "─",
-    .horizontalAlt: "─",
-    .vertical: "│",
-    .verticalAlt: "│",
+    .horizontal(.top): "─",
+    .horizontal(.bottom): "─",
+    .horizontal(.interior): "─",
+    ///
+    .vertical(.leading): "│",
+    .vertical(.trailing): "│",
+    .vertical(.interior): "│",
+    ///
     .joinLeading: "├",
     .joinTrailing: "┤",
     .joinTop: "┬",
     .joinBottom: "┴",
     .joinCross: "┼",
+    ///
     .cornerTopLeading: "╭",
     .cornerTopTrailing: "╮",
     .cornerBottomLeading: "╰",
@@ -45,21 +56,26 @@ public extension SwiftBox.GlyphSet {
   
   static let double = SwiftBox.GlyphSet(set: [
     
-    .horizontal: "═",
-    .horizontalAlt: "─",
-    .vertical: "║",
-    .verticalAlt: "│",
+    .horizontal(.top): "═",
+    .horizontal(.bottom): "═",
+    .horizontal(.interior): "─",
+    ///
+    .vertical(.leading): "║",
+    .vertical(.trailing): "║",
+    .vertical(.interior): "│",
+    ///
     .joinLeading: "╟",
     .joinTrailing: "╢",
     .joinTop: "╤",
     .joinBottom: "╧",
     .joinCross: "┼",
+    ///
     .cornerTopLeading: "╔",
     .cornerTopTrailing: "╗",
     .cornerBottomLeading: "╚",
     .cornerBottomTrailing: "╝"
   ])
-
+  
 }
 
 
