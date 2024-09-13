@@ -5,10 +5,12 @@
 //  Created by Dave Coleman on 11/9/2024.
 //
 
-import TextCore
 import Foundation
+import TextCore
 
 public extension SwiftBox {
+  
+  typealias CharacterGrid = [[Character]]
   
   struct BoxPart {
     public var content: CharacterGrid
@@ -17,29 +19,32 @@ public extension SwiftBox {
     public init(
       content: CharacterGrid,
       type: PartType
-      
     ) {
-      
-//      precondition(
-//        content.rows == self.resolution.rows
-//        && content.columns == resolution.columns,
-//        """
-//        Content grid size must match resolution.
-//        Grid Columns: \(content.columns), Rows: \(content.rows)
-//        Resolution: \(resolution.columns)x\(resolution.rows)
-//        """
-//      )
-//      
       self.content = content
       self.type = type
     }
-    
-    
+  }
+}
+
+public extension SwiftBox.BoxPart {
+  
+  
+  var width: Int {
+    content.first?.count ?? 0
   }
   
+  var height: Int {
+    content.count
+  }
+  
+  var columns: Int {
+    self.width
+  }
+  
+  var rows: Int {
+    self.height
+  }
 
-  
-  
 }
 
 //public extension SwiftBox.BoxPart {
