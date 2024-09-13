@@ -11,6 +11,7 @@ import SwiftUI
 public extension SwiftBox {
   
   enum Invisibles {
+    
     case line
     case space
     case tab

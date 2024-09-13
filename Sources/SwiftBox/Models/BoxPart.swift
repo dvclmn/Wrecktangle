@@ -36,11 +36,11 @@ public extension SwiftBox {
     
   }
   
-  
-  enum PartType {
+
+  enum PartType: Hashable {
     
-    case horizontal(location: HorizontalPosition? = nil)
-    case vertical(location: VerticalPosition? = nil)
+    case horizontal(location: HorizontalLocation = .top)
+    case vertical(location: VerticalLocation = .leading)
     
     case joinLeading            /// ┠
     case joinTrailing           /// ┨
@@ -53,45 +53,19 @@ public extension SwiftBox {
     case cornerBottomLeading    /// ┗
     case cornerBottomTrailing   /// ┛
     
-    public enum HorizontalPosition {
+    public enum HorizontalLocation: Hashable {
       case top
       case bottom
+      case interior // Divider
     }
     
-    public enum VerticalPosition {
+    public enum VerticalLocation: Hashable {
       case leading
       case trailing
+      case interior // Divider
     }
     
-//    public var boxGlyphEquivalent: BoxGlyph {
-//      switch self {
-//        case .horizontal(.top):
-//          BoxGlyph.horizontalExterior
-//        case .horizontal(.bottom):
-//          <#code#>
-//        case .vertical(.leading):
-//        case .vertical(.trailing):
-//          <#code#>
-//        case .joinLeading:
-//          <#code#>
-//        case .joinTrailing:
-//          <#code#>
-//        case .joinTop:
-//          <#code#>
-//        case .joinBottom:
-//          <#code#>
-//        case .joinCross:
-//          <#code#>
-//        case .cornerTopLeading:
-//          <#code#>
-//        case .cornerTopTrailing:
-//          <#code#>
-//        case .cornerBottomLeading:
-//          <#code#>
-//        case .cornerBottomTrailing:
-//          <#code#>
-//      }
-//    }
+
     
   }
   

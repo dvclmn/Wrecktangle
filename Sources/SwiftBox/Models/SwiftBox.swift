@@ -9,6 +9,8 @@ import Foundation
 
 public struct SwiftBox {
   
+  public typealias CharacterGrid = [[Character]]
+  
   var header: String?
   var content: String
   var config: Config

@@ -13,13 +13,5 @@ public extension SwiftBox.Theme {
     case shadow
     case intertwined
     
-    public var resolution: SwiftBox.BoxPart.Resolution {
-      switch self {
-        case .single:
-            .oneByOne
-        case .double, .shadow, .intertwined:
-            .threeByTwo
-      }
-    }
   }
 }

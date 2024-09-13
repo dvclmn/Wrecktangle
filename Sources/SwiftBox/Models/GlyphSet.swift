@@ -7,11 +7,12 @@
 
 public extension SwiftBox {
   
+  
   struct GlyphSet {
     
-    private let glyphMap: [BoxGlyph: Character]
+    private let glyphMap: [PartType: Character]
     
-    init(set: [BoxGlyph: Character]) {
+    init(set: [PartType: Character]) {
       self.glyphMap = set
     }
 
@@ -19,7 +20,7 @@ public extension SwiftBox {
     /// on which *other* parts. This `character` function is very
     /// important — and I think `BoxGlyph` might use it the most?
     ///
-    public func character(for glyph: BoxGlyph) -> Character {
+    public func character(for glyph: PartType) -> Character {
       return glyphMap[glyph] ?? " "
     }
     

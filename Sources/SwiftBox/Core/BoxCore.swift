@@ -57,7 +57,7 @@ public extension SwiftBox {
     }
     
     /// Divider
-//    self.buildLine(.divider, attrString: &output)
+    self.buildLine(.divider, attrString: &output)
     
     
     /// Content
@@ -99,6 +99,7 @@ public extension SwiftBox {
     var textPadding: Int
     
     if type.isStructural {
+      
       /// Don't want spaces in our structural lines
       textPadding = 0
       

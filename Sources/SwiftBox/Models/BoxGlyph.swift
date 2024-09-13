@@ -17,25 +17,25 @@ public extension SwiftBox {
   /// e.g. a corner, or a vertical wall. Can be any resolution, and thus
   /// made up of more than one `Character`.
 
-  enum BoxGlyph: Hashable {
-    
-    case horizontal             /// ━
-    case horizontalAlt     /// ─
-    case vertical               /// ┃
-    case verticalAlt       /// │
-    
-    case joinLeading            /// ┠
-    case joinTrailing           /// ┨
-    case joinTop                /// ┯
-    case joinBottom             /// ┷
-    case joinCross              /// ┼
-    
-    case cornerTopLeading       /// ┏
-    case cornerTopTrailing      /// ┓
-    case cornerBottomLeading    /// ┗
-    case cornerBottomTrailing   /// ┛
-    
-  }
+//  enum BoxGlyph: Hashable {
+//    
+//    case horizontal             /// ━
+//    case horizontalAlt          /// ─
+//    case vertical               /// ┃
+//    case verticalAlt            /// │
+//    
+//    case joinLeading            /// ┠
+//    case joinTrailing           /// ┨
+//    case joinTop                /// ┯
+//    case joinBottom             /// ┷
+//    case joinCross              /// ┼
+//    
+//    case cornerTopLeading       /// ┏
+//    case cornerTopTrailing      /// ┓
+//    case cornerBottomLeading    /// ┗
+//    case cornerBottomTrailing   /// ┛
+//    
+//  }
   
 }
 
