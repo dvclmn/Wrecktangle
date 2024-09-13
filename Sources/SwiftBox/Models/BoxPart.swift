@@ -28,7 +28,6 @@ public extension SwiftBox {
 
 public extension SwiftBox.BoxPart {
   
-  
   var width: Int {
     content.first?.count ?? 0
   }

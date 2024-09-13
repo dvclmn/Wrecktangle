@@ -38,4 +38,10 @@ public extension SwiftBox {
 
     
   }
+  
+  enum LineSegment {
+    case capLeading
+    case capTrailing
+  }
+  
 }

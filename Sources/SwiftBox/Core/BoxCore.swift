@@ -17,11 +17,7 @@ public extension SwiftBox {
     self.config.theme.glyphSet
   }
   
-  var resolution: BoxPart.Resolution {
-    self.config.theme.frameStyle.resolution
-  }
-  
-  var width: Int {
+  var boxWidth: Int {
     self.config.width
   }
   

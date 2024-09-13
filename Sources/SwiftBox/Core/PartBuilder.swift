@@ -118,70 +118,39 @@ public extension SwiftBox {
             ]
         }
         
-        for (rowIndex, row) in content.enumerated() {
-          for (columnIndex, char) in row.enumerated() {
-            content[columnIndex, rowIndex] = glyph(char)
-          }
-        }
         
-        return BoxPart(content: content, type: type)
+        // Perform the hot swapping after the switch
+        let swappedContent = swapCharacters(in: content)
+        
+        return BoxPart(content: swappedContent, type: type)
         
     }
     
   }
   
-  
-  
-  
-  private func glyph(
-    _ representative: Character,
-    type: PartType,
-    set: GlyphSet
-  ) -> Character {
-    
-    let archetypeSet: GlyphSet = .sharp
-    
-    
-    
-    
-    
-    //        /// The below glyphs are 'representatives', for the other box drawing
-    //        /// parts that are the same structure, but in a different style.
-    //        ///
-    //        /// This allows a more visual way to build part presets, whilst still
-    //        /// rendering the final part as per the user's selected Theme.
-    //        ///
-    //      case "━": glyphSet.character(for: .horizontal(.))
-    //      case "─": glyphSet.character(for: .horizontalAlt)
-    //      case "┃": glyphSet.character(for: .vertical)
-    //      case "│": glyphSet.character(for: .verticalAlt)
-    //
-    //      case "├": glyphSet.character(for: .joinLeading)
-    //      case "┤": glyphSet.character(for: .joinTrailing)
-    //      case "┬": glyphSet.character(for: .joinTop)
-    //      case "┴": glyphSet.character(for: .joinBottom)
-    //      case "┼": glyphSet.character(for: .joinCross)
-    //
-    //      case "┌": glyphSet.character(for: .cornerTopLeading)
-    //      case "┐": glyphSet.character(for: .cornerTopTrailing)
-    //      case "└": glyphSet.character(for: .cornerBottomLeading)
-    //      case "┘": glyphSet.character(for: .cornerBottomTrailing)
-    //      case " ": " "
-    //
-    //      default: return "@" // Default character for undefined glyphs
-    //    }
+  private func swapCharacters(in grid: CharacterGrid) -> CharacterGrid {
+    return grid.map { row in
+      row.map { char in
+        glyph(char, set: self.glyphSet)
+      }
+    }
   }
   
+  private func glyph(_ representative: Character, set: GlyphSet) -> Character {
+    let archetypeSet: GlyphSet = .sharp
+    
+    // Create a reverse mapping of Character to PartType for the archetype set
+    let reverseMap = Dictionary(uniqueKeysWithValues: archetypeSet.glyphMap.map { ($1, $0) })
+    
+    // Find the PartType for the representative character
+    if let partType = reverseMap[representative] {
+      // Return the corresponding character from the user's chosen set
+      return set.character(for: partType)
+    }
+    
+    // If no match is found, return the original character
+    return representative
+  }
+
   
 }
-
-//
-//extension Character {
-//  func constructBoxPart(for line: SwiftBox.BoxLine, width: Int) -> String {
-//    let preset = SwiftBox.BoxPart(
-//      content: SwiftBox.CharacterGrid(rows: 1, columns: 1, defaultValue: self),
-//      resolution: .oneByOne
-//    )
-//    return preset.constructBoxPart(for: line, width: width)
-//  }
-//}
