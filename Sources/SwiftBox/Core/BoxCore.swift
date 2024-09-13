@@ -26,25 +26,22 @@ public extension SwiftBox {
     /// Box roof
     let top = line(.top)
     output.appendString(top, addsLineBreak: true)
-
-//    output.appendString(topLine.render(width: boxWidth), addsLineBreak: true)
     
     /// Header
     
-//    if let headerText = self.header {
-//      
-//      let headerLines: [String] = headerText.reflowText(
-//        width: remainingBoxWidth(for: .header()),
-//        maxLines: config.headerLineLimit,
-//        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
-//      )
-//      
-//      for line in headerLines {
-//        
-//        self.buildLine(.header(line), attrString: &output)
-//        
-//      }
-//    }
+    if let headerText = self.header {
+      
+      let headerLines: [String] = headerText.reflowText(
+        width: widthLeftForText,
+        maxLines: config.headerLineLimit,
+        paddingCharacter: Invisibles.ifNeeded(.space, isShowing: config.metrics.invisibles)
+      )
+      
+      for headerLine in headerLines {
+        let boxLine = line(.text(content: headerLine, lineLimit: config.headerLineLimit))
+        output.appendString(boxLine, addsLineBreak: true)
+      }
+    }
     
     /// Divider
 //    self.buildLine(.divider, attrString: &output)
@@ -80,6 +77,8 @@ public extension SwiftBox {
 
     return output
   }
+  
+
   
 
 //  func remainingBoxWidth(

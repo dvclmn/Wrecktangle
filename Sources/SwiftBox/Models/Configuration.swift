@@ -31,7 +31,7 @@ public extension SwiftBox {
     /// If set, the header will be truncated if it exceeds this number of lines.
     /// Set to `nil` for no limit.
     ///
-    public var headerLineLimit: Int?
+    public var headerLineLimit: Int
     
     /// The maximum number of lines for the main content.
     ///
@@ -47,8 +47,8 @@ public extension SwiftBox {
     public init(
       theme: Theme = Theme(),
       width: Int = 60,
-      headerLineLimit: Int? = 3,
-      contentLineLimit: Int? = nil,
+      headerLineLimit: Int = 3,
+      contentLineLimit: Int = 0,
       metrics: Metrics = Metrics()
     ) {
       self.theme = theme

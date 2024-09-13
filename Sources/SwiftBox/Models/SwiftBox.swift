@@ -43,5 +43,13 @@ public extension SwiftBox {
     self.config.width
   }
   
+  var widthLeftForText: Int {
+    
+    let padding = theme.padding
+    let caps = theme.frameStyle.reservedWidth
+    
+    return boxWidth - (padding + caps)
+    
+  }
   
 }
