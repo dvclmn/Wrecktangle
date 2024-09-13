@@ -61,9 +61,11 @@ public extension SwiftBox {
         
     }
     
-    var grid = CharacterGrid(columns: 1, rows: 1)
-    
-    grid[0, 0] = self.glyph(character)
+    var grid = CharacterGrid(
+      columns: 1,
+      rows: 1,
+      initialValue: self.glyph(character)
+    )
     
     return BoxPart(content: grid, type: partType)
     
@@ -72,42 +74,41 @@ public extension SwiftBox {
   private func threeByTwoPreset(for partType: PartType) -> BoxPart {
     
     let layout: [[Character]]
+    var isRepeater: Bool = false
     
     switch partType {
 
       case .horizontal(.none):
         layout = [
-          ["━", "━", "━"],
-          ["━", "━", "━"]
+          ["━"],
+          ["━"]
         ]
+        isRepeater = true
         
       case .horizontal(.top):
         layout = [
-          ["━", "━", "━"],
-          ["─", "─", "─"]
+          ["━"],
+          ["─"]
         ]
-        
+        isRepeater = true
       case .horizontal(.bottom):
         layout = [
-          ["─", "─", "─"],
-          ["━", "━", "━"]
+          ["─"],
+          ["━"]
         ]
-        
+        isRepeater = true
       case .vertical(.none):
         layout = [
-          ["┃", " ", "┃"],
           ["┃", " ", "┃"]
         ]
 
       case .vertical(.leading):
         layout = [
-          ["┃", " ", "│"],
           ["┃", " ", "│"]
         ]
         
       case .vertical(.trailing):
         layout = [
-          ["│", " ", "┃"],
           ["│", " ", "┃"]
         ]
         
@@ -129,11 +130,13 @@ public extension SwiftBox {
       case .joinBottom:
         layout = [
           ["│", " ", "│"],
+          
           ["┴", "─", "┴"]
         ]
       case .joinCross:
         layout = [
           ["┼", "─", "┼"],
+          
           ["│", " ", "│"]
         ]
         
@@ -165,7 +168,11 @@ public extension SwiftBox {
         ]
     }
 
-    var grid = CharacterGrid(columns: 3, rows: 2)
+    var grid = CharacterGrid(
+      columns: 3,
+      rows: 2,
+      isRepeater: isRepeater
+    )
     
     for (rowIndex, row) in layout.enumerated() {
       for (columnIndex, char) in row.enumerated() {

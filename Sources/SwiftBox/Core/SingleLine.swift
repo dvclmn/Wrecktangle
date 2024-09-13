@@ -17,12 +17,14 @@ public extension SwiftBox {
     
     let leadingPart: BoxPart
     let trailingPart: BoxPart
+    var repeatingPart: BoxPart = partPreset(for: .horizontal(location: .bottom))
     var text: String? = nil
     
     switch line {
       case .top:
         leadingPart = partPreset(for: .cornerTopLeading)
         trailingPart = partPreset(for: .cornerTopTrailing)
+        repeatingPart = partPreset(for: .horizontal(location: .top))
         
       case .bottom:
         leadingPart = partPreset(for: .cornerBottomLeading)
@@ -55,7 +57,11 @@ public extension SwiftBox {
       trailingString.appendTo(&attrString, addsLineBreak: true)
     } else {
       // For top, bottom, and divider lines
+      
       var fullLine = leadingString
+      
+      
+      
       
       // Add horizontal parts if needed (e.g., for top, bottom, divider)
       //      if case .top = line, let horizontalPart = partPreset(for: .horizontal(location: .top)) {
@@ -64,7 +70,11 @@ public extension SwiftBox {
       //      }
       // Add similar conditions for bottom and divider if needed
       
+      fullLine.append(repeatingPart.multiLineAttributedString.repeated(remainingBoxWidth(for: .top)))
+      
       fullLine.append(trailingString)
+      
+      
       fullLine.appendTo(&attrString, addsLineBreak: true)
       
       
