@@ -28,7 +28,7 @@ public extension SwiftBox.BoxPart {
         
         
         // MARK: - Double frame
-      case .double, .shadow, .intertwined:
+      case .double, .intertwined:
         
         let content: SwiftBox.CharacterGrid
         

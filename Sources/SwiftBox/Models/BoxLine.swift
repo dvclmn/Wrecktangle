@@ -16,7 +16,7 @@ public extension SwiftBox {
     var rawContent: String { get }
     var type: LineType { get }
   }
-
+  
   struct BoxLine {
     let content: LineContent
     let leadingCap: BoxPart
@@ -75,71 +75,37 @@ public extension SwiftBox {
     case divider
     case bottom
     case text(content: String, lineLimit: Int = 0)
+    case shadow
+    
+    public var parts: (
+      leading: PartType,
+      repeater: PartType,
+      trailing: PartType
+    )? {
+      switch self {
+        case .top:
+          (
+            PartType.cornerTopLeading,
+            PartType.horizontal(.top),
+            PartType.cornerTopTrailing
+          )
+        case .divider:
+          (
+            PartType.joinLeading,
+            PartType.horizontal(.interior),
+            PartType.joinTrailing
+          )
+        case .bottom:
+          (
+            PartType.cornerBottomLeading,
+            PartType.horizontal(.bottom),
+            PartType.cornerBottomTrailing
+          )
+        case .text, .shadow:
+          nil
+      }
+    }
   }
   
 }
 
-public extension SwiftBox {
-  
-  func line(
-    _ preset: LinePreset
-  ) -> String {
-    
-    let leading: BoxPart?
-    let repeater: BoxPart?
-    let trailing: BoxPart?
-    let textContent: String?
-    let textLineLimit: Int?
-
-    switch preset {
-      case .top:
-        leading = BoxPart.create(.cornerTopLeading, theme: theme)
-        repeater = BoxPart.create(.horizontal(.top), theme: theme)
-        trailing = BoxPart.create(.cornerTopTrailing, theme: theme)
-        textContent = nil
-        textLineLimit = nil
-        
-      case .divider:
-        leading = BoxPart.create(.joinLeading, theme: theme)
-        repeater = BoxPart.create(.horizontal(.interior), theme: theme)
-        trailing = BoxPart.create(.joinTrailing, theme: theme)
-        textContent = nil
-        textLineLimit = nil
-        
-      case .bottom:
-        leading = BoxPart.create(.cornerBottomLeading, theme: theme)
-        repeater = BoxPart.create(.horizontal(.bottom), theme: theme)
-        trailing = BoxPart.create(.cornerBottomTrailing, theme: theme)
-        textContent = nil
-        textLineLimit = nil
-        
-      case let .text(content, lineLimit):
-        leading = nil
-        repeater = nil
-        trailing = nil
-        
-        let textPadding = String(repeating: invisibleIfNeeded(.space), count: theme.padding)
-        
-        textContent = textPadding + content + textPadding
-        textLineLimit = lineLimit
-        
-    } // END switch line preset
-    
-    let lineResult: SwiftBox.BoxLine
-    
-    if let text = textContent, let lineLimit = textLineLimit {
-      lineResult = SwiftBox.BoxLine(text: text, lineLimit: lineLimit, theme: theme)
-      
-    } else if let leading = leading, let repeater = repeater, let trailing = trailing {
-      lineResult = BoxLine(repeater: repeater, leadingCap: leading, trailingCap: trailing)
-    } else {
-      fatalError("The above *should* be supplying this function with what it needs.")
-    }
-    
-    let result = lineResult.render(width: boxWidth)
-    
-    return result
-    
-  } // END create line
-  
-}

@@ -9,9 +9,9 @@ public extension SwiftBox.BoxLine {
   
   func render(
     width: Int,
+    theme: SwiftBox.Theme,
     trimMethod: SwiftBox.TrimMethod = .leaveSpace
   ) -> String {
-    
     
     let contentWidth = width - leadingCap.width - trailingCap.width
     let renderedContent: [[Character]]

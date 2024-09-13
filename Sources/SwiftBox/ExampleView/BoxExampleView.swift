@@ -11,11 +11,13 @@ import TextCore
 
 struct BoxPrintView: View {
   
+  
+  
   let box01 = SwiftBox(
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: SwiftBox.Config (
-      theme: SwiftBox.Theme(glyphSet: .rounded, frameStyle: .single, shadow: .simple),
+      theme: SwiftBox.Theme(glyphSet: .rounded, frameStyle: .single, shadow: SwiftBox.Theme.BoxShadow(type: .simple, lightSource: .bottomTrailing, strength: .light)),
       width: 38,
       headerLineLimit: 1,
       contentLineLimit: 3,
@@ -27,7 +29,7 @@ struct BoxPrintView: View {
     header: TestStrings.conversationTitles[1],
     content: TestStrings.paragraphs[7],
     config: SwiftBox.Config (
-      theme: SwiftBox.Theme(glyphSet: .double, frameStyle: .double),
+      theme: SwiftBox.Theme(glyphSet: .double, frameStyle: .double, shadow: SwiftBox.Theme.BoxShadow(type: .simple, lightSource: .topLeading, strength: .light)),
       width: 38,
       headerLineLimit: 2,
       contentLineLimit: 7,
@@ -79,9 +81,8 @@ struct BoxPrintView: View {
       
     }
     .textSelection(.enabled)
-    
     .monospaced()
-    //    .padding(40)
+    .environment(\._lineHeightMultiple, 0.84)
     .frame(width: 370, height: 600)
     .background(.black.opacity(0.6))
     

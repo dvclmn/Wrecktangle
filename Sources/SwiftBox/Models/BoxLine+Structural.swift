@@ -20,7 +20,11 @@ public extension SwiftBox {
     }
     
     func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> [[Character]] {
-      return SwiftBox.repeatHorizontally(repeatingPattern, toWidth: width, trimMethod: trimMethod)
+      return SwiftBox.repeatHorizontally(
+        repeatingPattern,
+        toWidth: width,
+        trimMethod: trimMethod
+      )
     }
   }
 

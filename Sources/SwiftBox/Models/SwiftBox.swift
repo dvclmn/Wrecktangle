@@ -39,17 +39,31 @@ public extension SwiftBox {
     self.config.theme.glyphSet
   }
   
-  var boxWidth: Int {
-    self.config.width
+  func boxWidth(_ includingShadow: Bool = true) -> Int {
+    
+    let shadowWidth: Int = includingShadow ? self.config.theme.shadow.reservedSpace : 0
+    
+    return self.config.width - shadowWidth
   }
   
   var widthLeftForText: Int {
     
+    /// Note: Do not include shadow in here, shadow reserved space should
+    /// be deducated from the *box* width, not internal content width.
+    ///
     let padding = theme.padding * 2 // Either side
     let caps = theme.frameStyle.reservedWidth
     
-    return boxWidth - (padding + caps)
+    return boxWidth() - (padding + caps)
     
+  }
+  
+  var shadow: SwiftBox.Theme.BoxShadow {
+    self.config.theme.shadow
+  }
+  
+  var shadowCharacter: Character {
+    self.config.theme.shadow.strength.character
   }
   
 }

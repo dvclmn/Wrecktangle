@@ -21,9 +21,14 @@ public extension SwiftBox {
     var output = AttributedString()
     
     /// Add a width counter, according to user's preference ()
-    output += TextCore.widthCounter(boxWidth, style: self.config.metrics.widthCounter)
+    output += TextCore.widthCounter(boxWidth(false), style: self.config.metrics.widthCounter)
+
     
     /// Box roof
+    if shadow.sideHasShadow(.top) {
+      let shadow = line(.shadow)
+      output.appendString(shadow, addsLineBreak: true)
+    }
     let top = line(.top)
     output.appendString(top, addsLineBreak: true)
     
@@ -73,10 +78,14 @@ public extension SwiftBox {
     /// Bottom
     let bottom = line(.bottom)
     output.appendString(bottom, addsLineBreak: true)
-    
+    if shadow.sideHasShadow(.bottom) {
+      let shadow = line(.shadow)
+      output.appendString(shadow, addsLineBreak: true)
+    }
 
     return output
   }
+
   
 
 }

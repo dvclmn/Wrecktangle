@@ -24,7 +24,7 @@ public extension SwiftBox {
       glyphSet: GlyphSet = .sharp,
       colour: ColourSet = .default,
       frameStyle: FrameStyle = .single,
-      shadow: BoxShadow = .none,
+      shadow: BoxShadow = BoxShadow(),
       padding: Int = 1
     ) {
       self.glyphSet = glyphSet
@@ -33,12 +33,5 @@ public extension SwiftBox {
       self.shadow = shadow
       self.padding = padding
     }
-  }
-}
-
-public extension SwiftBox.Theme {
-  enum BoxShadow {
-    case simple
-    case none
   }
 }
