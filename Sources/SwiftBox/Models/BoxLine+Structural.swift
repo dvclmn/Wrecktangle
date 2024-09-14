@@ -7,20 +7,19 @@
 
 import TextCore
 
-
-public extension SwiftBox {
+public extension SwiftBox.BoxLine {
 
   struct StructuralContent: LineContent {
     public let rawContent: String
-    public let type: LineType = .structural
-    let repeatingPattern: BoxPart
     
-    init(repeatingPattern: BoxPart) {
-      self.repeatingPattern = repeatingPattern
-      self.rawContent = repeatingPattern.content.map { String($0) }.joined(separator: "\n")
+    init(
+      adjustedWidth: Int,
+      repeatingPattern: SwiftBox.BoxPart
+    ) {
+
+      let contentString = repeatingPattern.content.repeatHorizontally(toWidth: adjustedWidth)
+      self.rawContent = contentString.string
     }
 
   }
-
-
 }

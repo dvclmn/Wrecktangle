@@ -10,7 +10,7 @@ import TextCore
 public extension SwiftBox {
   
   func line(
-    _ preset: LinePreset
+    _ preset: BoxLine.LinePreset
   ) -> String {
     
     switch preset {
@@ -42,9 +42,14 @@ public extension SwiftBox {
         let textContent = textPadding + content + textPadding
         
         /// This uses `BoxLine`s text-based initialiser
-        let lineResult = SwiftBox.BoxLine(text: textContent, lineLimit: lineLimit, theme: theme)
+        let lineResult = SwiftBox.BoxLine(
+          text: textContent,
+          lineLimit: lineLimit,
+          boxWidth: boxWidth,
+          theme: theme
+        )
         
-        let lineString = lineResult.render(width: boxWidth, theme: theme)
+        let lineString = lineResult.render()
         
         return lineString
         
@@ -53,7 +58,7 @@ public extension SwiftBox {
     
   } // END create line
   
-  private func buildStructureLine(for preset: LinePreset, hasLineBreak: Bool) -> String {
+  private func buildStructureLine(for preset: BoxLine.LinePreset, hasLineBreak: Bool) -> String {
     
     if let parts = preset.parts {
       
@@ -62,9 +67,15 @@ public extension SwiftBox {
       let trailing = BoxPart.create(parts.trailing, theme: theme)
       
       /// This uses `BoxLine`s structure-based initialiser
-      let lineResult = BoxLine(repeater: repeating, leadingCap: leading, trailingCap: trailing, theme: theme)
+      let lineResult = BoxLine(
+        boxWidth: boxWidth,
+        repeater: repeating,
+        leadingCap: leading,
+        trailingCap: trailing,
+        theme: theme
+      )
       
-      let lineString = lineResult.render(width: boxWidth, theme: theme)
+      let lineString = lineResult.render()
       
       let result = lineString + (hasLineBreak ? "\n" : "")
       return result
@@ -76,7 +87,7 @@ public extension SwiftBox {
   }
   
   
-  private func buildShadow(for linePreset: LinePreset, hasLineBreak: Bool) -> String {
+  private func buildShadow(for linePreset: BoxLine.LinePreset, hasLineBreak: Bool) -> String {
     
     if linePreset.hasShadow(lightSource: shadow.lightSource) {
       
@@ -97,37 +108,3 @@ public extension SwiftBox {
   }
 }
 
-
-public extension SwiftBox {
-//  
-//  /// This
-//  func shadowCap(height: Int = 1) -> StringCaps {
-//    
-//    let shadowString = "?"
-////        let shadowString = shadowCharacter.string
-//    
-//    let blank = "x"
-//    
-//    let result: StringCaps
-//    
-//    switch shadow.lightSource {
-//        
-//      case .topLeading:
-//        result = (blank, shadowString)
-//        
-//      case .topTrailing:
-//        result = (shadowString, blank)
-//        
-//      case .bottomLeading:
-//        result = (blank, shadowString)
-//        
-//      case .bottomTrailing:
-//        result = (shadowString, blank)
-//        
-//    } // END switch
-//    
-//    return result
-//    
-//    
-//  }
-}

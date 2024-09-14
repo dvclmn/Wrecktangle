@@ -12,13 +12,9 @@
 
 public extension SwiftBox {
   
-  protocol LineContent {
-    var rawContent: String { get }
-    var type: LineType { get }
-  }
-  
   struct BoxLine {
     let content: LineContent
+    let boxWidth: Int
     let leadingCap: BoxPart
     let trailingCap: BoxPart
     let theme: SwiftBox.Theme
@@ -26,12 +22,22 @@ public extension SwiftBox {
     /// Default initialiser (structure-based)
     ///
     init(
+      boxWidth: Int,
       repeater: BoxPart,
       leadingCap: BoxPart,
       trailingCap: BoxPart,
       theme: SwiftBox.Theme
     ) {
-      self.content = StructuralContent(repeatingPattern: repeater)
+      self.boxWidth = boxWidth
+      
+      
+      let shadowWidth: Int = theme.shadow.reservedSpace
+      let capWidth: Int = leadingCap.width + trailingCap.width
+
+      let reservedWidth = capWidth + shadowWidth
+      let remainingWidth = max(0, (boxWidth - reservedWidth))
+      
+      self.content = StructuralContent(adjustedWidth: remainingWidth, repeatingPattern: repeater)
       self.leadingCap = leadingCap
       self.trailingCap = trailingCap
       self.theme = theme
@@ -42,10 +48,12 @@ public extension SwiftBox {
     init(
       text: String,
       lineLimit: Int,
+      boxWidth: Int,
       theme: SwiftBox.Theme
     ) {
       
       self.content = TextContent(text, lineLimit: lineLimit)
+      self.boxWidth = boxWidth
       self.theme = theme
       
       /// Currently, this initialiser 'has to' take in a `theme` parameter, to obtain
@@ -68,14 +76,12 @@ public extension SwiftBox {
   }
 }
 
-public extension SwiftBox {
-
-  enum LineType {
-    case structural
-    case text
-    
-  }
+public extension SwiftBox.BoxLine {
   
+  protocol LineContent {
+    var rawContent: String { get }
+  }
+
   typealias ThreePartLine = (
     leading: SwiftBox.PartType,
     repeater: SwiftBox.PartType,
