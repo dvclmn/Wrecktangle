@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import IdentifiedCollections
 import BaseStyles
 
 public extension SwiftBox.Theme {
   
   struct ColourSet {
-    private var colors: IdentifiedArrayOf<Attributes>
+    private var colors: [ColourCategory: Attributes]
     
     public init(
       primary: Color,
@@ -20,12 +19,12 @@ public extension SwiftBox.Theme {
       tertiary: Color,
       accent: Color
     ) {
-      self.colors = IdentifiedArrayOf<Attributes>(uniqueElements: [
-        Attributes(id: .primary, foreground: primary),
-        Attributes(id: .secondary, foreground: secondary),
-        Attributes(id: .tertiary, foreground: tertiary),
-        Attributes(id: .accent, foreground: accent)
-      ])
+      self.colors = [
+        .primary: Attributes(foreground: primary),
+        .secondary: Attributes(foreground: secondary),
+        .tertiary: Attributes(foreground: tertiary),
+        .accent: Attributes(foreground: accent)
+      ]
     }
     
     /// `subscript` is a shorthand way to access elements in a collection.
@@ -38,15 +37,19 @@ public extension SwiftBox.Theme {
     /// let primaryColor = myColourSet[.primary]
     /// ```
     ///
+    
     public subscript(category: ColourCategory) -> Attributes {
-      get { colors[id: category] ?? Attributes(id: category, foreground: .black) }
-      set { colors[id: category] = newValue }
+      get { colors[category] ?? Attributes(foreground: .primary) }
+      set { colors[category] = newValue }
     }
     
+    
     public mutating func updateColor(for category: ColourCategory, foreground: Color, background: Color? = nil) {
-      colors[id: category]?.foreground = foreground
-      colors[id: category]?.background = background
+      colors[category]?.foreground = foreground
+      colors[category]?.background = background
     }
+    
+    
     
     /// This method provides an alternative way to retrieve `Attributes` for a given category.
     ///
@@ -57,7 +60,7 @@ public extension SwiftBox.Theme {
     /// ```
     ///
     public func color(for category: ColourCategory) -> Attributes {
-      colors[id: category] ?? Attributes(id: category, foreground: .black)
+      colors[category] ?? Attributes(foreground: .primary)
     }
   }
   
@@ -83,13 +86,12 @@ public extension SwiftBox.Theme {
   /// We can rely on the computed property `container` to return an *actual*
   /// container when we need it.
   ///
-  struct Attributes: Identifiable {
-    public let id: ColourCategory
+  
+  struct Attributes {
     var foreground: Color
     var background: Color?
     
-    init(id: ColourCategory, foreground: Color, background: Color? = nil) {
-      self.id = id
+    init(foreground: Color, background: Color? = nil) {
       self.foreground = foreground
       self.background = background
     }
@@ -103,8 +105,5 @@ public extension SwiftBox.Theme {
   }
   
   
-  
-  
-
   
 }

@@ -57,11 +57,19 @@ public extension SwiftBox {
 
 public extension SwiftBox {
   
+  
+  
   enum LineType {
     case structural
     case text
     
   }
+  
+  typealias ThreePartLine = (
+    leading: SwiftBox.PartType,
+    repeater: SwiftBox.PartType,
+    trailing: SwiftBox.PartType
+  )
   
   /// What kinds of lines could there be, in a box?
   ///
@@ -70,42 +78,51 @@ public extension SwiftBox {
   ///
   /// E.g. `top` would consist of a leading cap, repeating part, and trailing cap.
   ///
-  enum LinePreset {
+  enum LinePreset: Hashable {
     case top
     case divider
     case bottom
     case text(content: String, lineLimit: Int = 0)
-    case shadow
     
-    public var parts: (
-      leading: PartType,
-      repeater: PartType,
-      trailing: PartType
-    )? {
+    public var parts: ThreePartLine? {
       switch self {
         case .top:
           (
-            PartType.cornerTopLeading,
-            PartType.horizontal(.top),
-            PartType.cornerTopTrailing
+            SwiftBox.PartType.cornerTopLeading,
+            SwiftBox.PartType.horizontal(.top),
+            SwiftBox.PartType.cornerTopTrailing
           )
         case .divider:
           (
-            PartType.joinLeading,
-            PartType.horizontal(.interior),
-            PartType.joinTrailing
+            SwiftBox.PartType.joinLeading,
+            SwiftBox.PartType.horizontal(.interior),
+            SwiftBox.PartType.joinTrailing
           )
         case .bottom:
           (
-            PartType.cornerBottomLeading,
-            PartType.horizontal(.bottom),
-            PartType.cornerBottomTrailing
+            SwiftBox.PartType.cornerBottomLeading,
+            SwiftBox.PartType.horizontal(.bottom),
+            SwiftBox.PartType.cornerBottomTrailing
           )
-        case .text, .shadow:
+        case .text:
           nil
       }
     } // END parts
     
+    private static let shadowLookup: [LinePreset: Set<SwiftBox.LightSource>] = [
+      .top: [.bottomLeading, .bottomTrailing],
+      .bottom: [.topLeading, .topTrailing]
+    ]
+    
+    func hasShadow(lightSource: SwiftBox.LightSource) -> Bool {
+      switch self {
+        case .top, .bottom:
+          return Self.shadowLookup[self, default: []].contains(lightSource)
+        case .divider, .text:
+          return false
+      }
+    }
+
   }
   
 }

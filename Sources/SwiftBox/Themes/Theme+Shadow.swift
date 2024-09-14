@@ -9,14 +9,14 @@
 
 public extension SwiftBox.Theme {
   
-  struct BoxShadow {
+  struct Shadow {
     var type: ShadowType
-    var lightSource: LightSource
+    var lightSource: SwiftBox.LightSource
     var strength: ShadowStrength
     
     public init(
       type: ShadowType = .simple,
-      lightSource: LightSource = .topTrailing,
+      lightSource: SwiftBox.LightSource = .topTrailing,
       strength: ShadowStrength = .light
     ) {
       self.type = type
@@ -26,7 +26,7 @@ public extension SwiftBox.Theme {
   }
 }
 
-public extension SwiftBox.Theme.BoxShadow {
+public extension SwiftBox.Theme.Shadow {
   
   /// What do we need to know to create a shadow for a side?
   ///
@@ -48,43 +48,14 @@ public extension SwiftBox.Theme.BoxShadow {
     }
   }
   
-  func sideHasShadow(_ side: SwiftBox.BoxSide) -> Bool {
-    
-    guard self.type != .none else { return false }
 
-    switch side {
-      case .top, .bottom:
-        return side == self.lightSource.shadowedSides.vertical
-      case .leading, .trailing:
-        return side == self.lightSource.shadowedSides.horizontal
-    }
-  }
   
   enum ShadowType {
     case simple
     case none
   } // END shadow type
   
-  enum LightSource {
-    case topLeading
-    case topTrailing
-    case bottomLeading
-    case bottomTrailing
-    
-    var shadowedSides: (vertical: SwiftBox.BoxSide, horizontal: SwiftBox.BoxSide) {
-      switch self {
-        case .topLeading:
-          return (.bottom, .trailing)
-        case .topTrailing:
-          return (.bottom, .leading)
-        case .bottomLeading:
-          return (.top, .trailing)
-        case .bottomTrailing:
-          return (.top, .leading)
-      }
-    }
-    
-  } // END light source
+
   
   enum ShadowStrength {
     case light
@@ -107,69 +78,41 @@ public extension SwiftBox.Theme.BoxShadow {
 
 public extension SwiftBox {
   
-  
-//  func shadow(for side: SwiftBox.BoxSide) -> String {
+  enum LightSource {
+    case topLeading
+    case topTrailing
+    case bottomLeading
+    case bottomTrailing
+    
+  } // END light source
+}
+
+//public extension SwiftBox {
+//  
+//  enum BoxSide {
+//    case top
+//    case bottom
+//    case leading
+//    case trailing
 //    
-//    var shadowWidth: Int {
-//      let width: Int
-//      switch side.shadowMode {
-//        case .repeating:
-//          width = boxWidth()
-//        case .cap:
-//          width = 1
+//    /// Depending on which side of the box the shadow needs to
+//    /// be drawn on, the shadow may repeat, or act as a line cap.
+//    ///
+//    public var shadowMode: ShadowMode {
+//      switch self {
+//        case .top, .bottom:
+//            .repeating
+//        case .leading, .trailing:
+//            .cap
 //      }
 //    }
 //    
-//    var shadowHeight: Int {
-//      
+//
+//    public enum ShadowMode {
+//      case cap
+//      case repeating
 //    }
 //    
-//    
-//    switch side {
-//      case .top:
-//        <#code#>
-//      case .bottom:
-//        <#code#>
-//      case .leading:
-//        <#code#>
-//      case .trailing:
-//        <#code#>
-//    }
-//    
-//    
-//    switch shadow.lightSource {
-//      case .topLeading:
-//      case .topTrailing:
-//      case .bottomLeading:
-//      case .bottomTrailing:
-//    }
 //  }
-  
-  
-  enum BoxSide {
-    case top
-    case bottom
-    case leading
-    case trailing
-    
-    /// Depending on which side of the box the shadow needs to
-    /// be drawn on, the shadow may repeat, or act as a line cap.
-    ///
-    public var shadowMode: ShadowMode {
-      switch self {
-        case .top, .bottom:
-            .repeating
-        case .leading, .trailing:
-            .cap
-      }
-    }
-    
-
-    public enum ShadowMode {
-      case cap
-      case repeating
-    }
-    
-  }
-  
-}
+//  
+//}

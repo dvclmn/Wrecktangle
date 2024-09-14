@@ -7,6 +7,14 @@
 
 public extension SwiftBox {
   
+  static let singleBox: String = """
+  ┏━━━━━━━┓
+  ┃       ┃
+  ┃       ┃
+  ┃       ┃
+  ┗━━━━━━━┛
+  """
+  
   private static let boxScraps: String = """
   
         

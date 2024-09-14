@@ -18,26 +18,26 @@ public extension SwiftBox {
     ///
     
     switch preset {
-      case .top, .divider, .bottom:
-        
-        if let predefinedParts = preset.parts {
+      case .top:
           
-          let leading = BoxPart.create(predefinedParts.leading, theme: theme)
-          let repeating = BoxPart.create(predefinedParts.repeater, theme: theme)
-          let trailing = BoxPart.create(predefinedParts.trailing, theme: theme)
+        let shadowLine = buildShadow(for: preset)
+        let structureLine = buildStructureLine(for: preset)
+        
+        return shadowLine + structureLine
+        
+        
+      case .divider:
+          
+        return buildStructureLine(for: preset)
+        
+          case .bottom:
+        
+        let shadowLine = buildShadow(for: preset)
+        let structureLine = buildStructureLine(for: preset)
+        
+        return structureLine + shadowLine
+        
 
-          let lineResult = BoxLine(repeater: repeating, leadingCap: leading, trailingCap: trailing)
-          
-          let lineString = lineResult.render(width: boxWidth(), theme: theme)
-          
-          let lineAndShadow = shadowCap(.leading) + lineString + shadowCap(.trailing)
-          
-          return lineAndShadow
-          
-        } else {
-          return "nil"
-        }
-        
       case .text(let content, let lineLimit):
         
         let textPadding = String(repeating: invisibleIfNeeded(.space), count: theme.padding)
@@ -47,23 +47,76 @@ public extension SwiftBox {
         
         let lineString = lineResult.render(width: boxWidth(), theme: theme)
         
-        let lineAndShadow = shadowCap(.leading) + lineString + shadowCap(.trailing)
+        let lineAndShadow = shadowCap().leading + lineString + shadowCap().trailing
         
         return lineAndShadow
         
-      case .shadow:
-
-        let shadowWidth: Int = boxWidth()
-        let shadowRepeated = String(repeating: shadowCharacter, count: shadowWidth)
-        
-        let shadowWithCaps = shadowCap(.leading) + shadowRepeated + shadowCap(.trailing)
-        
-        return shadowWithCaps
     }
     
     
   } // END create line
   
+  private func buildStructureLine(for preset: LinePreset) -> String {
+    
+    if let parts = preset.parts {
+      let leading = BoxPart.create(parts.leading, theme: theme)
+      let repeating = BoxPart.create(parts.repeater, theme: theme)
+      let trailing = BoxPart.create(parts.trailing, theme: theme)
+      
+      let lineResult = BoxLine(repeater: repeating, leadingCap: leading, trailingCap: trailing)
+      
+      let lineString = lineResult.render(width: boxWidth(), theme: theme)
+      
+      let lineAndShadow = shadowCap().leading + lineString + shadowCap().trailing
+      
+      return lineAndShadow
+      
+    } else {
+      return "nil"
+    }
+    
+  }
   
- 
+  private func buildShadow(for linePreset: LinePreset) -> String {
+    
+    if linePreset.hasShadow(lightSource: shadow.lightSource) {
+      
+      let shadowWidth: Int = boxWidth() - 2
+      let shadowRepeated = String(repeating: shadowCharacter, count: shadowWidth)
+      
+      let shadowWithCaps = shadowCap().leading + shadowRepeated + shadowCap().trailing
+      
+      return shadowWithCaps
+
+    } else {
+      return ""
+    }
+    
+  }
+}
+
+
+public extension SwiftBox {
+  
+  /// This
+  func shadowCap() -> (leading: String, trailing: String) {
+    
+    let shadowString = shadowCharacter.string
+    
+    switch shadow.lightSource {
+        
+      case .topLeading:
+        return (" ", shadowString)
+        
+      case .topTrailing:
+        return (shadowString, " ")
+        
+      case .bottomLeading:
+        return (" ", shadowString)
+        
+      case .bottomTrailing:
+        return (shadowString, " ")
+        
+    }
+  }
 }

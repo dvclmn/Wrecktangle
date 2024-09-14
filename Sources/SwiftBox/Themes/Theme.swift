@@ -17,14 +17,14 @@ public extension SwiftBox {
     /// This is only relevant for SwiftUI views, not the console output
     public var colour: ColourSet
     public var frameStyle: FrameStyle
-    public var shadow: BoxShadow
+    public var shadow: Shadow
     public var padding: Int
     
     public init(
       glyphSet: GlyphSet = .sharp,
       colour: ColourSet = .default,
       frameStyle: FrameStyle = .single,
-      shadow: BoxShadow = BoxShadow(),
+      shadow: Shadow = Shadow(),
       padding: Int = 1
     ) {
       self.glyphSet = glyphSet

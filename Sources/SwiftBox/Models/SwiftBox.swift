@@ -58,7 +58,7 @@ public extension SwiftBox {
     
   }
   
-  var shadow: SwiftBox.Theme.BoxShadow {
+  var shadow: SwiftBox.Theme.Shadow {
     self.config.theme.shadow
   }
   

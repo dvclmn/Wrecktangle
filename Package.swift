@@ -19,13 +19,12 @@ let package = Package(
     )
   ],
   dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.0"),
     .package(name: "Helpers", path: "\(localPackagesRoot)/SwiftCollection/Helpers"),
     .package(name: "TextCore", path: "\(localPackagesRoot)/TextCore"),
     .package(name: "Styles", path: "\(localPackagesRoot)/Styles"),
   ],
   targets: [
-    .target(name: "SwiftBox", dependencies: ["TextCore", "Helpers", "Styles", .product(name: "IdentifiedCollections", package: "swift-identified-collections")]),
+    .target(name: "SwiftBox", dependencies: ["TextCore", "Helpers", "Styles"]),
     .testTarget(
       name: "SwiftBoxTests", dependencies: ["SwiftBox"]
     ),

@@ -15,7 +15,7 @@ public extension SwiftBox.BoxLine {
     errorGlyph: Character = "?" // Probably a better way than this
   ) -> String {
     
-//    let leadingShadow = shadow
+    //    let leadingShadow = shadow
     let contentWidth = width - leadingCap.width - trailingCap.width
     let renderedContent: [[Character]]
     
@@ -40,17 +40,21 @@ public extension SwiftBox.BoxLine {
     
     return outputLines.joined(separator: "\n")
   }
-
-
-}
-
-public extension SwiftBox {
   
-  func shadowCap(_ side: SwiftBox.BoxSide) -> String {
-    
-    let result: String = shadow.sideHasShadow(side) ? "\(shadowCharacter)" : ""
-    
-    return result
-    
-  }
+  
 }
+
+//public extension SwiftBox {
+//
+//  func shadowCap(_ side: SwiftBox.BoxSide) -> String {
+//
+//    let result: String = shadow.sideHasShadow(side) ? "\(shadowCharacter)" : ""
+//
+//    return result
+//
+//  }
+//}
+
+
+
+

@@ -17,7 +17,7 @@ struct BoxPrintView: View {
     header: TestStrings.paragraphs[0],
     content: TestStrings.paragraphs[1],
     config: SwiftBox.Config (
-      theme: SwiftBox.Theme(glyphSet: .rounded, frameStyle: .single, shadow: SwiftBox.Theme.BoxShadow(type: .simple, lightSource: .bottomTrailing, strength: .light)),
+      theme: SwiftBox.Theme(glyphSet: .rounded, frameStyle: .single, shadow: SwiftBox.Theme.Shadow(type: .simple, lightSource: .bottomTrailing, strength: .light)),
       width: 38,
       headerLineLimit: 1,
       contentLineLimit: 3,
@@ -29,13 +29,42 @@ struct BoxPrintView: View {
     header: TestStrings.conversationTitles[1],
     content: TestStrings.paragraphs[7],
     config: SwiftBox.Config (
-      theme: SwiftBox.Theme(glyphSet: .double, frameStyle: .double, shadow: SwiftBox.Theme.BoxShadow(type: .simple, lightSource: .topLeading, strength: .light)),
+      theme: SwiftBox.Theme(glyphSet: .double, frameStyle: .double, shadow: SwiftBox.Theme.Shadow(type: .simple, lightSource: .topLeading, strength: .light)),
       width: 38,
       headerLineLimit: 2,
       contentLineLimit: 7,
       metrics: .init(widthCounter: .compact, lineNumbers: false, invisibles: false)
     )
   )
+  
+  let boxSmall01 = SwiftBox(
+    header: TestStrings.conversationTitles[2],
+    content: "TestStrings.paragraphs[6]",
+    config: SwiftBox.Config (
+      theme: SwiftBox.Theme(
+        glyphSet: .double,
+        frameStyle: .single,
+        shadow: SwiftBox.Theme.Shadow(type: .simple, lightSource: .bottomLeading, strength: .medium)
+      ),
+      width: 14,
+      metrics: .init(widthCounter: .off, lineNumbers: false, invisibles: false)
+    )
+  )
+  
+  let boxSmall02 = SwiftBox(
+    header: TestStrings.conversationTitles[4],
+    content: TestStrings.paragraphs[6],
+    config: SwiftBox.Config (
+      theme: SwiftBox.Theme(
+        glyphSet: .double,
+        frameStyle: .single,
+        shadow: SwiftBox.Theme.Shadow(type: .simple, lightSource: .bottomLeading, strength: .medium)
+      ),
+      width: 14,
+      metrics: .init(widthCounter: .off, lineNumbers: false, invisibles: false)
+    )
+  )
+  
   
   
   
@@ -66,6 +95,11 @@ struct BoxPrintView: View {
       
       Text(box01.attributedString)
       Text(box02.attributedString)
+      
+      HStack {
+        Text(boxSmall01.attributedString)
+        Text(boxSmall02.attributedString)
+      }
       HStack {
         
 //        Text("top leading\n" + box01.partPreset(for: .corner(.topLeading), with: .threeByTwo))

@@ -25,10 +25,10 @@ public extension SwiftBox {
 
     
     /// Box roof
-    if shadow.sideHasShadow(.top) {
-      let shadow = line(.shadow)
-      output.appendString(shadow, addsLineBreak: true)
-    }
+    
+//    let shadowLine = line(.shadow)
+//    output.appendString(shadowLine, addsLineBreak: true)
+    
     let top = line(.top)
     output.appendString(top, addsLineBreak: true)
     
@@ -78,10 +78,10 @@ public extension SwiftBox {
     /// Bottom
     let bottom = line(.bottom)
     output.appendString(bottom, addsLineBreak: true)
-    if shadow.sideHasShadow(.bottom) {
-      let shadow = line(.shadow)
-      output.appendString(shadow, addsLineBreak: true)
-    }
+//    if shadow.sideHasShadow(.bottom) {
+//      let shadow = line(.shadow)
+//      output.appendString(shadow, addsLineBreak: true)
+//    }
 
     return output
   }
