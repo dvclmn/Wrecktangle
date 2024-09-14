@@ -15,7 +15,7 @@ public extension SwiftBox.BoxLine {
     errorGlyph: Character = "?" // Probably a better way than this
   ) -> String {
     
-    let leadingShadow = shadow
+//    let leadingShadow = shadow
     let contentWidth = width - leadingCap.width - trailingCap.width
     let renderedContent: [[Character]]
     

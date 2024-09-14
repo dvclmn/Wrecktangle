@@ -7,7 +7,7 @@
 
 public extension SwiftBox {
   
-  private static let boxTests: String = """
+  private static let boxScraps: String = """
   
         
   ┏━
@@ -40,9 +40,10 @@ public extension SwiftBox {
   ✗
   █
   
-  ░
-  ▒
-  ▓
+  ⠥  ⠠
+  ░  ⠮ 
+  ▒  ░  ⠡
+  ▓  ▒  ░  .
   
   ╷╷╷╷
            ■
@@ -54,7 +55,7 @@ public extension SwiftBox {
            ┌───┐ │     │         
    ┌┐  ┌─┐ │   │ │     │         
    └┘  └─┘ └───┘ └─────┘         
-  2x4  3x2  2                    
+  2x2  3x2  5x3    7x4                
                                  
   ▮
   ▮
@@ -69,7 +70,10 @@ public extension SwiftBox {
   ▤
   ⌃⌃⌃⌃⌃⌃⌃⌃⌃⌃⌃
       
+  cute little piano
+  
   ШШШШШШШШШШ
+  
       ◠  ◡  
       ╱/╱/⁄
           ¤
@@ -181,7 +185,7 @@ public extension SwiftBox {
       ║ └───────────┘ ║
       ╚═════════════╝
       
-                                                                        ▉
+                                                                      ▉
   ╔══╦══╗  ┌──┬──┐  ╭──┬──╮  ╭──┬──╮  ┏━━┳━━┓  ┎┒┏┑   ╷  ╻ ┏┯┓ ┌┰┐    ▊ ╱╲╱╲╳╳╳
   ║┌─╨─┐║  │╔═╧═╗│  │╒═╪═╕│  │╓─╁─╖│  ┃┌─╂─┐┃  ┗╃╄┙  ╶┼╴╺╋╸┠┼┨ ┝╋┥    ▋ ╲╱╲╱╳╳╳
   ║│╲ ╱│║  │║   ║│  ││ │ ││  │║ ┃ ║│  ┃│ ╿ │┃  ┍╅╆┓   ╵  ╹ ┗┷┛ └┸┘    ▌ ╱╲╱╲╳╳╳

@@ -48,12 +48,7 @@ public extension SwiftBox.Theme {
       colors[id: category]?.background = background
     }
     
-    /// This method provides an alternative way to retrieve a `Attributes` for a given
-    /// category. While it's similar to the `subscript`, it has some advantages:
-    ///
-    /// - It's more explicit in its intent, which can make code more readable.
-    /// - It can be easier to use in certain contexts, like when passing as a closure.
-    /// - It allows for more complex logic or error handling if needed in the future.
+    /// This method provides an alternative way to retrieve `Attributes` for a given category.
     ///
     /// Usage example:
     ///
@@ -77,7 +72,7 @@ public extension SwiftBox.Theme {
     }
   }
   
-  /// `AttributeSet` holds an `AttributeContainer` instance, which
+  /// `Attributes` holds an `AttributeContainer` instance, which
   /// holds all the styles for the set.
   ///
   /// I find `AttributeContainer`s somewhat clumsy to make, so this type

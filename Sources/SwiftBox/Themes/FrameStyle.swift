@@ -12,7 +12,7 @@ public extension SwiftBox.Theme {
     case double
     case intertwined
     
-    // TODO: I think I need to 'enforce a promise' in the package, regarding permitted width of leading and trailing caps, so that this value is reliable
+    // TODO: I think I need to enforce permitted width of leading and trailing caps, so that this value is reliable
     public var reservedWidth: Int {
       switch self {
         case .single:
