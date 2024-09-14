@@ -29,10 +29,10 @@ public extension SwiftBox.BoxLine {
         renderedContent = structuralContent.render(width: contentWidth, trimMethod: trimMethod)
         
       case let textContent as SwiftBox.TextContent:
-        renderedContent = [Array(textContent.rawContent)]
+        renderedContent = MultilineString([Array(textContent.rawContent)])
         
       default:
-        renderedContent = MultilineString(SwiftBox.CharacterGrid(repeating: [Character](repeating: errorGlyph, count: contentWidth), count: 1))
+        renderedContent = MultilineString(CharacterGrid(repeating: [Character](repeating: errorGlyph, count: contentWidth), count: 1))
 
     }
     
@@ -48,30 +48,36 @@ public extension SwiftBox.BoxLine {
     ///
     
     
-    let outputLines: [String] = (0..<renderedContent.height).map { index in
-      let leadingCapRow: [Character] = index < leadingCap.content.height ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)
-      let trailingCapRow: [Character] = index < trailingCap.content.height ? trailingCap.content[index] : [Character](repeating: errorGlyph, count: trailingCap.width)
-      
-      return String(MultilineString(leadingCapRow) + renderedContent[index] + MultilineString(trailingCapRow))
-    }
+    let joinedContent = leadingCap.content.joinHorizontally(with: renderedContent)
+      .joinHorizontally(with: trailingCap.content)
     
-    return outputLines.joined(separator: "\n")
-
+    return joinedContent.string
     
     
-    let outputLines: [String] = renderedContent.enumerated().map { index, row in
-      
-      let leadingCapRow: [Character] = index < leadingCap.content.count ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)
-      let trailingCapRow: [Character] = index < trailingCap.content.count ? trailingCap.content[index] : [Character](repeating: errorGlyph, count: trailingCap.width)
-      
-      return String(leadingCapRow + row + trailingCapRow)
-    }
-    
-    let result = outputLines.joined(separator: "\n")
+//    
+//    let outputLines: [String] = (0..<renderedContent.height).map { index in
+//      let leadingCapRow: [Character] = index < leadingCap.content.height ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)
+//      let trailingCapRow: [Character] = index < trailingCap.content.height ? trailingCap.content[index] : [Character](repeating: errorGlyph, count: trailingCap.width)
+//      
+//      return String(MultilineString(leadingCapRow) + renderedContent[index] + MultilineString(trailingCapRow))
+//    }
+//    
+//    return outputLines.joined(separator: "\n")
+//
+//    
+//    
+//    let outputLines: [String] = renderedContent.enumerated().map { index, row in
+//      
+//      let leadingCapRow: [Character] = index < leadingCap.content.count ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)
+//      let trailingCapRow: [Character] = index < trailingCap.content.count ? trailingCap.content[index] : [Character](repeating: errorGlyph, count: trailingCap.width)
+//      
+//      return String(leadingCapRow + row + trailingCapRow)
+//    }
+//    
+//    let result = outputLines.joined(separator: "\n")
     
 //    print(result)
     
-    return result
   }
   
   

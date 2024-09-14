@@ -137,12 +137,28 @@ public extension SwiftBox.BoxPart {
     in grid: MultilineString,
     with theme: SwiftBox.Theme
   ) -> MultilineString {
-    return grid.map { row in
+    let swappedGrid = grid.map { row in
       row.map { char in
         glyph(char, set: theme.glyphSet)
       }
     }
+    return MultilineString(swappedGrid)
   }
+
+  
+//  private static func swapCharacters(
+//    in grid: MultilineString,
+//    with theme: SwiftBox.Theme
+//  ) -> MultilineString {
+//    
+//    
+//    
+//    return grid.map { row in
+//      row.map { char in
+//        glyph(char, set: theme.glyphSet)
+//      }
+//    }
+//  }
   
   private static func glyph(_ representative: Character, set: SwiftBox.GlyphSet) -> Character {
     let archetypeSet: SwiftBox.GlyphSet = .sharp

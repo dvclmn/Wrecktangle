@@ -16,15 +16,16 @@ public extension SwiftBox {
     trimMethod: TrimMethod = .crop
   ) -> MultilineString {
     
-    guard !part.content.isEmpty && !part.content[0].isEmpty else { return [] }
-    
-    let patternWidth = part.content[0].count
-    let patternHeight = part.content.count
+    guard !part.content.isEmpty && !part.content[0].isEmpty else { return MultilineString([]) }
+
+    let patternWidth = part.width
+    let patternHeight = part.height
     
     let repetitions = width / patternWidth
     let remainder = width % patternWidth
     
-    var result: MultilineString = Array(repeating: [], count: patternHeight)
+    var result = MultilineString([])
+
     
     for row in 0..<patternHeight {
       for _ in 0..<repetitions {

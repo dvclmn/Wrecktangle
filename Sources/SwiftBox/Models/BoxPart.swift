@@ -10,7 +10,7 @@ import TextCore
 
 public extension SwiftBox {
   
-  typealias CharacterGrid = [[Character]]
+
   
   struct BoxPart {
     public var content: MultilineString
