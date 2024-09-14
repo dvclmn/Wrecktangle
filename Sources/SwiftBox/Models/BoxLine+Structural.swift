@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import TextCore
 
 
 public extension SwiftBox {
@@ -19,7 +20,7 @@ public extension SwiftBox {
       self.rawContent = repeatingPattern.content.map { String($0) }.joined(separator: "\n")
     }
     
-    func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> [[Character]] {
+    func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> MultilineString {
       return SwiftBox.repeatHorizontally(
         repeatingPattern,
         toWidth: width,

@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 12/9/2024.
 //
 
+import TextCore
+
 public extension SwiftBox.BoxPart {
   
   /// This function provides a way to obtain a part of any resolution (as defined
@@ -22,15 +24,17 @@ public extension SwiftBox.BoxPart {
         
         /// Single is quite simple, and should just directly obtain the correct `1x1` character
         /// from the user's selected `GlyphSet`, chosen via `Theme`.
-        let grid: SwiftBox.CharacterGrid = [[theme.glyphSet.character(for: type)]]
-        let part = SwiftBox.BoxPart(content: grid, type: type)
+        let content: MultilineString = [[theme.glyphSet.character(for: type)]]
+        
+        let part = SwiftBox.BoxPart(content: content, type: type)
+        
         return part
         
         
         // MARK: - Double frame
       case .double, .intertwined:
         
-        let content: SwiftBox.CharacterGrid
+        let content: MultilineString
         
         switch type {
             
@@ -130,9 +134,9 @@ public extension SwiftBox.BoxPart {
   }
   
   private static func swapCharacters(
-    in grid: SwiftBox.CharacterGrid,
+    in grid: MultilineString,
     with theme: SwiftBox.Theme
-  ) -> SwiftBox.CharacterGrid {
+  ) -> MultilineString {
     return grid.map { row in
       row.map { char in
         glyph(char, set: theme.glyphSet)

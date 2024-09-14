@@ -5,18 +5,16 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import TextCore
 
 public extension SwiftBox {
-  enum TrimMethod {
-    case leaveSpace
-    case crop
-  }
+
   
   static func repeatHorizontally(
     _ part: BoxPart,
     toWidth width: Int,
     trimMethod: TrimMethod = .crop
-  ) -> [[Character]] {
+  ) -> MultilineString {
     
     guard !part.content.isEmpty && !part.content[0].isEmpty else { return [] }
     
@@ -26,7 +24,7 @@ public extension SwiftBox {
     let repetitions = width / patternWidth
     let remainder = width % patternWidth
     
-    var result: CharacterGrid = Array(repeating: [], count: patternHeight)
+    var result: MultilineString = Array(repeating: [], count: patternHeight)
     
     for row in 0..<patternHeight {
       for _ in 0..<repetitions {

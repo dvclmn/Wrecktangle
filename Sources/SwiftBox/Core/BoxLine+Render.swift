@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import TextCore
 
 public extension SwiftBox.BoxLine {
   
@@ -12,14 +13,14 @@ public extension SwiftBox.BoxLine {
   func render(
     width: Int,
     theme: SwiftBox.Theme,
-    trimMethod: SwiftBox.TrimMethod = .leaveSpace,
+    trimMethod: TrimMethod = .leaveSpace,
     errorGlyph: Character = "!" // Probably a better way than this
   ) -> String {
     
     
     let contentWidth = width - leadingCap.width - trailingCap.width
     
-    let renderedContent: SwiftBox.CharacterGrid
+    let renderedContent: MultilineString
     
     print("Leading cap: \(leadingCap.content). Trailing cap: \(trailingCap.content)")
     
@@ -31,7 +32,8 @@ public extension SwiftBox.BoxLine {
         renderedContent = [Array(textContent.rawContent)]
         
       default:
-        renderedContent = [[Character]](repeating: [Character](repeating: errorGlyph, count: contentWidth), count: 1)
+        renderedContent = MultilineString(SwiftBox.CharacterGrid(repeating: [Character](repeating: errorGlyph, count: contentWidth), count: 1))
+
     }
     
     /// I didn't know this until just recently, but if you supply `String` with
@@ -44,6 +46,19 @@ public extension SwiftBox.BoxLine {
     /// That's what's happening here:
     /// `String(leadingCapRow + row + trailingCapRow)`
     ///
+    
+    
+    let outputLines: [String] = (0..<renderedContent.height).map { index in
+      let leadingCapRow: [Character] = index < leadingCap.content.height ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)
+      let trailingCapRow: [Character] = index < trailingCap.content.height ? trailingCap.content[index] : [Character](repeating: errorGlyph, count: trailingCap.width)
+      
+      return String(MultilineString(leadingCapRow) + renderedContent[index] + MultilineString(trailingCapRow))
+    }
+    
+    return outputLines.joined(separator: "\n")
+
+    
+    
     let outputLines: [String] = renderedContent.enumerated().map { index, row in
       
       let leadingCapRow: [Character] = index < leadingCap.content.count ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)

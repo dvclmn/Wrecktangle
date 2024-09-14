@@ -13,10 +13,10 @@ public extension SwiftBox {
   typealias CharacterGrid = [[Character]]
   
   struct BoxPart {
-    public var content: CharacterGrid
+    public var content: MultilineString
     public var type: PartType
     
-    public init(content: CharacterGrid, type: PartType) {
+    public init(content: MultilineString, type: PartType) {
       self.content = content
       self.type = type
     }
@@ -26,11 +26,11 @@ public extension SwiftBox {
 public extension SwiftBox.BoxPart {
   
   var width: Int {
-    content.first?.count ?? 0
+    content.width
   }
   
   var height: Int {
-    content.count
+    content.height
   }
   
   var columns: Int {
