@@ -19,14 +19,7 @@ public extension SwiftBox {
       self.repeatingPattern = repeatingPattern
       self.rawContent = repeatingPattern.content.map { String($0) }.joined(separator: "\n")
     }
-    
-    func render(width: Int, trimMethod: TrimMethod = .leaveSpace) -> MultilineString {
-      return SwiftBox.repeatHorizontally(
-        repeatingPattern,
-        toWidth: width,
-        trimMethod: trimMethod
-      )
-    }
+
   }
 
 

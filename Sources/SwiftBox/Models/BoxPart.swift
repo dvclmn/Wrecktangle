@@ -9,9 +9,7 @@ import Foundation
 import TextCore
 
 public extension SwiftBox {
-  
 
-  
   struct BoxPart {
     public var content: MultilineString
     public var type: PartType

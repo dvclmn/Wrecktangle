@@ -9,6 +9,15 @@ import TextCore
 
 public extension SwiftBox.BoxLine {
   
+  var reservedWidth: Int {
+    let shadowWidth: Int = theme.shadow.reservedSpace
+    
+    let capWidth: Int = leadingCap.width + trailingCap.width
+    
+    let result = capWidth + shadowWidth
+    
+    return result
+  }
   
   func render(
     width: Int,
@@ -17,8 +26,7 @@ public extension SwiftBox.BoxLine {
     errorGlyph: Character = "!" // Probably a better way than this
   ) -> String {
     
-    
-    let contentWidth = width - leadingCap.width - trailingCap.width
+    let contentWidth: Int = max(0, width - reservedWidth)
     
     let renderedContent: MultilineString
     
@@ -26,57 +34,21 @@ public extension SwiftBox.BoxLine {
     
     switch content {
       case let structuralContent as SwiftBox.StructuralContent:
-        renderedContent = structuralContent.render(width: contentWidth, trimMethod: trimMethod)
+        let repeatingPart = structuralContent.repeatingPattern.content
+        renderedContent = MultilineString.repeatHorizontally(repeatingPart, toWidth: contentWidth)
         
       case let textContent as SwiftBox.TextContent:
         renderedContent = MultilineString([Array(textContent.rawContent)])
         
       default:
-        renderedContent = MultilineString(CharacterGrid(repeating: [Character](repeating: errorGlyph, count: contentWidth), count: 1))
-
+        fatalError("Something went wrong when casting as one of the two possible BoxLine types.")
+        
     }
-    
-    /// I didn't know this until just recently, but if you supply `String` with
-    /// an array (or even, as below, multiple concatenated arrays!) of
-    /// `[Character]`, Swift will initialise this as... a `String`.
-    ///
-    /// It makes sense, but it wasn't something I would have assumed until
-    /// it was shown to me.
-    ///
-    /// That's what's happening here:
-    /// `String(leadingCapRow + row + trailingCapRow)`
-    ///
-    
-    
+
     let joinedContent = leadingCap.content.joinHorizontally(with: renderedContent)
       .joinHorizontally(with: trailingCap.content)
     
     return joinedContent.string
-    
-    
-//    
-//    let outputLines: [String] = (0..<renderedContent.height).map { index in
-//      let leadingCapRow: [Character] = index < leadingCap.content.height ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)
-//      let trailingCapRow: [Character] = index < trailingCap.content.height ? trailingCap.content[index] : [Character](repeating: errorGlyph, count: trailingCap.width)
-//      
-//      return String(MultilineString(leadingCapRow) + renderedContent[index] + MultilineString(trailingCapRow))
-//    }
-//    
-//    return outputLines.joined(separator: "\n")
-//
-//    
-//    
-//    let outputLines: [String] = renderedContent.enumerated().map { index, row in
-//      
-//      let leadingCapRow: [Character] = index < leadingCap.content.count ? leadingCap.content[index] : [Character](repeating: errorGlyph, count: leadingCap.width)
-//      let trailingCapRow: [Character] = index < trailingCap.content.count ? trailingCap.content[index] : [Character](repeating: errorGlyph, count: trailingCap.width)
-//      
-//      return String(leadingCapRow + row + trailingCapRow)
-//    }
-//    
-//    let result = outputLines.joined(separator: "\n")
-    
-//    print(result)
     
   }
   

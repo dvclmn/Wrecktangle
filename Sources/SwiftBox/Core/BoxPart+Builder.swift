@@ -25,11 +25,8 @@ public extension SwiftBox.BoxPart {
         /// Single is quite simple, and should just directly obtain the correct `1x1` character
         /// from the user's selected `GlyphSet`, chosen via `Theme`.
         let content: MultilineString = [[theme.glyphSet.character(for: type)]]
-        
         let part = SwiftBox.BoxPart(content: content, type: type)
-        
         return part
-        
         
         // MARK: - Double frame
       case .double, .intertwined:
@@ -145,21 +142,6 @@ public extension SwiftBox.BoxPart {
     return MultilineString(swappedGrid)
   }
 
-  
-//  private static func swapCharacters(
-//    in grid: MultilineString,
-//    with theme: SwiftBox.Theme
-//  ) -> MultilineString {
-//    
-//    
-//    
-//    return grid.map { row in
-//      row.map { char in
-//        glyph(char, set: theme.glyphSet)
-//      }
-//    }
-//  }
-  
   private static func glyph(_ representative: Character, set: SwiftBox.GlyphSet) -> Character {
     let archetypeSet: SwiftBox.GlyphSet = .sharp
     
@@ -170,12 +152,13 @@ public extension SwiftBox.BoxPart {
     if let glyphType = reverseMap[representative] {
       // Return the corresponding character from the user's chosen set
       return set.character(for: glyphType.toPartType)
+    } else {
+      print("Could not find glyph, returning representative: \(representative)")
+      return representative
     }
     
-    // If no match is found, return the original character
-    return representative
   }
-
+  
   
   
 }

@@ -32,10 +32,10 @@ public extension SwiftBox.GlyphSet {
   static let rounded = SwiftBox.GlyphSet([
     
     .horizontal: "─",
-    .horizontalAlt: "━",
+    .horizontalAlt: "─",
     ///
     .vertical: "│",
-    .verticalAlt: "┃",
+    .verticalAlt: "│",
     ///
     .joinLeading: "├",
     .joinTrailing: "┤",

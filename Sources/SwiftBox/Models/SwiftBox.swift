@@ -39,11 +39,8 @@ public extension SwiftBox {
     self.config.theme.glyphSet
   }
   
-  func boxWidth(_ includingShadow: Bool = true) -> Int {
-    
-    let shadowWidth: Int = includingShadow ? self.config.theme.shadow.reservedSpace : 0
-    
-    return self.config.width - shadowWidth
+  var boxWidth: Int {
+    self.config.width
   }
   
   var widthLeftForText: Int {
@@ -54,7 +51,7 @@ public extension SwiftBox {
     let padding = theme.padding * 2 // Either side
     let caps = theme.frameStyle.reservedWidth
     
-    return boxWidth() - (padding + caps)
+    return boxWidth - (padding + caps)
     
   }
   

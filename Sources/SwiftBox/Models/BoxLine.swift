@@ -21,17 +21,20 @@ public extension SwiftBox {
     let content: LineContent
     let leadingCap: BoxPart
     let trailingCap: BoxPart
+    let theme: SwiftBox.Theme
     
     /// Default initialiser (structure-based)
     ///
     init(
       repeater: BoxPart,
       leadingCap: BoxPart,
-      trailingCap: BoxPart
+      trailingCap: BoxPart,
+      theme: SwiftBox.Theme
     ) {
       self.content = StructuralContent(repeatingPattern: repeater)
       self.leadingCap = leadingCap
       self.trailingCap = trailingCap
+      self.theme = theme
     }
     
     /// Convenience initialiser for text-based content
@@ -43,6 +46,7 @@ public extension SwiftBox {
     ) {
       
       self.content = TextContent(text, lineLimit: lineLimit)
+      self.theme = theme
       
       /// Currently, this initialiser 'has to' take in a `theme` parameter, to obtain
       /// the correct `BoxParts` for the leading and trailing caps, to save

@@ -23,7 +23,6 @@ public extension SwiftBox {
         /// Note the order here, shadow first, then structure
         return shadowLine + structureLine
         
-        
       case .divider:
         
         return buildStructureLine(for: preset, hasLineBreak: false)
@@ -45,11 +44,9 @@ public extension SwiftBox {
         /// This uses `BoxLine`s text-based initialiser
         let lineResult = SwiftBox.BoxLine(text: textContent, lineLimit: lineLimit, theme: theme)
         
-        let lineString = lineResult.render(width: boxWidth(), theme: theme)
+        let lineString = lineResult.render(width: boxWidth, theme: theme)
         
-        let lineAndShadow = shadowCap().leading + lineString + shadowCap().trailing
-        
-        return lineAndShadow
+        return lineString
         
     }
     
@@ -64,17 +61,12 @@ public extension SwiftBox {
       let repeating = BoxPart.create(parts.repeater, theme: theme)
       let trailing = BoxPart.create(parts.trailing, theme: theme)
       
-      /// Takes cue for shadow height from leading cap
-      let shadowHeight: Int = leading.height
-      
       /// This uses `BoxLine`s structure-based initialiser
-      let lineResult = BoxLine(repeater: repeating, leadingCap: leading, trailingCap: trailing)
+      let lineResult = BoxLine(repeater: repeating, leadingCap: leading, trailingCap: trailing, theme: theme)
       
-      let lineString = lineResult.render(width: boxWidth(), theme: theme)
+      let lineString = lineResult.render(width: boxWidth, theme: theme)
       
-      let lineAndShadow = shadowCap(height: shadowHeight).leading + lineString + shadowCap(height: shadowHeight).trailing
-      
-      let result = lineAndShadow + (hasLineBreak ? "\n" : "")
+      let result = lineString + (hasLineBreak ? "\n" : "")
       return result
       
     } else {
@@ -88,12 +80,13 @@ public extension SwiftBox {
     
     if linePreset.hasShadow(lightSource: shadow.lightSource) {
       
-      let shadowWidth: Int = boxWidth() - 2
+      let shadowWidth: Int = boxWidth
       let shadowRepeated = String(repeating: shadowCharacter, count: shadowWidth)
       
-      let shadowWithCaps = shadowCap().leading + shadowRepeated + shadowCap().trailing
+//      let shadowWithCaps = shadowCap().leading + shadowRepeated + shadowCap().trailing
       
-      let result = shadowWithCaps + (hasLineBreak ? "\n" : "")
+      let result = shadowRepeated + (hasLineBreak ? "\n" : "")
+//      let result = shadowWithCaps + (hasLineBreak ? "\n" : "")
       
       return result
       
@@ -106,35 +99,35 @@ public extension SwiftBox {
 
 
 public extension SwiftBox {
-  
-  /// This
-  func shadowCap(height: Int = 1) -> StringCaps {
-    
-    let shadowString = "?"
-//        let shadowString = shadowCharacter.string
-    
-    let blank = "x"
-    
-    let result: StringCaps
-    
-    switch shadow.lightSource {
-        
-      case .topLeading:
-        result = (blank, shadowString)
-        
-      case .topTrailing:
-        result = (shadowString, blank)
-        
-      case .bottomLeading:
-        result = (blank, shadowString)
-        
-      case .bottomTrailing:
-        result = (shadowString, blank)
-        
-    } // END switch
-    
-    return result
-    
-    
-  }
+//  
+//  /// This
+//  func shadowCap(height: Int = 1) -> StringCaps {
+//    
+//    let shadowString = "?"
+////        let shadowString = shadowCharacter.string
+//    
+//    let blank = "x"
+//    
+//    let result: StringCaps
+//    
+//    switch shadow.lightSource {
+//        
+//      case .topLeading:
+//        result = (blank, shadowString)
+//        
+//      case .topTrailing:
+//        result = (shadowString, blank)
+//        
+//      case .bottomLeading:
+//        result = (blank, shadowString)
+//        
+//      case .bottomTrailing:
+//        result = (shadowString, blank)
+//        
+//    } // END switch
+//    
+//    return result
+//    
+//    
+//  }
 }

@@ -30,7 +30,7 @@ struct BoxPrintView: View {
       theme: SwiftBox.Theme(glyphSet: .double, frameStyle: .double, shadow: SwiftBox.Theme.Shadow(type: .simple, lightSource: .topLeading, strength: .light)),
       width: 38,
       headerLineLimit: 2,
-      contentLineLimit: 7,
+      contentLineLimit: 4,
       metrics: .init(widthCounter: .compact, lineNumbers: false, invisibles: false)
     )
   )
@@ -40,8 +40,8 @@ struct BoxPrintView: View {
     content: "TestStrings.paragraphs[6]",
     config: SwiftBox.Config (
       theme: SwiftBox.Theme(
-        glyphSet: .double,
-        frameStyle: .single,
+        glyphSet: .rounded,
+        frameStyle: .double,
         shadow: SwiftBox.Theme.Shadow(type: .simple, lightSource: .bottomTrailing, strength: .medium)
       ),
       width: 14,
@@ -55,7 +55,7 @@ struct BoxPrintView: View {
     content: TestStrings.paragraphs[6],
     config: SwiftBox.Config (
       theme: SwiftBox.Theme(
-        glyphSet: .double,
+        glyphSet: .sharp,
         frameStyle: .single,
         shadow: SwiftBox.Theme.Shadow(type: .simple, lightSource: .bottomLeading, strength: .medium)
       ),
