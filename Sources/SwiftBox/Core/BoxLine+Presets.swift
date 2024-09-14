@@ -5,44 +5,44 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import TextCore
+
 public extension SwiftBox {
   
   func line(
     _ preset: LinePreset
   ) -> String {
     
-    
-    /// This takes care of top, divider and bottom, just leaves text and shadow
-    ///
-    /// I should make this clearer in the code
-    ///
-    
     switch preset {
-      case .top:
-          
-        let shadowLine = buildShadow(for: preset)
-        let structureLine = buildStructureLine(for: preset)
         
+      case .top:
+        
+        let shadowLine = buildShadow(for: preset, hasLineBreak: true)
+        let structureLine = buildStructureLine(for: preset, hasLineBreak: false)
+        
+        /// Note the order here, shadow first, then structure
         return shadowLine + structureLine
         
         
       case .divider:
-          
-        return buildStructureLine(for: preset)
         
-          case .bottom:
+        return buildStructureLine(for: preset, hasLineBreak: false)
         
-        let shadowLine = buildShadow(for: preset)
-        let structureLine = buildStructureLine(for: preset)
+      case .bottom:
         
+        let structureLine = buildStructureLine(for: preset, hasLineBreak: true)
+        let shadowLine = buildShadow(for: preset, hasLineBreak: true)
+        
+        /// Structure first, then shadow
         return structureLine + shadowLine
         
-
+        
       case .text(let content, let lineLimit):
         
         let textPadding = String(repeating: invisibleIfNeeded(.space), count: theme.padding)
         let textContent = textPadding + content + textPadding
         
+        /// This uses `BoxLine`s text-based initialiser
         let lineResult = SwiftBox.BoxLine(text: textContent, lineLimit: lineLimit, theme: theme)
         
         let lineString = lineResult.render(width: boxWidth(), theme: theme)
@@ -56,20 +56,26 @@ public extension SwiftBox {
     
   } // END create line
   
-  private func buildStructureLine(for preset: LinePreset) -> String {
+  private func buildStructureLine(for preset: LinePreset, hasLineBreak: Bool) -> String {
     
     if let parts = preset.parts {
+      
       let leading = BoxPart.create(parts.leading, theme: theme)
       let repeating = BoxPart.create(parts.repeater, theme: theme)
       let trailing = BoxPart.create(parts.trailing, theme: theme)
       
+      /// Takes cue for shadow height from leading cap
+      let shadowHeight: Int = leading.height
+      
+      /// This uses `BoxLine`s structure-based initialiser
       let lineResult = BoxLine(repeater: repeating, leadingCap: leading, trailingCap: trailing)
       
       let lineString = lineResult.render(width: boxWidth(), theme: theme)
       
-      let lineAndShadow = shadowCap().leading + lineString + shadowCap().trailing
+      let lineAndShadow = shadowCap(height: shadowHeight).leading + lineString + shadowCap(height: shadowHeight).trailing
       
-      return lineAndShadow
+      let result = lineAndShadow + (hasLineBreak ? "\n" : "")
+      return result
       
     } else {
       return "nil"
@@ -77,7 +83,8 @@ public extension SwiftBox {
     
   }
   
-  private func buildShadow(for linePreset: LinePreset) -> String {
+  
+  private func buildShadow(for linePreset: LinePreset, hasLineBreak: Bool) -> String {
     
     if linePreset.hasShadow(lightSource: shadow.lightSource) {
       
@@ -86,8 +93,10 @@ public extension SwiftBox {
       
       let shadowWithCaps = shadowCap().leading + shadowRepeated + shadowCap().trailing
       
-      return shadowWithCaps
-
+      let result = shadowWithCaps + (hasLineBreak ? "\n" : "")
+      
+      return result
+      
     } else {
       return ""
     }
@@ -99,24 +108,33 @@ public extension SwiftBox {
 public extension SwiftBox {
   
   /// This
-  func shadowCap() -> (leading: String, trailing: String) {
+  func shadowCap(height: Int = 1) -> StringCaps {
     
-    let shadowString = shadowCharacter.string
+    let shadowString = "?"
+//        let shadowString = shadowCharacter.string
+    
+    let blank = "x"
+    
+    let result: StringCaps
     
     switch shadow.lightSource {
         
       case .topLeading:
-        return (" ", shadowString)
+        result = (blank, shadowString)
         
       case .topTrailing:
-        return (shadowString, " ")
+        result = (shadowString, blank)
         
       case .bottomLeading:
-        return (" ", shadowString)
+        result = (blank, shadowString)
         
       case .bottomTrailing:
-        return (shadowString, " ")
+        result = (shadowString, blank)
         
-    }
+    } // END switch
+    
+    return result
+    
+    
   }
 }

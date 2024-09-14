@@ -22,7 +22,7 @@ public extension SwiftBox {
     let leadingCap: BoxPart
     let trailingCap: BoxPart
     
-    /// Default initialiser
+    /// Default initialiser (structure-based)
     ///
     init(
       repeater: BoxPart,
@@ -32,15 +32,24 @@ public extension SwiftBox {
       self.content = StructuralContent(repeatingPattern: repeater)
       self.leadingCap = leadingCap
       self.trailingCap = trailingCap
-      
-      
     }
     
     /// Convenience initialiser for text-based content
     ///
-    init(text: String, lineLimit: Int, theme: SwiftBox.Theme) {
+    init(
+      text: String,
+      lineLimit: Int,
+      theme: SwiftBox.Theme
+    ) {
       
       self.content = TextContent(text, lineLimit: lineLimit)
+      
+      /// Currently, this initialiser 'has to' take in a `theme` parameter, to obtain
+      /// the correct `BoxParts` for the leading and trailing caps, to save
+      /// the package user from having to do it. Text-based lines will always
+      /// have the below part types (obviously with the correct glyphs subbed
+      /// in based on the selected Theme).
+      ///
       self.leadingCap = BoxPart.create(.vertical(.leading), theme: theme)
       self.trailingCap = BoxPart.create(.vertical(.trailing), theme: theme)
       
@@ -56,9 +65,7 @@ public extension SwiftBox {
 }
 
 public extension SwiftBox {
-  
-  
-  
+
   enum LineType {
     case structural
     case text
@@ -122,7 +129,6 @@ public extension SwiftBox {
           return false
       }
     }
-
   }
   
 }

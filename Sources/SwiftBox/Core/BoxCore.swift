@@ -38,7 +38,8 @@ public extension SwiftBox {
       let headerLines: [String] = headerText.reflowText(
         width: widthLeftForText,
         maxLines: config.headerLineLimit,
-        paddingCharacter: invisibleIfNeeded(.space)
+        paddingCharacter: invisibleIfNeeded(.space),
+        wrappingOption: self.config.wordWrapStrategy
       )
       
       for headerLine in headerLines {
@@ -57,7 +58,8 @@ public extension SwiftBox {
     let contentLines: [String] = self.content.reflowText(
         width: widthLeftForText,
         maxLines: config.contentLineLimit,
-        paddingCharacter: invisibleIfNeeded(.space)
+        paddingCharacter: invisibleIfNeeded(.space),
+        wrappingOption: self.config.wordWrapStrategy
       )
       
       for contentLine in contentLines {

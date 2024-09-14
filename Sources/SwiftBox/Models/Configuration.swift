@@ -5,6 +5,8 @@
 //  Created by Dave Coleman on 23/8/2024.
 //
 
+import TextCore
+
 public extension SwiftBox {
   
   /// A structure that defines the appearance and behavior of a `SwiftBox`.
@@ -40,6 +42,7 @@ public extension SwiftBox {
     ///
     public var contentLineLimit: Int
     
+    public var wordWrapStrategy: WordWrapStrategy
     /// Display metadata about the box itself
     ///
     public var metrics: Metrics
@@ -47,14 +50,16 @@ public extension SwiftBox {
     public init(
       theme: Theme = Theme(),
       width: Int = 60,
-      headerLineLimit: Int = 3,
+      headerLineLimit: Int = 0,
       contentLineLimit: Int = 0,
+      wordWrapStrategy: WordWrapStrategy = .hyphenate,
       metrics: Metrics = Metrics()
     ) {
       self.theme = theme
       self.width = width
       self.headerLineLimit = headerLineLimit
       self.contentLineLimit = contentLineLimit
+      self.wordWrapStrategy = wordWrapStrategy
       self.metrics = metrics
     }
     
