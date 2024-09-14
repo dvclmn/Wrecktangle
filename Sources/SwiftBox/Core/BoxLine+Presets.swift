@@ -37,15 +37,12 @@ public extension SwiftBox {
         
         
       case .text(let content, let lineLimit):
-        
-        let textPadding = String(repeating: invisibleIfNeeded(.space), count: theme.padding)
-        let textContent = textPadding + content + textPadding
-        
+
         /// This uses `BoxLine`s text-based initialiser
         let lineResult = SwiftBox.BoxLine(
-          text: textContent,
+          text: content,
           lineLimit: lineLimit,
-          boxWidth: boxWidth,
+          remainingWidth: widthLeftForText,
           theme: theme
         )
         
@@ -68,7 +65,7 @@ public extension SwiftBox {
       
       /// This uses `BoxLine`s structure-based initialiser
       let lineResult = BoxLine(
-        boxWidth: boxWidth,
+        remainingWidth: widthLeftForText,
         repeater: repeating,
         leadingCap: leading,
         trailingCap: trailing,

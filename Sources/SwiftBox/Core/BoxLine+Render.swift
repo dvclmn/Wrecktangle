@@ -17,8 +17,7 @@ public extension SwiftBox.BoxLine {
     
     renderedContent = MultilineString(content.rawContent)
 
-    let joinedContent = leadingCap.content.joinHorizontally(with: renderedContent)
-      .joinHorizontally(with: trailingCap.content)
+    let joinedContent = leadingCap.content + renderedContent + trailingCap.content
     
     return joinedContent.string
     

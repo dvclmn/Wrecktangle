@@ -14,7 +14,7 @@ public extension SwiftBox {
   
   struct BoxLine {
     let content: LineContent
-    let boxWidth: Int
+    let remainingWidth: Int
     let leadingCap: BoxPart
     let trailingCap: BoxPart
     let theme: SwiftBox.Theme
@@ -22,21 +22,14 @@ public extension SwiftBox {
     /// Default initialiser (structure-based)
     ///
     init(
-      boxWidth: Int,
+      remainingWidth: Int,
       repeater: BoxPart,
       leadingCap: BoxPart,
       trailingCap: BoxPart,
       theme: SwiftBox.Theme
     ) {
-      self.boxWidth = boxWidth
-      
-      
-      let shadowWidth: Int = theme.shadow.reservedSpace
-      let capWidth: Int = leadingCap.width + trailingCap.width
+      self.remainingWidth = remainingWidth
 
-      let reservedWidth = capWidth + shadowWidth
-      let remainingWidth = max(0, (boxWidth - reservedWidth))
-      
       self.content = StructuralContent(adjustedWidth: remainingWidth, repeatingPattern: repeater)
       self.leadingCap = leadingCap
       self.trailingCap = trailingCap
@@ -48,12 +41,12 @@ public extension SwiftBox {
     init(
       text: String,
       lineLimit: Int,
-      boxWidth: Int,
+      remainingWidth: Int,
       theme: SwiftBox.Theme
     ) {
       
       self.content = TextContent(text, lineLimit: lineLimit)
-      self.boxWidth = boxWidth
+      self.remainingWidth = remainingWidth
       self.theme = theme
       
       /// Currently, this initialiser 'has to' take in a `theme` parameter, to obtain

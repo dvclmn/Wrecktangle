@@ -44,14 +44,11 @@ public extension SwiftBox {
   }
   
   var widthLeftForText: Int {
-    
-    /// Note: Do not include shadow in here, shadow reserved space should
-    /// be deducated from the *box* width, not internal content width.
-    ///
-    let padding = theme.padding * 2 // Either side
+
+    let shadowSpace = theme.shadow.reservedSpace
     let caps = theme.frameStyle.reservedWidth
     
-    return boxWidth - (padding + caps)
+    return boxWidth - max(0, (caps + shadowSpace))
     
   }
   
