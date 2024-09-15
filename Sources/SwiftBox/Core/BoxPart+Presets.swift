@@ -40,6 +40,10 @@ public extension SwiftBox.BoxPart {
               ["━"],
               ["─"]
             ]
+//            content = [
+//              ["━"],
+//              ["─"]
+//            ]
             
           case .horizontal(.bottom):
             content = [
@@ -129,6 +133,8 @@ public extension SwiftBox.BoxPart {
     }
     
   }
+  
+  
   
   private static func swapCharacters(
     in grid: MultilineString,
