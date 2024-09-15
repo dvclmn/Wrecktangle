@@ -50,7 +50,7 @@ public extension SwiftBox {
       }
     }
     
-    var toGlyphType: GlyphType {
+    var toGlyphType: SwiftBox.GlyphType {
       switch self {
         case .horizontal(.top), .horizontal(.bottom):
           return .horizontal
@@ -65,7 +65,7 @@ public extension SwiftBox {
           return .verticalAlt
           
         default:
-          return GlyphType.fromPartType[self] ?? .horizontal
+          return SwiftBox.GlyphType.fromPartType[self] ?? .horizontal
       }
     } // END to glyph type
   } // END part type
@@ -85,18 +85,3 @@ public extension SwiftBox {
   
 }
 
-
-
-public extension SwiftBox.DimensionType {
-  
-  func value(_ ): Int {
-    switch self {
-      case .fixed(let int):
-        return int
-      case .repeatable(let min, let max):
-        <#code#>
-    }
-  }
-  
-
-}

@@ -46,7 +46,7 @@ public extension SwiftBox {
   var widthLeftForText: Int {
 
     let shadowSpace = theme.shadow.reservedSpace
-    let caps = theme.frameStyle.reservedWidth
+    let caps = theme.frameStyle.maximumGridSize.width.value
     
     return boxWidth - max(0, (caps + shadowSpace))
     
