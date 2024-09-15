@@ -59,8 +59,8 @@ public extension SwiftBox {
       /// in based on the selected Theme).
       ///
       
-      self.leadingCap = BoxPart.create(from: .vertical(.leading), using: theme.glyphSet)
-      self.trailingCap = BoxPart.create(from: .vertical(.trailing), using: theme.glyphSet)
+      self.leadingCap = BoxPart.create(.vertical(.leading), with: theme)
+      self.trailingCap = BoxPart.create(.vertical(.trailing), with: theme)
       
       let conditions = Self.checkConditions(leadingCap: self.leadingCap, trailingCap: self.trailingCap)
       

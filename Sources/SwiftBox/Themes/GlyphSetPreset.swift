@@ -16,6 +16,8 @@ public extension SwiftBox.GlyphSet {
   
   static let sharp = SwiftBox.GlyphSet.base([
     
+    GlyphType.blank: " ",
+    ///
     GlyphType.horizontal(.exterior): "━",
     GlyphType.horizontal(.interior): "─",
     ///
@@ -24,8 +26,13 @@ public extension SwiftBox.GlyphSet {
     ///
     GlyphType.join(x: .exterior, y: .interior, type: .top):       "┯",
     GlyphType.join(x: .exterior, y: .interior, type: .bottom):    "┷",
-    GlyphType.join(x: .exterior, y: .exterior, type: .leading):   "┠",
-    GlyphType.join(x: .exterior, y: .exterior, type: .trailing):  "┨",
+    GlyphType.join(x: .interior, y: .exterior, type: .leading):   "┠",
+    GlyphType.join(x: .interior, y: .exterior, type: .trailing):  "┨",
+    ///
+    GlyphType.join(x: .interior, y: .interior, type: .top):       "┬",
+    GlyphType.join(x: .interior, y: .interior, type: .bottom):    "┴",
+    GlyphType.join(x: .interior, y: .interior, type: .leading):   "├",
+    GlyphType.join(x: .interior, y: .interior, type: .trailing):  "┤",
     GlyphType.join(x: .interior, y: .interior, type: .cross):     "┼",
     ///
     GlyphType.corner(location: .exterior, type: .topLeading):     "┏",
@@ -42,20 +49,20 @@ public extension SwiftBox.GlyphSet {
   
   static let rounded = SwiftBox.GlyphSet.fallback([
     
-    GlyphType.horizontal(.exterior): "─",
+    GlyphType.horizontal(): "─",
     ///
-    GlyphType.vertical(.exterior): "│",
+    GlyphType.vertical(): "│",
     ///
-    GlyphType.join(x: .exterior, y: .interior, type: .top):       "┬",
-    GlyphType.join(x: .exterior, y: .interior, type: .bottom):    "┴",
-    GlyphType.join(x: .exterior, y: .exterior, type: .leading):   "├",
-    GlyphType.join(x: .exterior, y: .exterior, type: .trailing):  "┤",
-    GlyphType.join(x: .interior, y: .interior, type: .cross):     "┼",
+    GlyphType.join(type: .top):       "┬",
+    GlyphType.join(type: .bottom):    "┴",
+    GlyphType.join(type: .leading):   "├",
+    GlyphType.join(type: .trailing):  "┤",
+    GlyphType.join(type: .cross):     "┼",
     ///
-    GlyphType.corner(location: .exterior, type: .topLeading):     "╭",
-    GlyphType.corner(location: .exterior, type: .topTrailing):    "╮",
-    GlyphType.corner(location: .exterior, type: .bottomLeading):  "╰",
-    GlyphType.corner(location: .exterior, type: .bottomTrailing): "╯",
+    GlyphType.corner(type: .topLeading):     "╭",
+    GlyphType.corner(type: .topTrailing):    "╮",
+    GlyphType.corner(type: .bottomLeading):  "╰",
+    GlyphType.corner(type: .bottomTrailing): "╯",
 
 
   ], sharp)
@@ -71,8 +78,8 @@ public extension SwiftBox.GlyphSet {
     ///
     GlyphType.join(x: .exterior, y: .interior, type: .top):       "╤",
     GlyphType.join(x: .exterior, y: .interior, type: .bottom):    "╧",
-    GlyphType.join(x: .exterior, y: .exterior, type: .leading):   "╟",
-    GlyphType.join(x: .exterior, y: .exterior, type: .trailing):  "╢",
+    GlyphType.join(x: .interior, y: .exterior, type: .leading):   "╟",
+    GlyphType.join(x: .interior, y: .exterior, type: .trailing):  "╢",
     GlyphType.join(x: .interior, y: .interior, type: .cross):     "┼",
     ///
     GlyphType.corner(location: .exterior, type: .topLeading):     "╔",

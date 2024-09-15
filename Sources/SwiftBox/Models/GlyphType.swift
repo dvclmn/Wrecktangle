@@ -14,6 +14,8 @@ public extension SwiftBox {
     case top
     case bottom
     case cross
+    
+    
   }
   
   enum CornerType: Hashable {
@@ -58,10 +60,11 @@ public extension SwiftBox {
           return .horizontal(.exterior)
         case .vertical(.interior):
           return .vertical(.exterior)
-        case .join(let x, let y, _):
-          return .join(x: x, y: y, type: .cross) // Default to cross join
+        case .join(_, _, let type):
+          return .join(x: .exterior, y: .exterior, type: type) // Default to cross join
         case .corner(_, let type):
           return .corner(location: .exterior, type: type) // Default to top-leading corner
+          
         default:
           return nil
       }

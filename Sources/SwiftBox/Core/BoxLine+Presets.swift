@@ -58,12 +58,11 @@ public extension SwiftBox {
   private func buildStructureLine(for preset: BoxLine.LineType, hasLineBreak: Bool) -> String {
     
     if let parts = preset.parts {
+
       
-      
-      
-      let leading = BoxPart.create(from: parts.leading, using: theme.glyphSet)
-      let repeating = BoxPart.create(from: parts.repeater, using: theme.glyphSet)
-      let trailing = BoxPart.create(from: parts.trailing, using: theme.glyphSet)
+      let leading = BoxPart.create(parts.leading, with: theme)
+      let repeating = BoxPart.create(parts.repeater, with: theme)
+      let trailing = BoxPart.create(parts.trailing, with: theme)
       
       /// This uses `BoxLine`s structure-based initialiser
       let lineResult = BoxLine(
