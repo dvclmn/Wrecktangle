@@ -34,8 +34,8 @@ public extension SwiftBox {
     
     /// Joins
     case join(
-      horizontal: Location = .interior,
-      vertical: Location = .exterior,
+      x: Location = .interior,
+      y: Location = .exterior,
       type: JoinType
     )
     
@@ -51,7 +51,6 @@ public extension SwiftBox {
       case interior
       case exterior
     }
-    
     
     
 //    public static let toPartType: [GlyphType: SwiftBox.PartType] = [

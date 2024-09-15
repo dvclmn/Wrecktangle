@@ -166,9 +166,19 @@ public extension SwiftBox.PartType {
   
 }
 
+public extension SwiftBox {
+  func boxPart(for type: PartType) -> BoxPart {
+    
+    let string =
+    
+    BoxPart(content: <#T##MultilineString#>, type: <#T##PartType#>)
+  }
+}
 
 
 public extension SwiftBox.BoxPart {
+  
+  
   
   
   /// This function provides a way to obtain a part of any resolution (as defined
@@ -192,6 +202,8 @@ public extension SwiftBox.BoxPart {
         
         // MARK: - Double frame
       case .double, .intertwined:
+        
+        
         
         let content: MultilineString
         

@@ -20,6 +20,9 @@ public extension SwiftBox {
     /// the scope of the package internals.
     ///
     func character(for part: PartType) -> Character {
+      
+      
+      
       return glyphMap[part.toGlyphType] ?? " "
     }
     

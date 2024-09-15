@@ -7,26 +7,36 @@
 
 import Foundation
 
+
+
 public extension SwiftBox.GlyphSet {
+  
+  typealias GlyphType = SwiftBox.GlyphType
   
   static let sharp = SwiftBox.GlyphSet([
     
-    .horizontal: "━",
-    .horizontalAlt: "─",
+    GlyphType.horizontal(.exterior): "━",
+    GlyphType.horizontal(.interior): "─",
     ///
-    .vertical: "┃",
-    .verticalAlt: "│",
+    GlyphType.vertical(.exterior): "┃",
+    GlyphType.vertical(.interior): "│",
     ///
-    .joinLeading: "┠",
-    .joinTrailing: "┨",
-    .joinTop: "┯",
-    .joinBottom: "┷",
-    .joinCross: "┼",
+    GlyphType.join(x: .exterior, y: .interior, type: .top):       "┯",
+    GlyphType.join(x: .exterior, y: .interior, type: .bottom):    "┷",
+    GlyphType.join(x: .exterior, y: .exterior, type: .leading):   "┠",
+    GlyphType.join(x: .exterior, y: .exterior, type: .trailing):  "┨",
+    GlyphType.join(x: .interior, y: .interior, type: .cross):     "┼",
     ///
-    .cornerTopLeading: "┏",
-    .cornerTopTrailing: "┓",
-    .cornerBottomLeading: "┗",
-    .cornerBottomTrailing: "┛"
+    GlyphType.corner(location: .exterior, type: .topLeading):     "┏",
+    GlyphType.corner(location: .exterior, type: .topTrailing):    "┓",
+    GlyphType.corner(location: .exterior, type: .bottomLeading):  "┗",
+    GlyphType.corner(location: .exterior, type: .bottomTrailing): "┛",
+    ///
+    GlyphType.corner(location: .interior, type: .topLeading):     "┌",
+    GlyphType.corner(location: .interior, type: .topTrailing):    "┐",
+    GlyphType.corner(location: .interior, type: .bottomLeading):  "└",
+    GlyphType.corner(location: .interior, type: .bottomTrailing): "┘",
+
   ])
   
   static let rounded = SwiftBox.GlyphSet([
