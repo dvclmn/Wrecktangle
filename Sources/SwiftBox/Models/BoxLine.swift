@@ -58,8 +58,9 @@ public extension SwiftBox {
       /// have the below part types (obviously with the correct glyphs subbed
       /// in based on the selected Theme).
       ///
-      self.leadingCap = BoxPart.create(.vertical(.leading), theme: theme)
-      self.trailingCap = BoxPart.create(.vertical(.trailing), theme: theme)
+      
+      self.leadingCap = BoxPart.create(from: .vertical(.leading), using: theme.glyphSet)
+      self.trailingCap = BoxPart.create(from: .vertical(.trailing), using: theme.glyphSet)
       
       let conditions = Self.checkConditions(leadingCap: self.leadingCap, trailingCap: self.trailingCap)
       
@@ -101,21 +102,21 @@ public extension SwiftBox.BoxLine {
       switch self {
         case .top:
           (
-            SwiftBox.PartType.cornerTopLeading,
+            SwiftBox.PartType.corner(.topLeading),
             SwiftBox.PartType.horizontal(.top),
-            SwiftBox.PartType.cornerTopTrailing
+            SwiftBox.PartType.corner(.topTrailing)
           )
         case .divider:
           (
-            SwiftBox.PartType.joinLeading,
+            SwiftBox.PartType.join(.leading),
             SwiftBox.PartType.horizontal(.interior),
-            SwiftBox.PartType.joinTrailing
+            SwiftBox.PartType.join(.trailing)
           )
         case .bottom:
           (
-            SwiftBox.PartType.cornerBottomLeading,
+            SwiftBox.PartType.corner(.bottomLeading),
             SwiftBox.PartType.horizontal(.bottom),
-            SwiftBox.PartType.cornerBottomTrailing
+            SwiftBox.PartType.corner(.bottomTrailing)
           )
         case .text:
           nil

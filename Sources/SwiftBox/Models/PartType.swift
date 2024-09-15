@@ -6,6 +6,7 @@
 //
 
 import SwiftUICore
+import TextCore
 
 public extension SwiftBox {
   
@@ -42,7 +43,7 @@ public extension SwiftBox {
       }
     }
     
-    
+   
     
   } // END part type
   

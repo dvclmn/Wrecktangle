@@ -16,17 +16,10 @@ public extension SwiftBox {
       self.glyphMap = set
     }
     
-    /// Initially not set to `public`, as it's not required outside
-    /// the scope of the package internals.
-    ///
-    func character(for part: PartType) -> Character {
-      
-      
-      
-      return glyphMap[part.toGlyphType] ?? " "
+    func character(for glyphType: SwiftBox.GlyphType) -> Character {
+      return glyphMap[glyphType] ?? " "
     }
-    
-    
+
   }
   
 }

@@ -26,6 +26,7 @@ public extension SwiftBox.PartType {
     typealias Glyph = SwiftBox.GlyphType
     
     switch self {
+        
       case .horizontal(.top):
         return [
           [Glyph.horizontal(.exterior)],
@@ -65,12 +66,12 @@ public extension SwiftBox.PartType {
               Glyph.blank,
               /// I can use `joinType` directly here, as `PartType` and `GlyphType`
               /// share the same type for describing joins
-              Glyph.join(horizontal: .interior, vertical: .interior, type: joinType),
+              Glyph.join(x: .interior, y: .interior, type: joinType),
             ]]
             
           case .trailing:
             return [[
-              Glyph.join(horizontal: .interior, vertical: .interior, type: joinType),
+              Glyph.join(x: .interior, y: .interior, type: joinType),
               Glyph.blank,
               Glyph.vertical(.exterior),
             ]]
@@ -78,15 +79,15 @@ public extension SwiftBox.PartType {
           case .top:
             return [
               [Glyph.horizontal(.exterior)],
-              [Glyph.join(horizontal: .interior, vertical: .interior, type: joinType)],
+              [Glyph.join(x: .interior, y: .interior, type: joinType)],
             ]
           case .bottom:
             return [
-              [Glyph.join(horizontal: .interior, vertical: .interior, type: joinType)],
+              [Glyph.join(x: .interior, y: .interior, type: joinType)],
               [Glyph.horizontal(.exterior)],
             ]
           case .cross:
-            return [[Glyph.join(horizontal: .interior, vertical: .interior, type: joinType)]]
+            return [[Glyph.join(x: .interior, y: .interior, type: joinType)]]
         }
         
       case .corner(let cornerType):
@@ -166,147 +167,156 @@ public extension SwiftBox.PartType {
   
 }
 
-public extension SwiftBox {
-  func boxPart(for type: PartType) -> BoxPart {
-    
-    let string =
-    
-    BoxPart(content: <#T##MultilineString#>, type: <#T##PartType#>)
-  }
-}
+
 
 
 public extension SwiftBox.BoxPart {
-  
-  
-  
-  
-  /// This function provides a way to obtain a part of any resolution (as defined
-  /// by the current `SwiftBox` instance Theme settings).
-  ///
+ 
   static func create(
-    _ type: SwiftBox.PartType,
-    theme: SwiftBox.Theme
+    from part: SwiftBox.PartType,
+    using glyphSet: SwiftBox.GlyphSet
   ) -> SwiftBox.BoxPart {
     
-    switch theme.frameStyle {
-        
-        // MARK: - Single frame
-      case .single:
-        
-        /// Single is quite simple, and should just directly obtain the correct `1x1` character
-        /// from the user's selected `GlyphSet`, chosen via `Theme`.
-        let content: MultilineString = [[theme.glyphSet.character(for: type)]]
-        let part = SwiftBox.BoxPart(content: content, type: type)
-        return part
-        
-        // MARK: - Double frame
-      case .double, .intertwined:
-        
-        
-        
-        let content: MultilineString
-        
-        switch type {
-            
-          case .horizontal(.top):
-            content = [
-              ["━"],
-              ["─"]
-            ]
-            //            content = [
-            //              ["━"],
-            //              ["─"]
-            //            ]
-            
-          case .horizontal(.bottom):
-            content = [
-              ["─"],
-              ["━"]
-            ]
-            
-          case .horizontal(.interior):
-            content = [
-              ["─"]
-            ]
-            
-          case .vertical(.leading):
-            content = [
-              ["┃", " ", "│"]
-            ]
-            
-          case .vertical(.trailing):
-            content = [
-              ["│", " ", "┃"]
-            ]
-            
-          case .vertical(.interior):
-            content = [
-              ["│"]
-            ]
-            
-          case .joinLeading:
-            content = [
-              ["┃", " ", "├"]
-            ]
-            
-          case .joinTrailing:
-            content = [
-              ["┤", " ", "┃"]
-            ]
-          case .joinTop:
-            content = [
-              ["━"],
-              ["┬"]
-            ]
-          case .joinBottom:
-            content = [
-              ["┴"],
-              
-              ["━"]
-            ]
-          case .joinCross:
-            content = [
-              ["┼"]
-            ]
-            
-            /// Corners
-            ///
-          case .cornerTopLeading:
-            content = [
-              ["┏","━","━"],
-              
-              ["┃"," ","┌"]
-            ]
-          case .cornerTopTrailing:
-            content = [
-              ["━","━","┓"],
-              
-              ["┐"," ","┃"]
-            ]
-          case .cornerBottomLeading:
-            content = [
-              ["┃"," ","└"],
-              
-              ["┗","━","━"]
-            ]
-          case .cornerBottomTrailing:
-            content = [
-              ["┘"," ","┃"],
-              
-              ["━","━","┛"]
-            ]
-        }
-        
-        
-        // Perform the hot swapping after the switch
-        let swappedContent = swapCharacters(in: content, with: theme)
-        
-        return SwiftBox.BoxPart(content: swappedContent, type: type)
-        
+    let glyphGrid = part.preset
+    let characterGrid = glyphGrid.map { row in
+      row.map { glyphSet.character(for: $0) }
     }
-    
+    let multilineString = MultilineString(characterGrid)
+    return SwiftBox.BoxPart(content: multilineString, type: part)
   }
+  
+  
+}
+//
+//  
+//  
+//  
+//  /// This function provides a way to obtain a part of any resolution (as defined
+//  /// by the current `SwiftBox` instance Theme settings).
+//  ///
+//  static func create(
+//    _ type: SwiftBox.PartType,
+//    theme: SwiftBox.Theme
+//  ) -> SwiftBox.BoxPart {
+//    
+//    switch theme.frameStyle {
+//        
+//        // MARK: - Single frame
+//      case .single:
+//        
+//        /// Single is quite simple, and should just directly obtain the correct `1x1` character
+//        /// from the user's selected `GlyphSet`, chosen via `Theme`.
+//        let content: MultilineString = [[theme.glyphSet.character(for: type)]]
+//        let part = SwiftBox.BoxPart(content: content, type: type)
+//        return part
+//        
+//        // MARK: - Double frame
+//      case .double, .intertwined:
+//        
+//        
+//        
+//        let content: MultilineString
+//        
+//        switch type {
+//            
+//          case .horizontal(.top):
+//            content = [
+//              ["━"],
+//              ["─"]
+//            ]
+//            //            content = [
+//            //              ["━"],
+//            //              ["─"]
+//            //            ]
+//            
+//          case .horizontal(.bottom):
+//            content = [
+//              ["─"],
+//              ["━"]
+//            ]
+//            
+//          case .horizontal(.interior):
+//            content = [
+//              ["─"]
+//            ]
+//            
+//          case .vertical(.leading):
+//            content = [
+//              ["┃", " ", "│"]
+//            ]
+//            
+//          case .vertical(.trailing):
+//            content = [
+//              ["│", " ", "┃"]
+//            ]
+//            
+//          case .vertical(.interior):
+//            content = [
+//              ["│"]
+//            ]
+//            
+//          case .joinLeading:
+//            content = [
+//              ["┃", " ", "├"]
+//            ]
+//            
+//          case .joinTrailing:
+//            content = [
+//              ["┤", " ", "┃"]
+//            ]
+//          case .joinTop:
+//            content = [
+//              ["━"],
+//              ["┬"]
+//            ]
+//          case .joinBottom:
+//            content = [
+//              ["┴"],
+//              
+//              ["━"]
+//            ]
+//          case .joinCross:
+//            content = [
+//              ["┼"]
+//            ]
+//            
+//            /// Corners
+//            ///
+//          case .cornerTopLeading:
+//            content = [
+//              ["┏","━","━"],
+//              
+//              ["┃"," ","┌"]
+//            ]
+//          case .cornerTopTrailing:
+//            content = [
+//              ["━","━","┓"],
+//              
+//              ["┐"," ","┃"]
+//            ]
+//          case .cornerBottomLeading:
+//            content = [
+//              ["┃"," ","└"],
+//              
+//              ["┗","━","━"]
+//            ]
+//          case .cornerBottomTrailing:
+//            content = [
+//              ["┘"," ","┃"],
+//              
+//              ["━","━","┛"]
+//            ]
+//        }
+//        
+//        
+//        // Perform the hot swapping after the switch
+//        let swappedContent = swapCharacters(in: content, with: theme)
+//        
+//        return SwiftBox.BoxPart(content: swappedContent, type: type)
+//        
+//    }
+//    
+//  }
   
   
   
@@ -341,4 +351,4 @@ public extension SwiftBox.BoxPart {
   
   
   
-}
+//}
