@@ -52,54 +52,21 @@ public extension SwiftBox {
       case exterior
     }
     
-    
-//    public static let toPartType: [GlyphType: SwiftBox.PartType] = [
-//      .horizontal: .horizontal(),
-//      .horizontalAlt: .horizontal(.interior),
-//      .vertical: .vertical(),
-//      .verticalAlt: .vertical(.interior),
-//      .joinLeading: .joinLeading,
-//      .joinTrailing: .joinTrailing,
-//      .joinTop: .joinTop,
-//      .joinBottom: .joinBottom,
-//      .joinCross: .joinCross,
-//      .cornerTopLeading: .cornerTopLeading,
-//      .cornerTopTrailing: .cornerTopTrailing,
-//      .cornerBottomLeading: .cornerBottomLeading,
-//      .cornerBottomTrailing: .cornerBottomTrailing
-//    ]
-//    
-//    static let fromPartType: [SwiftBox.PartType: GlyphType] = Dictionary(uniqueKeysWithValues: toPartType.map { ($1, $0) })
-//    
-//    var toPartType: SwiftBox.PartType {
-//      return GlyphType.toPartType[self] ?? .horizontal()
-//    }
-//    
-//    public func part(for frameStyle: SwiftBox.Theme.FrameStyle) -> SwiftBox.BoxPart {
-//      
-//      switch frameStyle {
-//        case .single:
-//          break
-//        case .double:
-//          switch self {
-//            case .horizontal(.exterior):
-//                
-//              
-//            case .horizontal(.interior):
-//              
-//            case .vertical(.exterior):
-//            case .vertical(.interior):
-//              
-//            case .join(let horizontal, let vertical, let type):
-//              <#code#>
-//            case .corner(let location, let type):
-//              <#code#>
-//          }
-//        case .intertwined:
-//          break
-//      }
-//      
-//    }
+    var fallback: SwiftBox.GlyphType? {
+      switch self {
+        case .horizontal(.interior):
+          return .horizontal(.exterior)
+        case .vertical(.interior):
+          return .vertical(.exterior)
+        case .join(let x, let y, _):
+          return .join(x: x, y: y, type: .cross) // Default to cross join
+        case .corner(let x, let y, _):
+          return .corner(location: .exterior, type: .) // Default to top-leading corner
+        default:
+          return nil
+      }
+    }
+  }
     
   }
 }
