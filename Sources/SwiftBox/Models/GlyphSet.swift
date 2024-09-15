@@ -17,7 +17,7 @@ public extension SwiftBox {
     }
     
     func character(for glyphType: SwiftBox.GlyphType) -> Character {
-      return glyphMap[glyphType] ?? " "
+      return glyphMap[glyphType] ?? "?"
     }
 
   }

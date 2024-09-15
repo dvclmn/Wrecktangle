@@ -13,7 +13,7 @@ public extension SwiftBox.BoxLine {
 
     let renderedContent: MultilineString
     
-    print("Leading cap: \(leadingCap.content). Trailing cap: \(trailingCap.content)")
+//    print("Leading cap: \(leadingCap.content). Trailing cap: \(trailingCap.content)")
     
     renderedContent = MultilineString(content.rawContent)
 

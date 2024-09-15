@@ -7,7 +7,7 @@
 
 
 /// Currently this library can only handle horizontal dividers, not vertical.
-/// So processing line-by-line, vertically, is fairly strightforward.
+/// So processing line-by-line, vertically, is fairly straightforward.
 ///
 
 public extension SwiftBox {
