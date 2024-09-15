@@ -11,8 +11,10 @@ import Foundation
 public extension SwiftBox.GlyphSet {
   
   typealias GlyphType = SwiftBox.GlyphType
+
   
-  static let sharp = SwiftBox.GlyphSet([
+  
+  static let sharp = SwiftBox.GlyphSet.base([
     
     GlyphType.horizontal(.exterior): "━",
     GlyphType.horizontal(.interior): "─",
@@ -38,8 +40,7 @@ public extension SwiftBox.GlyphSet {
 
   ])
   
-  static let rounded = SwiftBox.GlyphSet([
-    
+  static let rounded = SwiftBox.GlyphSet.fallback([
     
     GlyphType.horizontal(.exterior): "─",
     ///
@@ -57,9 +58,9 @@ public extension SwiftBox.GlyphSet {
     GlyphType.corner(location: .exterior, type: .bottomTrailing): "╯",
 
 
-  ])
+  ], sharp)
   
-  static let double = SwiftBox.GlyphSet([
+  static let double = SwiftBox.GlyphSet.fallback([
     
     
     GlyphType.horizontal(.exterior): "═",
@@ -84,7 +85,7 @@ public extension SwiftBox.GlyphSet {
     GlyphType.corner(location: .interior, type: .bottomLeading):  "└",
     GlyphType.corner(location: .interior, type: .bottomTrailing): "┘",
 
-  ])
+  ], sharp)
   
 }
 

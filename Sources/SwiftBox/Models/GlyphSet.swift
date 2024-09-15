@@ -7,47 +7,32 @@
 
 public extension SwiftBox {
   
-  
-  struct GlyphSet {
+  enum GlyphSet {
+    case base([GlyphType: Character])
+    indirect case fallback([GlyphType: Character], GlyphSet)
     
-    let glyphMap: [GlyphType: Character]
-    let fallbackSet: GlyphSet?
-    
-    init(
-      _ set: [GlyphType: Character],
-      fallbackTo: GlyphSet? = nil
-    ) {
-      self.glyphMap = set
-      self.fallbackSet = fallbackTo
+    func character(for glyphType: GlyphType) -> Character {
+      switch self {
+        case .base(let glyphMap):
+          return characterFromMap(glyphMap, for: glyphType) ?? "?"
+        case .fallback(let glyphMap, let fallbackSet):
+          return characterFromMap(glyphMap, for: glyphType) ?? fallbackSet.character(for: glyphType)
+      }
     }
-
     
-    func character(for glyphType: SwiftBox.GlyphType) -> Character {
-      
-      // Try to get the character from this set
+    private func characterFromMap(_ glyphMap: [GlyphType: Character], for glyphType: GlyphType) -> Character? {
       if let char = glyphMap[glyphType] {
         return char
       }
-      
-      // Try fallback within this set
       if let fallbackType = glyphType.fallback,
          let fallbackChar = glyphMap[fallbackType] {
         return fallbackChar
       }
-      
-      // If we have a fallback set, try to get the character from there
-      if let fallbackSetChar = fallbackSet?.character(for: glyphType) {
-        return fallbackSetChar
-      }
-      
-      // If all else fails, return a default character
-      return "?"
-      
+      return nil
     }
-    
+
   }
-  
-  
+
   
 }
 

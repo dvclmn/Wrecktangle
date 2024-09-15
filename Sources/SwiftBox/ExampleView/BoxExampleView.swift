@@ -82,7 +82,7 @@ struct BoxPrintView: View {
     .textSelection(.enabled)
     .monospaced()
     .environment(\._lineHeightMultiple, 0.84)
-    .frame(width: 370, height: 600)
+    .frame(width: 370, height: 640)
     .background(.black.opacity(0.6))
     
   }

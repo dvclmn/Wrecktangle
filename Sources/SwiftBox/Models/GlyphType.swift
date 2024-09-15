@@ -60,13 +60,12 @@ public extension SwiftBox {
           return .vertical(.exterior)
         case .join(let x, let y, _):
           return .join(x: x, y: y, type: .cross) // Default to cross join
-        case .corner(let x, let y, _):
-          return .corner(location: .exterior, type: .) // Default to top-leading corner
+        case .corner(_, let type):
+          return .corner(location: .exterior, type: type) // Default to top-leading corner
         default:
           return nil
       }
     }
   }
     
-  }
 }
