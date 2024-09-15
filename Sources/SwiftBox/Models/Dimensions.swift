@@ -10,7 +10,6 @@ public extension SwiftBox {
   protocol FixedDimension {
     var value: Int { get }
   }
-
   
   struct Dimensions {
     var width: DimensionType
@@ -22,40 +21,41 @@ public extension SwiftBox {
     }
     
     init(_ width: Int, _ height: Int) {
-      self.width = .fixed(width)
-      self.height = .fixed(height)
+      self.width = .fixed(.init(width))
+      self.height = .fixed(.init(height))
     }
     
   }
-  
-//  enum DimensionType {
-//    case fixed(Int)
-//    case repeatable(min: Int, max: Int? = nil)
-//  }
-  
+
   enum DimensionType {
-    case fixed(Fixed)
-    case repeatable(Repeatable)
+    case fixed(Int)
+    case repeatable(min: Int, max: Int?)
     
-    public struct Fixed {
-      public let value: Int
-    }
-    
-    public struct Repeatable {
-      public let min: Int
+    var fixedValue: Int? {
+      switch self {
+        case .fixed(let value):
+          return value
+        case .repeatable:
+          return nil
+      }
     }
   }
+
   
   
-  public func expectedDimensions(for part: SwiftBox.PartType) -> SwiftBox.Dimensions {
+  func expectedDimensions(for part: SwiftBox.PartType) -> SwiftBox.Dimensions {
     
-    let reservedWidth: Int = theme.frameStyle.reservedDimensions.width
+    /// This will only return a value for dimensions with a `DimensionType` of `.fixed()`.
+    /// I'm sure there is a better way to handle this, I'll get to it.
+    ///
+    let maxPartWidth: Int = theme.frameStyle.maximumGridSize.width.value
+    let maxPartHeight: Int = theme.frameStyle.maximumGridSize.height.value
+    
     let dimensions: SwiftBox.Dimensions
-    
     
     switch theme.frameStyle {
       case .single:
-        
+        dimensions = SwiftBox.Dimensions(maxPartWidth, maxPartHeight)
         
       case .double:
         
@@ -106,36 +106,20 @@ public extension SwiftBox {
     
     
   }
-  
-  //  public func expectedDimensions(for part: SwiftBox.PartType) -> SwiftBox.Dimensions {
-  //    switch self {
-  //      case .single:
-  //
-  //
-  //
-  //      case .double:
-  //
-  //        let dimensions: SwiftBox.Dimensions
-  //
-  //        switch part {
-  //          case .horizontal:
-  //            dimensions = .init((width: Int, height: Int))
-  //
-  //        }
-  //    }
+
 }
 
-
-
-extension SwiftBox.DimensionType.Fixed: SwiftBox.FixedDimension {}
-
-
-extension SwiftBox.DimensionType: SwiftBox.FixedDimension where Self == SwiftBox.DimensionType.Fixed  {
+extension SwiftBox.DimensionType: SwiftBox.FixedDimension {
   
+  /// Warning: This will cause a fatal error if accessed for a
+  /// variable-width (aka `repeatable`) dimension type.
+  ///
   public var value: Int {
-    guard case .fixed(let value) = self else {
-      fatalError("This should never happen due to the conditional conformance")
+    switch self {
+      case .fixed(let value):
+        return value
+      case .repeatable:
+        fatalError("Cannot get fixed value from a repeatable dimension")
     }
-    return value
   }
 }

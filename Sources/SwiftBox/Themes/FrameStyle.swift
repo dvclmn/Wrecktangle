@@ -12,27 +12,66 @@ public extension SwiftBox.Theme {
     case double
     case intertwined
 
-    public var reservedDimensions: SwiftBox.Dimensions {
+    /// This property forms a 'promise' that no single `BoxPart` should
+    /// exceed either dimension (width or height) for the given
+    /// `FrameStyle`, as defined below.
+    ///
+    /// This can also be thought of like a tile size. Any `BoxPart`
+    /// exceeding this tile size is likely to break the layout in some way.
+    ///
+    public var maximumGridSize: SwiftBox.Dimensions {
       
       let dimensions: SwiftBox.Dimensions
       
       switch self {
         case .single:
           
-          // 1x1
+          /// # Single — 1x1
+          ///
+          /// ```
+          /// // Top leading corner
+          ///   1
+          /// 1 ┌
+          ///
+          /// //Bottom centre join
+          ///   1
+          /// 1 ╧
+          ///
+          /// ```
+          ///
           let width: Int = 1 + 1 // One character either side
           let height: Int = 1
           
           dimensions = .init(width, height)
 
+          
         case .double, .intertwined:
           
-          // 3x2
+          /// # Double — 3x2
+          ///
+          /// ```
+          /// // Top leading corner, 3x2
+          ///
+          ///   123
+          /// 1 ┏━━
+          /// 2 ┃ ┏
+          ///
+          ///
+          /// // Bottom centre join 1x2
+          /// // Does not exceed 3x2
+          ///
+          ///   1
+          /// 1 ┷
+          /// 2 ═
+          ///
+          /// ```
+          ///
           let width: Int = 3 + 3 // One character either side
           let height: Int = 2
           
           dimensions = .init(width, height)
-      } // END switch
+          
+      }
       
       return dimensions
     }
