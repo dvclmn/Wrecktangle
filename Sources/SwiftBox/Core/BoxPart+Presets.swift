@@ -7,7 +7,169 @@
 
 import TextCore
 
+
+public extension SwiftBox.PartType {
+  
+  /// This should be able to replace the old method, using 'archetype' glyphs
+  /// that would then need to be swapped in.
+  ///
+  /// ```
+  /// case .horizontal(.top):
+  ///   content = [
+  ///     ["━"],
+  ///     ["─"]
+  ///   ]
+  /// ```
+  ///
+  var preset: [[SwiftBox.GlyphType]] {
+    
+    typealias Glyph = SwiftBox.GlyphType
+    
+    switch self {
+      case .horizontal(.top):
+        return [
+          [Glyph.horizontal(.exterior)],
+          [Glyph.horizontal(.interior)],
+        ]
+        
+      case .horizontal(.bottom):
+        return [
+          [Glyph.horizontal(.interior)],
+          [Glyph.horizontal(.exterior)],
+        ]
+        
+      case .horizontal(.interior):
+        return [
+          [Glyph.horizontal(.interior)],
+        ]
+        
+      case .vertical(.leading):
+        return [
+          [Glyph.vertical(.exterior), Glyph.blank, Glyph.vertical(.interior)],
+        ]
+        
+      case .vertical(.trailing):
+        return [
+          [Glyph.vertical(.interior), Glyph.blank, Glyph.vertical(.exterior)],
+        ]
+      case .vertical(.interior):
+        return [
+          [Glyph.vertical(.interior)],
+        ]
+        
+      case .join(let joinType):
+        switch joinType {
+          case .leading:
+            return [[
+              Glyph.vertical(.exterior),
+              Glyph.blank,
+              /// I can use `joinType` directly here, as `PartType` and `GlyphType`
+              /// share the same type for describing joins
+              Glyph.join(horizontal: .interior, vertical: .interior, type: joinType),
+            ]]
+            
+          case .trailing:
+            return [[
+              Glyph.join(horizontal: .interior, vertical: .interior, type: joinType),
+              Glyph.blank,
+              Glyph.vertical(.exterior),
+            ]]
+            
+          case .top:
+            return [
+              [Glyph.horizontal(.exterior)],
+              [Glyph.join(horizontal: .interior, vertical: .interior, type: joinType)],
+            ]
+          case .bottom:
+            return [
+              [Glyph.join(horizontal: .interior, vertical: .interior, type: joinType)],
+              [Glyph.horizontal(.exterior)],
+            ]
+          case .cross:
+            return [[Glyph.join(horizontal: .interior, vertical: .interior, type: joinType)]]
+        }
+        
+      case .corner(let cornerType):
+        switch cornerType {
+            
+            /// # Example
+            ///
+            ///
+            /// ```
+            /// ["┏","━","━"],
+            ///
+            /// ["┃"," ","┌"]
+            ///
+            /// // Output:
+            /// ┏━━
+            /// ┃ ┌
+            ///
+            /// ```
+            ///
+          case .topLeading:
+            return [
+              [
+                Glyph.corner(location: .exterior, type: cornerType),
+                Glyph.horizontal(.exterior),
+                Glyph.horizontal(.exterior)
+              ],
+              [
+                Glyph.vertical(.exterior),
+                Glyph.blank,
+                Glyph.corner(location: .interior, type: cornerType)
+              ],
+            ]
+            
+          case .topTrailing:
+            return [
+              [
+                Glyph.horizontal(.exterior),
+                Glyph.horizontal(.exterior),
+                Glyph.corner(location: .exterior, type: cornerType),
+              ],
+              [
+                Glyph.corner(location: .interior, type: cornerType),
+                Glyph.blank,
+                Glyph.vertical(.exterior),
+              ],
+            ]
+            
+          case .bottomLeading:
+            return [
+              [
+                Glyph.vertical(.exterior),
+                Glyph.blank,
+                Glyph.corner(location: .interior, type: cornerType)
+              ],
+              [
+                Glyph.corner(location: .exterior, type: cornerType),
+                Glyph.horizontal(.exterior),
+                Glyph.horizontal(.exterior)
+              ],
+            ]
+          case .bottomTrailing:
+            return [
+              [
+                Glyph.corner(location: .interior, type: cornerType),
+                Glyph.blank,
+                Glyph.vertical(.exterior),
+              ],
+              [
+                Glyph.horizontal(.exterior),
+                Glyph.horizontal(.exterior),
+                Glyph.corner(location: .exterior, type: cornerType),
+              ],
+            ]
+        }
+    }
+  }
+  
+}
+
+
+
 public extension SwiftBox.BoxPart {
+  
   
   /// This function provides a way to obtain a part of any resolution (as defined
   /// by the current `SwiftBox` instance Theme settings).
@@ -40,10 +202,10 @@ public extension SwiftBox.BoxPart {
               ["━"],
               ["─"]
             ]
-//            content = [
-//              ["━"],
-//              ["─"]
-//            ]
+            //            content = [
+            //              ["━"],
+            //              ["─"]
+            //            ]
             
           case .horizontal(.bottom):
             content = [
@@ -136,34 +298,34 @@ public extension SwiftBox.BoxPart {
   
   
   
-  private static func swapCharacters(
-    in grid: MultilineString,
-    with theme: SwiftBox.Theme
-  ) -> MultilineString {
-    let swappedGrid = grid.map { row in
-      row.map { char in
-        glyph(char, set: theme.glyphSet)
-      }
-    }
-    return MultilineString(swappedGrid)
-  }
-
-  private static func glyph(_ representative: Character, set: SwiftBox.GlyphSet) -> Character {
-    let archetypeSet: SwiftBox.GlyphSet = .sharp
-    
-    // Create a reverse mapping of Character to PartType for the archetype set
-    let reverseMap = Dictionary(uniqueKeysWithValues: archetypeSet.glyphMap.map { ($1, $0) })
-    
-    // Find the PartType for the representative character
-    if let glyphType = reverseMap[representative] {
-      // Return the corresponding character from the user's chosen set
-      return set.character(for: glyphType.toPartType)
-    } else {
-      print("Could not find glyph, returning representative: \(representative)")
-      return representative
-    }
-    
-  }
+  //  private static func swapCharacters(
+  //    in grid: MultilineString,
+  //    with theme: SwiftBox.Theme
+  //  ) -> MultilineString {
+  //    let swappedGrid = grid.map { row in
+  //      row.map { char in
+  //        glyph(char, set: theme.glyphSet)
+  //      }
+  //    }
+  //    return MultilineString(swappedGrid)
+  //  }
+  //
+  //  private static func glyph(_ representative: Character, set: SwiftBox.GlyphSet) -> Character {
+  //    let archetypeSet: SwiftBox.GlyphSet = .sharp
+  //
+  //    // Create a reverse mapping of Character to PartType for the archetype set
+  //    let reverseMap = Dictionary(uniqueKeysWithValues: archetypeSet.glyphMap.map { ($1, $0) })
+  //
+  //    // Find the PartType for the representative character
+  //    if let glyphType = reverseMap[representative] {
+  //      // Return the corresponding character from the user's chosen set
+  //      return set.character(for: glyphType.toPartType)
+  //    } else {
+  //      print("Could not find glyph, returning representative: \(representative)")
+  //      return representative
+  //    }
+  //
+  //  }
   
   
   
