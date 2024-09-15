@@ -8,12 +8,14 @@
 
 public extension SwiftBox {
   
+  
+  /// I ought to make it so the code will use the external version of a glyph,
+  /// if there is no internal style available?
+  ///
   enum GlyphType: Hashable {
-    
-    case horizontal
-    case horizontalAlt
-    case vertical
-    case verticalAlt
+
+    case horizontal(Location = .exterior)
+    case vertical(Location = .exterior)
     
     case joinLeading            /// ┠
     case joinTrailing           /// ┨
@@ -21,13 +23,17 @@ public extension SwiftBox {
     case joinBottom             /// ┷
     case joinCross              /// ┼
     
-    case cornerTopLeading       /// ┏
-    case cornerTopTrailing      /// ┓
-    case cornerBottomLeading    /// ┗
-    case cornerBottomTrailing   /// ┛
+    case cornerTopLeading(Location = .exterior)       /// ┏
+    case cornerTopTrailing(Location = .exterior)      /// ┓
+    case cornerBottomLeading(Location = .exterior)    /// ┗
+    case cornerBottomTrailing(Location = .exterior)   /// ┛
     
+    public enum Location {
+      case interior
+      case exterior
+    }
     
-    public static let toPartType: [GlyphType: PartType] = [
+    public static let toPartType: [GlyphType: SwiftBox.PartType] = [
       .horizontal: .horizontal(),
       .horizontalAlt: .horizontal(.interior),
       .vertical: .vertical(),
@@ -43,9 +49,9 @@ public extension SwiftBox {
       .cornerBottomTrailing: .cornerBottomTrailing
     ]
     
-    static let fromPartType: [PartType: GlyphType] = Dictionary(uniqueKeysWithValues: toPartType.map { ($1, $0) })
+    static let fromPartType: [SwiftBox.PartType: GlyphType] = Dictionary(uniqueKeysWithValues: toPartType.map { ($1, $0) })
     
-    var toPartType: PartType {
+    var toPartType: SwiftBox.PartType {
       return GlyphType.toPartType[self] ?? .horizontal()
     }
     
