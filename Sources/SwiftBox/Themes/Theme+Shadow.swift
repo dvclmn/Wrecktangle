@@ -6,6 +6,33 @@
 //
 
 
+/// Thoughts for a parametric shadow system
+///
+/// - Any characters provided for any one parameter, will be cycled randomly
+/// - There will be different classes of characters, that represent different
+/// qualities, such as angle, orientation, opacity, etc
+///
+/// E.g. this `⣓` feels more anchored to the `bottomLeading` corner.
+/// This `⡻` would be considered `topTrailing`.
+///
+/// - Define 3, maybe 4 levels of strength (opacity). Any more would cause
+/// the shadow to take up too much room.
+/// - Light source will (of course) determine the angle
+/// - Hardness/spread — The gradient of the transition from fully black to full white
+/// - Rounding? Fall-off? Not sure if this would be a result of hardness or not. But would
+/// describe the sharpness/roundness of the corners of the shape formed overall by the shadow
+///
+/// ```
+///    ░░░░░░░░░░░       ░░░░░░░░░░░░░░░░░
+///  ░░▒▒▒▒▒▒▒▒▒▒▒░░     ░░▒▒▒▒▒▒▒▒▒▒▒▒▒░░
+/// ░░▒▒┌───────┐▒▒░░    ░░▒▒┌───────┐▒▒░░
+/// ░░▒▒│       │▒▒░░    ░░▒▒│       │▒▒░░
+/// ░░▒▒│       │▒▒░░    ░░▒▒│       │▒▒░░
+/// ░░▒▒└───────┘▒▒░░    ░░▒▒└───────┘▒▒░░
+///  ░░▒▒▒▒▒▒▒▒▒▒▒░░     ░░▒▒▒▒▒▒▒▒▒▒▒▒▒░░
+///    ░░░░░░░░░░░       ░░░░░░░░░░░░░░░░░
+///
+/// ```
 
 public extension SwiftBox.Theme {
   
