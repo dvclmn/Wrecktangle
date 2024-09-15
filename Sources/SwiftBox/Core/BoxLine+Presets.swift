@@ -10,27 +10,27 @@ import TextCore
 public extension SwiftBox {
   
   func line(
-    _ preset: BoxLine.LinePreset
+    _ lineType: BoxLine.LineType
   ) -> String {
     
-    switch preset {
+    switch lineType {
         
       case .top:
         
-        let shadowLine = buildShadow(for: preset, hasLineBreak: true)
-        let structureLine = buildStructureLine(for: preset, hasLineBreak: false)
+        let shadowLine = buildShadow(for: lineType, hasLineBreak: true)
+        let structureLine = buildStructureLine(for: lineType, hasLineBreak: false)
         
         /// Note the order here, shadow first, then structure
         return shadowLine + structureLine
         
       case .divider:
         
-        return buildStructureLine(for: preset, hasLineBreak: false)
+        return buildStructureLine(for: lineType, hasLineBreak: false)
         
       case .bottom:
         
-        let structureLine = buildStructureLine(for: preset, hasLineBreak: true)
-        let shadowLine = buildShadow(for: preset, hasLineBreak: true)
+        let structureLine = buildStructureLine(for: lineType, hasLineBreak: true)
+        let shadowLine = buildShadow(for: lineType, hasLineBreak: true)
         
         /// Structure first, then shadow
         return structureLine + shadowLine
@@ -55,7 +55,7 @@ public extension SwiftBox {
     
   } // END create line
   
-  private func buildStructureLine(for preset: BoxLine.LinePreset, hasLineBreak: Bool) -> String {
+  private func buildStructureLine(for preset: BoxLine.LineType, hasLineBreak: Bool) -> String {
     
     if let parts = preset.parts {
       
@@ -84,9 +84,9 @@ public extension SwiftBox {
   }
   
   
-  private func buildShadow(for linePreset: BoxLine.LinePreset, hasLineBreak: Bool) -> String {
+  private func buildShadow(for lineType: BoxLine.LineType, hasLineBreak: Bool) -> String {
     
-    if linePreset.hasShadow(lightSource: shadow.lightSource) {
+    if lineType.hasShadow(lightSource: shadow.lightSource) {
       
       let shadowWidth: Int = boxWidth
       let shadowRepeated = String(repeating: shadowCharacter, count: shadowWidth)

@@ -11,16 +11,31 @@ public extension SwiftBox.Theme {
     case single
     case double
     case intertwined
-    
-    // TODO: I think I need to enforce permitted width of leading and trailing caps, so that this value is reliable
-    public var reservedWidth: Int {
+
+    public var reservedDimensions: SwiftBox.Dimensions {
+      
+      let dimensions: SwiftBox.Dimensions
+      
       switch self {
         case .single:
-          1 + 1 // One character either side
           
+          // 1x1
+          let width: Int = 1 + 1 // One character either side
+          let height: Int = 1
+          
+          dimensions = .init(width, height)
+
         case .double, .intertwined:
-          3 + 3 // Three characters either side
-      }
+          
+          // 3x2
+          let width: Int = 3 + 3 // One character either side
+          let height: Int = 2
+          
+          dimensions = .init(width, height)
+      } // END switch
+      
+      return dimensions
     }
+
   }
 }

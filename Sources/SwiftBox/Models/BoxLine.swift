@@ -14,6 +14,9 @@ public extension SwiftBox {
   
   struct BoxLine {
     let content: LineContent
+    
+    /// The width left for content, after leading/trailing
+    /// structure/padding/shadow is accounted for
     let remainingWidth: Int
     let leadingCap: BoxPart
     let trailingCap: BoxPart
@@ -88,7 +91,7 @@ public extension SwiftBox.BoxLine {
   ///
   /// E.g. `top` would consist of a leading cap, repeating part, and trailing cap.
   ///
-  enum LinePreset: Hashable {
+  enum LineType: Hashable {
     case top
     case divider
     case bottom
@@ -119,7 +122,7 @@ public extension SwiftBox.BoxLine {
       }
     } // END parts
     
-    private static let shadowLookup: [LinePreset: Set<SwiftBox.LightSource>] = [
+    private static let shadowLookup: [LineType: Set<SwiftBox.LightSource>] = [
       .top: [.bottomLeading, .bottomTrailing],
       .bottom: [.topLeading, .topTrailing]
     ]

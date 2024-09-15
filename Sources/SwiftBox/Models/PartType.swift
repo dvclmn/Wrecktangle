@@ -5,6 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
+import SwiftUICore
 
 public extension SwiftBox {
   
@@ -36,16 +37,17 @@ public extension SwiftBox {
       case interior // Divider
     }
     
-    /// This is useful (although possibly expensive? I will need to test) for
-    /// providing a way to get the resolution for any part. This was made
-    /// to assist with calculating correct shadow values.
-    ///
-    func resolution(with theme: Theme) -> Resolution {
-      let part = BoxPart.create(self, theme: theme)
-      let width = part.width
-      let height = part.height
-      
-      return Resolution(width: width, height: height)
+    public var flexibility: PartFlexibility {
+      switch self {
+        case .horizontal:
+            .repeatable(axis: .horizontal)
+          
+        case .vertical:
+            .repeatable(axis: .vertical)
+          
+        default:
+            .fixed
+      }
     }
     
     var toGlyphType: GlyphType {
@@ -74,9 +76,27 @@ public extension SwiftBox {
     case capTrailing
   }
   
-  struct Resolution {
-    var width: Int
-    var height: Int
+ 
+  enum PartFlexibility {
+    case repeatable(axis: Axis)
+    case fixed
   }
   
+  
+}
+
+
+
+public extension SwiftBox.DimensionType {
+  
+  func value(_ ): Int {
+    switch self {
+      case .fixed(let int):
+        return int
+      case .repeatable(let min, let max):
+        <#code#>
+    }
+  }
+  
+
 }
