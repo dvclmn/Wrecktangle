@@ -5,16 +5,16 @@ import PackageDescription
 let localPackagesRoot = "/Users/dvclmn/Apps/_ Swift Packages"
 
 let package = Package(
-  name: "SwiftBox",
+  name: "BoxCore",
   platforms: [
     .iOS("16.0"),
     .macOS("12.0")
   ],
   products: [
     .library(
-      name: "SwiftBox",
+      name: "BoxCore",
       targets: [
-        "SwiftBox"
+        "BoxCore"
       ]
     )
   ],
@@ -25,9 +25,9 @@ let package = Package(
 
   ],
   targets: [
-    .target(name: "SwiftBox", dependencies: ["TextCore", .product(name: "NSUI", package: "nsui")]),
+    .target(name: "BoxCore", dependencies: ["TextCore", .product(name: "NSUI", package: "nsui")]),
     .testTarget(
-      name: "SwiftBoxTests", dependencies: ["SwiftBox"]
+      name: "BoxCoreTests", dependencies: ["BoxCore"]
     ),
   ]
 )
