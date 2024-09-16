@@ -19,7 +19,6 @@ public extension BoxCore {
   ) {
     let theme = BoxCore.Theme(
       glyphSet: glyphSet,
-      colour: .default,
       frameStyle: frameStyle,
       padding: 1
     )

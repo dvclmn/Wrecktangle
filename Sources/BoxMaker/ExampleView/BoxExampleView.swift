@@ -16,9 +16,6 @@ struct BoxExampleView: View {
   let boxWidth: Int = 27
   #endif
   
-  
-  
-  
   var body: some View {
     
     VStack(spacing: 14) {
@@ -37,7 +34,6 @@ struct BoxExampleView: View {
     .environment(\._lineHeightMultiple, 0.84)
     .frame(width: 370, height: 640)
     .background(.black.opacity(0.6))
-    
   }
 }
 
@@ -55,8 +51,8 @@ extension BoxExampleView {
       content: Self.testString,
       width: boxWidth,
       glyphSet: .rounded,
-      frameStyle: .,
-      widthCounter: <#T##TextCore.WidthCounterStyle#>
+      frameStyle: .double,
+      widthCounter: .compact
     )
   }
   
@@ -107,7 +103,26 @@ extension BoxExampleView {
   
   static var testString: String {
   """
-  After reviewing your code, I can see a few areas where improvements can be made and why some properties like `labelDisplay` might not be updating correctly. Let's address these issues and suggest some improvements:\n\n1. Repetition between CustomButton and CustomLabel:\n   You're right that there's a lot of repetition. We can solve this by creating a protocol extension for CustomStylable that implements these common methods.\n\n2. Config not updating correctly:\n   The main issue is that you're creating a new instance of the element in each modifier method, but you're not passing the existing configuration to the new instance. This means that each modifier is working on a fresh configuration, losing previous modifications.\n\n3. Improvements and Suggestions:\n\nHere's how we can address these issues:\n\na. Create a protocol extension for
+  let top = line(.top)
+    output.appendString(top, addsLineBreak: true)
+    
+    /// Header
+    if let headerText = self.header {
+      
+      let headerLines: [String] = headerText.reflowText(
+        width: widthLeftForText,
+        maxLines: config.headerLineLimit,
+        paddingWidth: self.config.theme.padding,
+        paddingCharacter: invisibleIfNeeded(.space),
+        wrappingOption: self.config.wordWrapStrategy
+      )
+      
+      for headerLine in headerLines {
+        let boxLine = line(.text(content: headerLine, lineLimit: config.headerLineLimit))
+        output.appendString(boxLine, addsLineBreak: true)
+      }
+    }
+    
   """
   }
 }

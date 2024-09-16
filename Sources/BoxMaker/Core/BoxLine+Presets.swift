@@ -17,11 +17,10 @@ public extension BoxCore {
         
       case .top:
         
-        let shadowLine = buildShadow(for: lineType, hasLineBreak: true)
         let structureLine = buildStructureLine(for: lineType, hasLineBreak: false)
         
         /// Note the order here, shadow first, then structure
-        return shadowLine + structureLine
+        return structureLine
         
       case .divider:
         
@@ -30,10 +29,10 @@ public extension BoxCore {
       case .bottom:
         
         let structureLine = buildStructureLine(for: lineType, hasLineBreak: true)
-        let shadowLine = buildShadow(for: lineType, hasLineBreak: true)
+//        let shadowLine = buildShadow(for: lineType, hasLineBreak: true)
         
         /// Structure first, then shadow
-        return structureLine + shadowLine
+        return structureLine
         
         
       case .text(let content, let lineLimit):
@@ -85,24 +84,24 @@ public extension BoxCore {
   }
   
   
-  private func buildShadow(for lineType: BoxLine.LineType, hasLineBreak: Bool) -> String {
-    
-    if lineType.hasShadow(lightSource: shadow.lightSource) {
-      
-      let shadowWidth: Int = boxWidth
-      let shadowRepeated = String(repeating: shadowCharacter, count: shadowWidth)
-      
-//      let shadowWithCaps = shadowCap().leading + shadowRepeated + shadowCap().trailing
-      
-      let result = shadowRepeated + (hasLineBreak ? "\n" : "")
-//      let result = shadowWithCaps + (hasLineBreak ? "\n" : "")
-      
-      return result
-      
-    } else {
-      return ""
-    }
-    
-  }
+//  private func buildShadow(for lineType: BoxLine.LineType, hasLineBreak: Bool) -> String {
+//    
+//    if lineType.hasShadow(lightSource: shadow.lightSource) {
+//      
+//      let shadowWidth: Int = boxWidth
+//      let shadowRepeated = String(repeating: shadowCharacter, count: shadowWidth)
+//      
+////      let shadowWithCaps = shadowCap().leading + shadowRepeated + shadowCap().trailing
+//      
+//      let result = shadowRepeated + (hasLineBreak ? "\n" : "")
+////      let result = shadowWithCaps + (hasLineBreak ? "\n" : "")
+//      
+//      return result
+//      
+//    } else {
+//      return ""
+//    }
+//    
+//  }
 }
 

@@ -36,7 +36,7 @@
 
 public extension BoxCore.Theme {
   
-  struct Shadow {
+  struct Shadow: Sendable {
     var type: ShadowType
     var lightSource: BoxCore.LightSource
     var strength: ShadowStrength
@@ -77,14 +77,14 @@ public extension BoxCore.Theme.Shadow {
   
 
   
-  enum ShadowType {
+  enum ShadowType: Sendable {
     case simple
     case none
   } // END shadow type
   
 
   
-  enum ShadowStrength {
+  enum ShadowStrength: Sendable {
     case light
     case medium
     case dark

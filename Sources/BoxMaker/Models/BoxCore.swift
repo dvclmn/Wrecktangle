@@ -47,19 +47,19 @@ public extension BoxCore {
   
   var widthLeftForText: Int {
 
-    let shadowSpace = theme.shadow.reservedSpace
+//    let shadowSpace = theme.shadow.reservedSpace
     let caps = theme.frameStyle.maximumGridSize.width.value
     
-    return boxWidth - max(0, (caps + shadowSpace))
+    return max(0, boxWidth - caps)
     
   }
   
-  var shadow: BoxCore.Theme.Shadow {
-    self.config.theme.shadow
-  }
-  
-  var shadowCharacter: Character {
-    self.config.theme.shadow.strength.character
-  }
+//  var shadow: BoxCore.Theme.Shadow {
+//    self.config.theme.shadow
+//  }
+//  
+//  var shadowCharacter: Character {
+//    self.config.theme.shadow.strength.character
+//  }
   
 }

@@ -14,22 +14,22 @@ public extension BoxCore {
     public var glyphSet: GlyphSet
     
     /// This is only relevant for SwiftUI views, not the console output
-    public var colour: ColourSet
+//    internal var colour: ColourSet
     public var frameStyle: FrameStyle
-    public var shadow: Shadow
+//    internal var shadow: Shadow
     public var padding: Int
     
     public init(
       glyphSet: GlyphSet = .sharp,
-      colour: ColourSet = .default,
+//      colour: ColourSet = .default,
       frameStyle: FrameStyle = .single,
-      shadow: Shadow = Shadow(),
+//      shadow: Shadow = Shadow(),
       padding: Int = 1
     ) {
       self.glyphSet = glyphSet
-      self.colour = colour
+//      self.colour = colour
       self.frameStyle = frameStyle
-      self.shadow = shadow
+//      self.shadow = shadow
       self.padding = padding
     }
   }
