@@ -111,35 +111,17 @@ public extension SwiftBox {
     case bottomLeading
     case bottomTrailing
     
+    public func hasShadow(_ location: SwiftBox.VerticalLocation) -> Bool {
+      switch location {
+        case .leading:
+          self == .topLeading || self == .bottomLeading
+        case .trailing:
+          self == .topTrailing || self == .bottomTrailing
+        case .interior:
+          false
+      }
+    }
+    
   } // END light source
 }
 
-//public extension SwiftBox {
-//  
-//  enum BoxSide {
-//    case top
-//    case bottom
-//    case leading
-//    case trailing
-//    
-//    /// Depending on which side of the box the shadow needs to
-//    /// be drawn on, the shadow may repeat, or act as a line cap.
-//    ///
-//    public var shadowMode: ShadowMode {
-//      switch self {
-//        case .top, .bottom:
-//            .repeating
-//        case .leading, .trailing:
-//            .cap
-//      }
-//    }
-//    
-//
-//    public enum ShadowMode {
-//      case cap
-//      case repeating
-//    }
-//    
-//  }
-//  
-//}

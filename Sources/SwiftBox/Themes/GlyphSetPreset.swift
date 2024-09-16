@@ -69,7 +69,6 @@ public extension SwiftBox.GlyphSet {
   
   static let double = SwiftBox.GlyphSet.fallback([
     
-    
     GlyphType.horizontal(.exterior): "═",
     GlyphType.horizontal(.interior): "─",
     ///

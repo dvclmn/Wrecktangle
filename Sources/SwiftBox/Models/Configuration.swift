@@ -9,7 +9,7 @@ import TextCore
 
 public extension SwiftBox {
   
-  /// A structure that defines the appearance and behavior of a `SwiftBox`.
+  /// Defines the appearance and behavior of a `SwiftBox`.
   ///
   /// Use `Config` to customize various aspects of a `SwiftBox`,
   /// such as its theme, width, and content limitations.
@@ -21,7 +21,7 @@ public extension SwiftBox {
     ///
     public var theme: Theme
     
-    /// The width of the box in characters.
+    /// The width of the box in `Character`s.
     ///
     /// This value determines the overall width of the box, including its borders.
     /// The content will be wrapped to fit within this width.

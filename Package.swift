@@ -22,6 +22,8 @@ let package = Package(
     .package(name: "Helpers", path: "\(localPackagesRoot)/SwiftCollection/Helpers"),
     .package(name: "TextCore", path: "\(localPackagesRoot)/TextCore"),
     .package(name: "Styles", path: "\(localPackagesRoot)/Styles"),
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
+
   ],
   targets: [
     .target(name: "SwiftBox", dependencies: ["TextCore", "Helpers", "Styles"]),

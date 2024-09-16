@@ -10,25 +10,25 @@ import TextCore
 
 public extension SwiftBox {
   
+  enum HorizontalLocation: Hashable {
+    case top
+    case bottom
+    case interior // Divider
+  }
+  
+  enum VerticalLocation: Hashable {
+    case leading
+    case trailing
+    case interior // Divider
+  }
+
   enum PartType: Hashable {
     
-    case horizontal(HorizontalLocation = .top)
-    case vertical(VerticalLocation = .leading)
+    case horizontal(SwiftBox.HorizontalLocation = .top)
+    case vertical(SwiftBox.VerticalLocation = .leading)
     case join(JoinType)
     case corner(CornerType)
     
-    
-    public enum HorizontalLocation: Hashable {
-      case top
-      case bottom
-      case interior // Divider
-    }
-    
-    public enum VerticalLocation: Hashable {
-      case leading
-      case trailing
-      case interior // Divider
-    }
     
     public var flexibility: PartFlexibility {
       switch self {
@@ -42,20 +42,14 @@ public extension SwiftBox {
             .fixed
       }
     }
-    
-   
-    
   } // END part type
-  
-  
   
   enum LineSegment {
     case capLeading
     case capTrailing
   }
   
-  
-  enum PartFlexibility {
+  enum PartFlexibility: Equatable {
     case repeatable(axis: Axis)
     case fixed
   }

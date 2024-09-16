@@ -225,10 +225,57 @@ public extension SwiftBox.BoxPart {
     let characterGrid = glyphGrid.map { row in
       row.map { theme.glyphSet.character(for: $0) }
     }
+    
     let multilineString = MultilineString(characterGrid)
+    
+    
+    
+    let finalResult: MultilineString
+    
+
+    
+//    switch theme.shadow.lightSource {
+//      case .bottomLeading:
+        
+//    }
+    
+    switch type {
+      case .vertical(.trailing):
+        finalResult = addShadow(to: multilineString, with: theme)
+        
+      default:
+        finalResult = multilineString
+    }
+    
+//     else if theme.shadow.lightSource.hasShadow(.trailing) {
+//      finalResult = shadowResult + multilineString
+//    } else {
+//      finalResult = multilineString
+//    }
     
     print("Character grid:\n \(multilineString)")
     
-    return SwiftBox.BoxPart(content: multilineString, type: type)
+    return SwiftBox.BoxPart(content: finalResult, type: type)
+  }
+  
+  private static func addShadow(
+    to string: MultilineString,
+    with theme: SwiftBox.Theme
+  ) -> MultilineString {
+    
+    let shadowHeight: Int = 1
+    //    let shadowHeight: Int = theme.frameStyle.maximumGridSize.height.value
+    let shadowString: [[Character]] = Array(repeating: [theme.shadow.strength.character], count: shadowHeight)
+    
+    let shadowResult = MultilineString(shadowString)
+    
+    if theme.shadow.lightSource.hasShadow(.leading)  {
+      return string + shadowResult
+    } else if theme.shadow.lightSource.hasShadow(.trailing) {
+      return shadowResult + string
+    } else {
+      return string
+    }
+    
   }
 }

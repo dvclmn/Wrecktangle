@@ -11,8 +11,6 @@ public extension SwiftBox {
     case base([GlyphType: Character])
     indirect case fallback([GlyphType: Character], GlyphSet)
 
-    
-    
     func character(for glyphType: GlyphType) -> Character {
       switch self {
         case .base(let glyphMap):
@@ -31,7 +29,7 @@ public extension SwiftBox {
       
       // For join and corner, try equivalent interior variants first
       switch glyphType {
-        case .join(let x, let y, let type):
+        case .join(_, _, let type):
           if let char = glyphMap[.join(x: .interior, y: .interior, type: type)] {
             return char
           }
