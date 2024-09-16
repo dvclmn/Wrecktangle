@@ -1,4 +1,5 @@
 {
+  "originHash" : "137437a4d24def14163e81a27740b74c72d0e44b5189a478a95369c11379f444",
   "pins" : [
     {
       "identity" : "swift-docc-plugin",
@@ -17,7 +18,16 @@
         "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
         "version" : "1.0.0"
       }
+    },
+    {
+      "identity" : "textcore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dvclmn/TextCore.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "eaa33b8a07be7cf3016cd3f60583a937d4196334"
+      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

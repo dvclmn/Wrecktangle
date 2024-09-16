@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 //import BaseHelpers
 import TextCore
-import AppKit
 
 public extension SwiftBox {
   

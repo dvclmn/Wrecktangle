@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import BaseStyles
 
 public extension SwiftBox.Theme.ColourSet {
   
@@ -46,8 +45,6 @@ public extension Color {
   static let peach = Color(.displayP3, red: 0.806, green: 0.536, blue: 0.422, opacity: 1)
   static let lavendar = Color(.displayP3, red: 0.596, green: 0.495, blue: 0.969, opacity: 1)
   static let olive = Color(.displayP3, red: 0.377, green: 0.38, blue: 0.276, opacity: 1)
-  static let chalkBlue = Swatch.chalkBlue.colour
-  static let slate = Swatch.slate.colour
   static let green = Color.green
 }
 

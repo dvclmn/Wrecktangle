@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import BaseStyles
 
 public extension SwiftBox.Theme {
   
