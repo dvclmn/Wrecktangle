@@ -52,54 +52,10 @@ extension BoxExampleView {
       width: boxWidth,
       glyphSet: .rounded,
       frameStyle: .double,
-      widthCounter: .compact
+      widthCounter: .off
     )
   }
-  
-//  let box02 = BoxCore(
-//    header: "lightSource: .topLeading",
-//    content: Self.testString,
-//    config: BoxCore.Config (
-//      theme: BoxCore.Theme(glyphSet: .double, frameStyle: .double, shadow: BoxCore.Theme.Shadow(type: .simple, lightSource: .topLeading, strength: .light)),
-//      width: boxWidth,
-//      headerLineLimit: 2,
-//      contentLineLimit: 4,
-//      metrics: .init(widthCounter: .compact, lineNumbers: false, invisibles: false)
-//    )
-//  )
-//  
-//  let boxSmall01 = BoxCore(
-//    header: "bottomTrailing",
-//    content: "TestStrings.paragraphs[6]",
-//    config: BoxCore.Config (
-//      theme: BoxCore.Theme(
-//        glyphSet: .rounded,
-//        frameStyle: .double,
-//        shadow: BoxCore.Theme.Shadow(type: .simple, lightSource: .bottomTrailing, strength: .medium)
-//      ),
-//      width: 14,
-//      contentLineLimit: 3,
-//      metrics: .init(widthCounter: .off, lineNumbers: false, invisibles: false)
-//    )
-//  )
-//  
-//  let boxSmall02 = BoxCore(
-//    header: "bottomLeading",
-//    content: Self.testString,
-//    config: BoxCore.Config (
-//      theme: BoxCore.Theme(
-//        glyphSet: .sharp,
-//        frameStyle: .single,
-//        shadow: BoxCore.Theme.Shadow(type: .simple, lightSource: .bottomLeading, strength: .medium)
-//      ),
-//      width: 14,
-//      contentLineLimit: 5,
-//      wordWrapStrategy: .wrap,
-//      metrics: .init(widthCounter: .off, lineNumbers: false, invisibles: false)
-//    )
-//  )
-  
-  
+ 
   
   static var testString: String {
   """

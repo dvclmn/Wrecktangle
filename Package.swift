@@ -8,7 +8,7 @@ let package = Package(
   name: "BoxMaker",
   platforms: [
     .iOS("16.0"),
-    .macOS("12.0")
+    .macOS("13.0")
   ],
   products: [
     .library(
