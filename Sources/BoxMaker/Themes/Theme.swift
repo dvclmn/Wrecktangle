@@ -20,7 +20,7 @@ public extension BoxCore {
     public var padding: Int
     
     public init(
-      glyphSet: GlyphSet = .sharp,
+      glyphSet: GlyphSet = .rounded,
 //      colour: ColourSet = .default,
       frameStyle: FrameStyle = .single,
 //      shadow: Shadow = Shadow(),

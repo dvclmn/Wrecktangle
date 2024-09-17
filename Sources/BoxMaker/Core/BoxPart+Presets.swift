@@ -253,7 +253,7 @@ public extension BoxCore.BoxPart {
 //      finalResult = multilineString
 //    }
     
-    print("Character grid:\n \(multilineString)")
+//    print("Character grid:\n \(multilineString)")
     
     return BoxCore.BoxPart(content: finalResult, type: type)
   }

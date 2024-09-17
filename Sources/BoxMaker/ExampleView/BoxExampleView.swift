@@ -78,6 +78,25 @@ extension BoxExampleView {
         output.appendString(boxLine, addsLineBreak: true)
       }
     }
+  
+  
+    ╭──────────────────────────────╮
+  //│ ╭──────────────────────────╮ │
+  //│ │ At this point I've made  │ │
+  //│ │ more commits to my repo  │ │
+  //│ │ *renaming* it, than I    │ │
+  //│ │ have for actual code.    │ │
+  //│ │                          │ │
+  //│ ╰──────────────────────────╯ │
+  //╰──────────────────────────────╯
+  /////////////////////////////////
+  
+  
+  
+  At this point I've made 
+  more commits to my repo 
+  renaming it than I have 
+  for actual code. 
     
   """
   }

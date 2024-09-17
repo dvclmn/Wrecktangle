@@ -5,16 +5,16 @@ import PackageDescription
 let localPackagesRoot = "/Users/dvclmn/Apps/_ Swift Packages"
 
 let package = Package(
-  name: "BoxMaker",
+  name: "Wrecktangle",
   platforms: [
     .iOS("16.0"),
     .macOS("13.0")
   ],
   products: [
     .library(
-      name: "BoxMaker",
+      name: "Wrecktangle",
       targets: [
-        "BoxMaker"
+        "Wrecktangle"
       ]
     )
   ],
@@ -25,9 +25,12 @@ let package = Package(
 
   ],
   targets: [
-    .target(name: "BoxMaker", dependencies: ["TextCore", .product(name: "NSUI", package: "nsui")]),
+    .target(name: "Wrecktangle", dependencies: [
+      "TextCore",
+        .product(name: "NSUI", package: "nsui")
+    ]),
     .testTarget(
-      name: "BoxCoreTests", dependencies: ["BoxMaker"]
+      name: "BoxCoreTests", dependencies: ["Wrecktangle"]
     ),
   ]
 )

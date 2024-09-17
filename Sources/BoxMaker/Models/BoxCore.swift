@@ -31,6 +31,13 @@ public struct BoxCore {
 
 }
 
+
+extension BoxCore: CustomStringConvertible {
+  public var description: String {
+    self.attributedString.string
+  }
+}
+
 public extension BoxCore {
   
   var theme: Theme {
