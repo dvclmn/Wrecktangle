@@ -30,7 +30,7 @@ let package = Package(
         .product(name: "NSUI", package: "nsui")
     ]),
     .testTarget(
-      name: "BoxCoreTests", dependencies: ["Wrecktangle"]
+      name: "WrecktangleTests", dependencies: ["Wrecktangle"]
     ),
   ]
 )
@@ -38,6 +38,7 @@ let package = Package(
 let swiftSettings: [SwiftSetting] = [
   .enableExperimentalFeature("StrictConcurrency"),
   .enableUpcomingFeature("DisableOutwardActorInference"),
+  .enableUpcomingFeature("InferSendableFromCaptures"),
 ]
 
 for target in package.targets {

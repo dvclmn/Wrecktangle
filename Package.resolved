@@ -1,5 +1,5 @@
 {
-  "originHash" : "e5f17ef54aef7a80675e20c46ea4ab4c83d008f61cdc84746207a4bb2116a180",
+  "originHash" : "04fa7a97996baeeb3a4633badaea9a99680725003c57318c5a613cf45b4e3ae8",
   "pins" : [
     {
       "identity" : "nsui",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "textcore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dvclmn/TextCore.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1e61456a5db92d479ad7675ce24946df8d2e9ff8"
       }
     }
   ],
