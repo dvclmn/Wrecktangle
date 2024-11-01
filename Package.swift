@@ -2,8 +2,6 @@
 
 import PackageDescription
 
-let localPackagesRoot = "/Users/dvclmn/Apps/_ Swift Packages"
-
 let package = Package(
   name: "Wrecktangle",
   platforms: [
@@ -19,7 +17,6 @@ let package = Package(
     )
   ],
   dependencies: [
-    .package(url: "https://github.com/mattmassicotte/nsui", from: "1.3.0"),
     .package(url: "https://github.com/dvclmn/TextCore.git", branch: "main"),
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
 
@@ -27,7 +24,6 @@ let package = Package(
   targets: [
     .target(name: "Wrecktangle", dependencies: [
       "TextCore",
-        .product(name: "NSUI", package: "nsui")
     ]),
     .testTarget(
       name: "WrecktangleTests", dependencies: ["Wrecktangle"]
