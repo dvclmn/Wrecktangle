@@ -6,7 +6,7 @@ let package = Package(
   name: "Wrecktangle",
   platforms: [
     .iOS("16.0"),
-    .macOS("13.0")
+    .macOS("14.0")
   ],
   products: [
     .library(
@@ -17,13 +17,13 @@ let package = Package(
     )
   ],
   dependencies: [
-    .package(url: "https://github.com/dvclmn/TextCore.git", branch: "main"),
+    .package(url: "https://github.com/dvclmn/Collection", branch: "main"),
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
 
   ],
   targets: [
     .target(name: "Wrecktangle", dependencies: [
-      "TextCore",
+      .product(name: "BaseHelpers", package: "Collection"),
     ]),
     .testTarget(
       name: "WrecktangleTests", dependencies: ["Wrecktangle"]

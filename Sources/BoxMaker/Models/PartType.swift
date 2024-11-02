@@ -6,7 +6,7 @@
 //
 
 import SwiftUICore
-import TextCore
+import BaseHelpers
 
 public extension BoxCore {
   

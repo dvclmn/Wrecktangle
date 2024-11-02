@@ -5,7 +5,7 @@
 //  Created by Dave Coleman on 13/9/2024.
 //
 
-import TextCore
+import BaseHelpers
 
 public extension BoxCore {
   
