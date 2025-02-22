@@ -1,13 +1,13 @@
 {
-  "originHash" : "04fa7a97996baeeb3a4633badaea9a99680725003c57318c5a613cf45b4e3ae8",
+  "originHash" : "e0bd729611218c4fe5ec6cc0a3aa97b726b488d0e94c537b4a02ffa6ec5b3f3d",
   "pins" : [
     {
-      "identity" : "nsui",
+      "identity" : "collection",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mattmassicotte/nsui",
+      "location" : "https://github.com/dvclmn/Collection",
       "state" : {
-        "revision" : "8792b2f789bf03be1be9ecb4df43d2bfe0e5d361",
-        "version" : "1.3.0"
+        "branch" : "main",
+        "revision" : "94d93b646cb4670647ed4471c16184002d6bbb57"
       }
     },
     {
@@ -29,12 +29,21 @@
       }
     },
     {
-      "identity" : "textcore",
+      "identity" : "swift-memberwise-init-macro",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dvclmn/TextCore.git",
+      "location" : "https://github.com/gohanlon/swift-memberwise-init-macro.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "1e61456a5db92d479ad7675ce24946df8d2e9ff8"
+        "revision" : "21ca6d8c8f9e4ce27e92f82da294e0d91953b8b6",
+        "version" : "0.5.1"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "0687f71944021d616d34d922343dcef086855920",
+        "version" : "600.0.1"
       }
     }
   ],
